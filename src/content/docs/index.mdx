@@ -1,0 +1,52 @@
+---
+title: Product Definition as Code
+description: An open methodology to model your product as a versioned, validated graph upstream of Spec-Driven Development.
+template: splash
+hero:
+  tagline: Your product, defined like code. An open methodology for the upstream layer of the AI-SDLC.
+  image:
+    file: ../../assets/pdac.png
+    alt: The PDaC product graph
+  actions:
+    - text: Read the manifesto
+      link: /manifesto/
+      icon: right-arrow
+    - text: Read the specification
+      link: /spec/
+      variant: minimal
+      icon: open-book
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## The bottleneck moved left
+
+AI-assisted engineering has made implementation fast. The limiting factor of software is no longer writing code; it is knowing, precisely and verifiably, what the product is. An agent that writes code in minutes amplifies whatever understanding it is given, including none.
+
+PDaC models product knowledge as a versioned, validated graph of small, related Markdown artifacts: actors, journeys, use cases, business rules, domain language and requirements. Humans and AI agents consume the same canonical model, and every implementation increment traces back to the product knowledge it serves.
+
+While Spec-Driven Development tools define how a single change gets built, PDaC defines what the product **is**: the graph that outlives every spec.
+
+<CardGrid stagger>
+  <Card title="The manifesto" icon="pen">
+    Four values, ten principles, the position in full. Signed by pull request.
+    [Read and sign it](/manifesto/).
+  </Card>
+  <Card title="The specification" icon="open-book">
+    Ten normative chapters, RFC 2119 language, stable diagnostic codes. Currently
+    v0.9, request for comments. [Start with the overview](/spec/).
+  </Card>
+  <Card title="The reference implementation" icon="github">
+    ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. Try it:
+    `npx @prodshape/cli init`.
+    [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
+  </Card>
+  <Card title="Build an implementation" icon="puzzle">
+    The spec is implementation-independent by design and wants more than one.
+    [Conformance and listing criteria](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md).
+  </Card>
+</CardGrid>
+
+## Where it comes from
+
+PDaC was introduced in [Product Definition as Code for the AI-SDLC](https://jgcarmona.com/en/product-definition-as-code/) (July 2026) and extracted into an open specification. Founding supporter: [Plain Concepts](https://www.plainconcepts.com).

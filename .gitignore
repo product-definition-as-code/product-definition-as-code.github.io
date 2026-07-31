@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.astro/
+# Generated from the spec repository by scripts/sync-spec.mjs; never edit here
+src/content/docs/spec/
+src/content/docs/manifesto.md

@@ -1,0 +1,22 @@
+/* PDaC brand: blueprint navy system */
+:root {
+  --sl-color-accent-low: #131e4f;
+  --sl-color-accent: #1d3fbf;
+  --sl-color-accent-high: #cadcfc;
+  --sl-color-bg-nav: #0f2560;
+}
+:root[data-theme='light'] {
+  --sl-color-accent-low: #cadcfc;
+  --sl-color-accent: #1e3a8a;
+  --sl-color-accent-high: #0f2560;
+}
+.site-title {
+  font-weight: 700;
+}
+/* Artifact family colors for inline use */
+.pdac-act { color: #2f855a; }
+.pdac-jrn { color: #1d3fbf; }
+.pdac-uc  { color: #6b46c1; }
+.pdac-br  { color: #d69e2e; }
+.pdac-term{ color: #dd6b20; }
+.pdac-fr  { color: #c53030; }
