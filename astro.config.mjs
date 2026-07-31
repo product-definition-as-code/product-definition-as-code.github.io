@@ -1,9 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import rehypePdacIds from './scripts/rehype-pdac-ids.mjs';
 
 export default defineConfig({
   site: 'https://pdac.dev',
+  markdown: {
+    rehypePlugins: [rehypePdacIds],
+  },
   integrations: [
     starlight({
       title: 'Product Definition as Code',

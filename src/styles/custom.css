@@ -1,22 +1,97 @@
-/* PDaC brand: blueprint navy system */
+/* ============================================================
+   PDaC brand tokens (see BRAND.md: the color contract)
+   Whiteboard explains, blueprint specifies. One hue per artifact
+   family, everywhere. Color reinforces the prefix, never replaces it.
+   ============================================================ */
+
+:root {
+  /* Palette */
+  --pdac-blueprint-deep: #0f2560;
+  --pdac-blueprint-navy: #1e3a8a;
+  --pdac-action-blue: #1d3fbf;
+  --pdac-ice: #cadcfc;
+  --pdac-paper: #fdfdfc;
+  --pdac-ink: #1f2328;
+
+  /* Header is Blueprint Deep in BOTH themes (brand constant) */
+  --sl-color-bg-nav: var(--pdac-blueprint-deep);
+}
+
+/* --- Dark theme -------------------------------------------- */
 :root {
   --sl-color-accent-low: #131e4f;
-  --sl-color-accent: #1d3fbf;
-  --sl-color-accent-high: #cadcfc;
-  --sl-color-bg-nav: #0f2560;
+  --sl-color-accent: #6c8cff;
+  --sl-color-accent-high: var(--pdac-ice);
+
+  /* Artifact family colors, lightened for AA contrast on dark */
+  --pdac-act: #57b98a;
+  --pdac-jrn: #7c9bff;
+  --pdac-uc: #b197fc;
+  --pdac-br: #e2b93b;
+  --pdac-term: #f0883e;
+  --pdac-req: #f07a76;
+  --pdac-flow: var(--pdac-ice);
 }
+
+/* --- Light theme ------------------------------------------- */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #cadcfc;
-  --sl-color-accent: #1e3a8a;
-  --sl-color-accent-high: #0f2560;
+  --sl-color-accent-low: var(--pdac-ice);
+  --sl-color-accent: var(--pdac-action-blue);
+  --sl-color-accent-high: var(--pdac-blueprint-deep);
+  --sl-color-bg: var(--pdac-paper);
+  --sl-color-text: var(--pdac-ink);
+
+  /* Artifact family colors, darkened where needed for AA on paper */
+  --pdac-act: #2f855a;
+  --pdac-jrn: #1d3fbf;
+  --pdac-uc: #6b46c1;
+  --pdac-br: #b7791f;
+  --pdac-term: #c05621;
+  --pdac-req: #c53030;
+  --pdac-flow: var(--pdac-blueprint-navy);
+}
+
+/* --- Header: navy always, light text always ----------------- */
+header.header,
+.header {
+  --sl-color-text: var(--pdac-paper);
+  --sl-color-text-accent: var(--pdac-ice);
+  --sl-color-gray-1: var(--pdac-ice);
+  --sl-color-gray-2: var(--pdac-ice);
 }
 .site-title {
+  color: var(--pdac-paper) !important;
   font-weight: 700;
 }
-/* Artifact family colors for inline use */
-.pdac-act { color: #2f855a; }
-.pdac-jrn { color: #1d3fbf; }
-.pdac-uc  { color: #6b46c1; }
-.pdac-br  { color: #d69e2e; }
-.pdac-term{ color: #dd6b20; }
-.pdac-fr  { color: #c53030; }
+header.header a,
+header.header button,
+header.header svg {
+  color: var(--pdac-paper);
+}
+/* Search button readable on navy in both themes */
+header.header site-search button[data-open-modal] {
+  background-color: rgba(253, 253, 252, 0.08);
+  border-color: rgba(202, 220, 252, 0.4);
+  color: var(--pdac-ice);
+}
+
+/* --- Headings in Blueprint Navy on light -------------------- */
+:root[data-theme='light'] .sl-markdown-content :is(h1, h2, h3, h4) {
+  color: var(--pdac-blueprint-navy);
+}
+
+/* --- The color contract: artifact IDs ------------------------
+   Applied by scripts/rehype-pdac-ids.mjs to inline code matching
+   an artifact ID or prefix. Monospace and the visible prefix stay
+   the primary channel; color trains the eye. */
+.pdac-id {
+  color: var(--pdac-fam, inherit);
+  font-weight: 600;
+}
+.pdac-act  { --pdac-fam: var(--pdac-act); }
+.pdac-jrn  { --pdac-fam: var(--pdac-jrn); }
+.pdac-uc   { --pdac-fam: var(--pdac-uc); }
+.pdac-br   { --pdac-fam: var(--pdac-br); }
+.pdac-term { --pdac-fam: var(--pdac-term); }
+.pdac-req  { --pdac-fam: var(--pdac-req); }
+.pdac-flow { --pdac-fam: var(--pdac-flow); }
