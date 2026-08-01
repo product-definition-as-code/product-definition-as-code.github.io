@@ -62,6 +62,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   const fm = [
     '---',
     `title: "${title}"`,
+    `editUrl: "https://github.com/product-definition-as-code/spec/edit/main/spec/${file}"`,
     `sidebar:`,
     `  order: ${order}`,
     ...(file === 'index.md' ? ['  label: "Overview"'] : []),
@@ -75,7 +76,13 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
 {
   const raw = readFileSync(join(specRepo, 'MANIFESTO.md'), 'utf8');
   const { title, body } = transform(raw, { label: 'Manifesto' });
-  const fm = ['---', `title: "${title}"`, '---', ''].join('\n');
+  const fm = [
+    '---',
+    `title: "${title}"`,
+    `editUrl: "https://github.com/product-definition-as-code/spec/edit/main/MANIFESTO.md"`,
+    '---',
+    '',
+  ].join('\n');
   writeFileSync(outManifesto, fm + body);
 }
 

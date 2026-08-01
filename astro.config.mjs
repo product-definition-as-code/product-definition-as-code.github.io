@@ -23,7 +23,11 @@ export default defineConfig({
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/product-definition-as-code/spec/edit/main/',
+        // Site-authored pages live in this repository. Synced spec pages carry a
+        // per-page editUrl (injected by scripts/sync-spec.mjs) pointing at their
+        // true source in the spec repository.
+        baseUrl:
+          'https://github.com/product-definition-as-code/product-definition-as-code.github.io/edit/main/',
       },
       sidebar: [
         { label: 'Manifesto', slug: 'manifesto' },
