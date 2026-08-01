@@ -19,13 +19,15 @@ hero:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## The bottleneck moved left
+## The bottleneck is moving left
 
-AI-assisted engineering has made implementation fast. The limiting factor of software is no longer writing code; it is knowing, precisely and verifiably, what the product is. An agent that writes code in minutes amplifies whatever understanding it is given, including none.
+AI-assisted engineering has made implementation fast. As implementation cost falls, ambiguity and decision quality become the larger share of delivery risk: the hard part is knowing, precisely and verifiably, what the product is. An agent that writes code in minutes amplifies whatever understanding it is given, including none.
 
 PDaC models product knowledge as a versioned, validated graph of small, related Markdown artifacts: actors, journeys, use cases, business rules, domain language and requirements. Humans and AI agents consume the same canonical model, and every implementation increment traces back to the product knowledge it serves.
 
-While Spec-Driven Development tools define how a single change gets built, PDaC defines what the product **is**: the graph that outlives every spec. And the handoff at its boundary is delivery-neutral: the same package briefs an SDD framework, an AI coding agent, or a human team working from the backlog. Give a frontier model a Product Handoff instead of a ticket, and you have removed the ambiguity where wrong software is born.
+Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed change. One-way authority, two-way learning. And the handoff at the boundary is delivery-neutral: the same package briefs an SDD framework, an AI coding agent, or a human team working from the backlog. Give a frontier model a Product Handoff instead of a ticket and you stop paying the re-derivation tax on every invocation; the ambiguity that remains becomes reviewable instead of invisible.
+
+**Where this stands today:** the specification is a v0.9 draft under public RFC, extracted from one working reference implementation. Independent conformance, a second implementation and external pilots are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
 
 <CardGrid stagger>
   <Card title="The manifesto" icon="pen">

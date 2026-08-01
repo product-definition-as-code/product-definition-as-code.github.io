@@ -1,0 +1,65 @@
+---
+title: Known limits
+description: What Product Definition as Code cannot claim yet, named before anyone has to discover it.
+---
+
+This page names what Product Definition as Code cannot claim yet. It exists because a
+methodology about explicit, inspectable intent should apply the same standard to itself.
+
+## Maturity
+
+There is one implementation, ProductShape, and the specification was extracted from it. Until
+an independent implementation passes a versioned conformance corpus, conformance is
+self-conformance: useful regression evidence, not independent validation. There is one listed
+adopter. Governance is founder-led while the work is experimental. The full picture is in the
+[maturity matrix](https://github.com/product-definition-as-code/spec/blob/main/MATURITY.md).
+
+## What the tooling cannot enforce
+
+The rule that the baseline changes only through promotion is currently a discipline, not a
+machine-enforced invariant: a direct edit to the baseline followed by validation succeeds.
+A baseline lock is under design in
+[RFC #1](https://github.com/product-definition-as-code/spec/issues/1).
+
+## What the model cannot see
+
+Structural validation proves the model is well-formed, not that it is true. The model records
+accepted intent; it does not yet normatively track whether that intent is implemented, deployed
+or verified in a named environment. Claims and reconciliation are under design in
+[RFC #3](https://github.com/product-definition-as-code/spec/issues/3). Until then, a green
+model and a divergent reality can coexist, and detecting that divergence is on you.
+
+## Topology
+
+The specification assumes the product model lives beside the code it describes. Organizations
+with a dedicated model repository and many delivery repositories are not covered yet; this is
+[RFC #2](https://github.com/product-definition-as-code/spec/issues/2).
+
+## Ontology
+
+The artifact vocabulary is a closed reference profile. Domain-specific artifact kinds and
+relationships (regulated obligations, safety cases, data contracts) do not fit yet. A
+namespaced profile mechanism is planned; the kernel is deliberately small and will stay small.
+
+## AI consumption
+
+Canonical Markdown that agents consume is also an attack surface. Digests prove content is
+unchanged, not that it is safe. A threat model covering prompt injection, provenance tiers and
+agent permissions is planned and does not exist today.
+
+## Cost and applicability
+
+Explicit models cost time to author and maintain, and semantic approval remains a human
+bottleneck by design. This methodology is most likely to pay off where product behaviour spans
+teams or repositories, knowledge has a long half-life, misinterpretation is expensive, agents
+or rotating teams repeatedly reconstruct context, or audit evidence matters. It is least likely
+to pay off for disposable prototypes, very small co-located teams, or products whose main
+uncertainty is market discovery rather than delivery interpretation. If that is you, do not
+adopt this; a good README and a short feedback loop will beat it.
+
+## ROI
+
+Unknown in general. The testable hypothesis is that reduced re-derivation, ambiguity and
+untracked divergence exceed the authoring and maintenance cost for products with substantial
+change, risk or coordination complexity. External pilots must establish where that threshold
+lies, and their results will be published including failures.
