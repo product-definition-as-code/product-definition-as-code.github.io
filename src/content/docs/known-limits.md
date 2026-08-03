@@ -16,18 +16,18 @@ adopter. Governance is founder-led while the work is experimental. The full pict
 
 ## What the tooling cannot enforce
 
-The rule that the baseline changes only through promotion is currently a discipline, not a
-machine-enforced invariant: a direct edit to the baseline followed by validation succeeds.
-A baseline lock is under design in
-[RFC #1](https://github.com/product-definition-as-code/spec/issues/1).
+The rule that the baseline changes only through a reviewed merge is enforced by branch
+protection and a CI validation gate, which are repository configuration, not spec-enforceable
+invariants: in a repository without branch protection, a direct edit to the canonical branch
+followed by validation succeeds. Protecting the canonical branch is on the adopter.
 
 ## What the model cannot see
 
 Structural validation proves the model is well-formed, not that it is true. The model records
-accepted intent; it does not yet normatively track whether that intent is implemented, deployed
-or verified in a named environment. Claims and reconciliation are under design in
-[RFC #3](https://github.com/product-definition-as-code/spec/issues/3). Until then, a green
-model and a divergent reality can coexist, and detecting that divergence is on you.
+accepted intent; whether that intent is implemented, deployed or verified in a named
+environment is delivery evidence, which the methodology gives a place to land (citation
+statuses, coverage of cited scenarios) without claiming it. A green model and a divergent
+reality can coexist, and detecting that divergence is on you.
 
 ## Topology
 
