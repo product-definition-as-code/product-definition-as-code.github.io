@@ -11,11 +11,8 @@ const FAMILY = {
   FR: 'req',
   QR: 'req',
   CON: 'req',
-  CHG: 'flow',
-  SLI: 'flow',
-  HOF: 'flow',
 };
-const ID_RE = /^(ACT|JRN|UC|BR|TERM|BC|FR|QR|CON|CHG|SLI|HOF)-[A-Z0-9][A-Z0-9-]*$|^(ACT|JRN|UC|BR|TERM|BC|FR|QR|CON|CHG|SLI|HOF)-$/;
+const ID_RE = /^(ACT|JRN|UC|BR|TERM|BC|FR|QR|CON)-[A-Z0-9][A-Z0-9-]*$|^(ACT|JRN|UC|BR|TERM|BC|FR|QR|CON)-$/;
 
 function visit(node, fn) {
   if (!node) return;

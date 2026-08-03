@@ -25,11 +25,9 @@ const ORDER = {
   'frontmatter-reference.md': 3,
   'identifiers.md': 4,
   'relationships.md': 5,
-  'product-changes.md': 6,
-  'delivery-slices.md': 7,
-  'handoff-contract.md': 8,
-  'validation.md': 9,
-  'conformance.md': 10,
+  'citation-contract.md': 6,
+  'validation.md': 7,
+  'conformance.md': 8,
 };
 
 function transform(md, { slugBase, label }) {

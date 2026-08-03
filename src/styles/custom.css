@@ -1,5 +1,6 @@
 /* ============================================================
-   PDaC brand tokens (see BRAND.md: the color contract)
+   PDaC brand tokens (color contract; the brand guide lives in the
+   org's private strategy repository)
    Whiteboard explains, blueprint specifies. One hue per artifact
    family, everywhere. Color reinforces the prefix, never replaces it.
    ============================================================ */
@@ -30,7 +31,6 @@
   --pdac-br: #e2b93b;
   --pdac-term: #f0883e;
   --pdac-req: #f07a76;
-  --pdac-flow: var(--pdac-ice);
 }
 
 /* --- Light theme ------------------------------------------- */
@@ -48,7 +48,6 @@
   --pdac-br: #b7791f;
   --pdac-term: #c05621;
   --pdac-req: #c53030;
-  --pdac-flow: var(--pdac-blueprint-navy);
 }
 
 /* --- Header: navy always, light text always ----------------- */
@@ -94,4 +93,3 @@ header.header site-search button[data-open-modal] {
 .pdac-br   { --pdac-fam: var(--pdac-br); }
 .pdac-term { --pdac-fam: var(--pdac-term); }
 .pdac-req  { --pdac-fam: var(--pdac-req); }
-.pdac-flow { --pdac-fam: var(--pdac-flow); }
