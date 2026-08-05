@@ -16,10 +16,9 @@ adopter. Governance is founder-led while the work is experimental. The full pict
 
 ## What the tooling cannot enforce
 
-The rule that the baseline changes only through a reviewed merge is enforced by branch
-protection and a CI validation gate, which are repository configuration, not spec-enforceable
-invariants: in a repository without branch protection, a direct edit to the canonical branch
-followed by validation succeeds. Protecting the canonical branch is on the adopter.
+The rule that the definition changes only through an explicit Product Change, approved by a human and accepted through review, is enforced by branch protection and a CI validation gate. Those are repository configuration, not spec-enforceable invariants: in a repository without branch protection, a direct edit to the canonical branch followed by validation succeeds. Protecting the canonical branch is on the adopter.
+
+Nor can the specification compel a modification to go through a Product Change in the first place. Structural validation runs against the resulting graph and has no way to ask whether a change record ever existed, so canonical model files edited directly still validate clean. Overlay validation constrains a change that exists; it cannot require one to exist. What you get is a place for the meaning of a change to live and a review boundary where a human accepts it, not a mechanism that makes bypassing it impossible.
 
 ## What the model cannot see
 

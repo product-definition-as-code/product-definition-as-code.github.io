@@ -31,6 +31,7 @@
   --pdac-br: #e2b93b;
   --pdac-term: #f0883e;
   --pdac-req: #f07a76;
+  --pdac-chg: var(--pdac-ice);
 }
 
 /* --- Light theme ------------------------------------------- */
@@ -48,6 +49,7 @@
   --pdac-br: #b7791f;
   --pdac-term: #c05621;
   --pdac-req: #c53030;
+  --pdac-chg: var(--pdac-blueprint-navy);
 }
 
 /* --- Header: navy always, light text always ----------------- */
@@ -93,3 +95,4 @@ header.header site-search button[data-open-modal] {
 .pdac-br   { --pdac-fam: var(--pdac-br); }
 .pdac-term { --pdac-fam: var(--pdac-term); }
 .pdac-req  { --pdac-fam: var(--pdac-req); }
+.pdac-chg  { --pdac-fam: var(--pdac-chg); }
