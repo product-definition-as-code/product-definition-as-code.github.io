@@ -25,9 +25,10 @@ const ORDER = {
   'frontmatter-reference.md': 3,
   'identifiers.md': 4,
   'relationships.md': 5,
-  'citation-contract.md': 6,
-  'validation.md': 7,
-  'conformance.md': 8,
+  'product-changes.md': 6,
+  'citation-contract.md': 7,
+  'validation.md': 8,
+  'conformance.md': 9,
 };
 
 function transform(md, { slugBase, label }) {
@@ -38,7 +39,11 @@ function transform(md, { slugBase, label }) {
 
   // Repo-level files → GitHub.
   md = md.replace(/\]\((?:\.\.\/)?(README|GOVERNANCE|CONTRIBUTING|SIGNATORIES|IMPLEMENTATIONS|ADOPTERS|CHANGELOG|LICENSE|CODE_OF_CONDUCT)\.md(#[^)]*)?\)/g, `](${GH}/$1.md$2)`);
-  md = md.replace(/\]\(MANIFESTO\.md(#[^)]*)?\)/g, '](/manifesto/$1)');
+  md = md.replace(/\]\((?:\.\.\/)?rfcs\/([a-z0-9-]+)\.md(#[^)]*)?\)/g, `](${GH}/rfcs/$1.md$2)`);
+
+  // The manifesto is a site page. Chapters link to it as ../MANIFESTO.md; the
+  // repository root links to it as MANIFESTO.md.
+  md = md.replace(/\]\((?:\.\.\/)?MANIFESTO\.md(#[^)]*)?\)/g, '](/manifesto/$1)');
 
   // Chapter cross-links → site routes.
   md = md.replace(/\]\((?:\.\/)?([a-z][a-z0-9-]*)\.md(#[^)]*)?\)/g, (m, name, hash = '') => {
