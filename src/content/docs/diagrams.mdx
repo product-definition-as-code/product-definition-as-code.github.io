@@ -1,0 +1,90 @@
+---
+title: PDaC in nine diagrams
+description: Nine diagrams explaining what Product Definition as Code protects, what a product definition contains, how it changes, and where it stops.
+---
+
+Nine diagrams, each answering one question. They are the fastest way into the methodology, and the fastest way to see where it stops.
+
+They are **non-normative**. They explain Product Definition as Code; they do not define it. Where a diagram and the [specification](/spec/) appear to disagree, the specification wins. Their arrows are readable prose rather than the [canonical relationship vocabulary](/spec/relationships/), and some point in the derived direction.
+
+## PDaC-0 · The one-minute map
+
+**What is PDaC, in one minute?**
+
+![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
+
+PDaC preserves the accepted definition of the product. Everything that builds software uses it. Note what the picture does not claim: PDaC does not control delivery.
+
+## PDaC-1 · Product Definition Context
+
+**What is inside PDaC, and what remains outside?**
+
+![The PDaC boundary. Inside, six numbered concerns: the accepted product definition, product artifacts, relationships, Product Changes, validation and impact analysis, and citations to the definition; below them, drawn dashed, the derived graph and its views. Outside: SDD specifications, backlogs, technical design, source code, deployment, runtime operation and release management. The definition is cited by SDD specifications, which guide implementation, which produces evidence; a dashed amber arrow labelled "may reveal" runs from evidence back to Product Changes. The closing line reads: PDaC defines the product, delivery builds it.](/diagrams/pdac-1-product-definition-context.png)
+
+The boundary drawn explicitly. Evidence from delivery *may reveal* a Product Change — the dashed return path is learning, not an automatic obligation. Authoritative: [the specification](/spec/).
+
+## PDaC-2 · Product Definition Model
+
+**What does it mean to define the product?**
+
+![The six model artifact families and their prefixes: Actors (ACT-), Journeys (JRN-), Use Cases (UC-), Business Rules (BR-), Domain (Terms, TERM-, and Bounded Contexts, BC-) and Requirements (Functional, FR-, Quality, QR-, and Constraints, CON-). Illustrative arrows run from actors through journeys to use cases, and from use cases out to business rules, domain and requirements. The diagram is labelled as the base model, not the only possible model, with relationships marked illustrative and not exhaustive.](/diagrams/pdac-2-product-definition-model.png)
+
+The six artifact families, with the prefixes that carry them. This is the base model currently formalised, not the only model possible, and the arrows shown are illustrative rather than exhaustive. Authoritative: [Artifacts](/spec/artifacts/).
+
+## PDaC-3 · Source to Graph
+
+**How is the graph obtained?**
+
+![Five numbered stages left to right: authored Markdown, badged source of truth; parse and validate; typed product artifacts, shown as the family prefixes; declared relationships, shown as a small node graph; and deterministic graph projection, badged derived. These feed a views panel holding product snapshot, impact analysis, reference validation, graph diff, navigation and citation status. The closing line reads: Markdown is the source of truth, the graph is compiled from Markdown.](/diagrams/pdac-3-source-to-graph.png)
+
+The conceptual architecture of an implementation. It describes a transformation of information, not a deployed application. Authoritative: [manifesto](/manifesto/) principle 2 and [Validation](/spec/validation/).
+
+## PDaC-4 · Product Change
+
+**How does the accepted definition change?**
+
+![How the accepted definition changes, in three labelled bands. Intention of change: the current product definition. Proposed change: a proposed Product Change carrying add, modify and remove operations, marked semantic intent. Accepted state: after a review and acceptance step, a new accepted product state, annotated "this is the resulting accepted definition, not implementation". A separate panel shows the graph diff as a derived effect, where modifying BR-014 marks UC-003, JRN-002 and the SDD citations stale or affected. Three boxes separate the roles: Product Change is semantic intent, pull request is the review mechanism, graph diff is the derived effect. The closing line reads: PDaC detects impact, the consuming process decides what to do.](/diagrams/pdac-4-product-change.png)
+
+Three things kept apart that are routinely conflated: the Product Change is semantic intent, the pull request is the review mechanism, and the graph diff is a derived effect. Downstream citations go *stale*, never *automatically propagated*. Authoritative: [Product Changes](/spec/product-changes/).
+
+## PDaC-5 · Citation and Drift
+
+**How does PDaC connect to a consumer without replacing it?**
+
+![The citation chain and what happens when it drifts. A product artifact, UC-CHECKOUT-001, carrying accepted intent, is cited by an SDD specification, spec checkout-flow, which is implemented by code or another delivery artifact, which produces verification or delivery evidence. A panel lists four citation statuses: current, where the citation matches the accepted artifact; stale, where the cited artifact changed and the specification needs review; unresolved, where the citation cannot be resolved; and tampered, where an embedded block differs from canonical text at the recorded digest. A drift scenario shows UC-CHECKOUT-001 changing, the citation becoming stale, and a consumer reviewing the specification, marked human-controlled, with two rules stated: no automatic rewrite, and PDaC does not prescribe implementation.](/diagrams/pdac-5-citation-and-drift.png)
+
+The diagram for anyone asking how this relates to OpenSpec, Spec Kit, Claude Code, Copilot or any other coding agent. The specification is never rewritten for you, and PDaC does not decide how anything is implemented. Authoritative: [Citation Contract](/spec/citation-contract/).
+
+## PDaC-6 · Impact Analysis
+
+**What happens when one part of the product changes?**
+
+![Impact analysis over a small graph neighbourhood, before and after a change. Before: BR-REFUND-001 connects to UC-REFUND-002, which is cited by an SDD spec and appears in JRN-CUSTOMER-001, which involves ACT-CUSTOMER-001. After: modifying BR-REFUND-001 walks the relationships to reach the affected product artifacts and the affected citations, each drawn with a dashed amber border labelled affected or stale. The closing line reads: PDaC detects impact, consumers decide what to do.](/diagrams/pdac-6-impact-analysis.png)
+
+Why the relationships are the methodology, rather than a nicety. Affected artifacts carry a dashed amber border *and* the word `affected` or `stale`; colour never carries meaning alone. Authoritative: [Relationships](/spec/relationships/).
+
+## PDaC-7 · Definition Ahead of Implementation
+
+**Why should the product definition not trail the code?**
+
+![Two timelines running at different speeds. The product thinking timeline runs the full width, passing accepted intent and later definition evolves. Below it, a shorter software delivery timeline starts later, passing cited by delivery work and then implementation; an arrow labelled "cited by" drops from accepted intent down onto it. During delivery, new evidence, a false assumption, an uncovered case or a required product decision feed a dashed amber path back up to the product timeline and into a proposed Product Change carrying semantic intent. A summary panel states that definition can lead implementation, with product thinking running ahead of software delivery and a dashed feedback arrow returning.](/diagrams/pdac-7-definition-ahead-of-implementation.png)
+
+The thesis. Not five mandatory phases: two speeds, and a feedback path between them. One-way authority, two-way learning. Authoritative: [the manifesto](/manifesto/).
+
+## PDaC-8 · Verification Derivation and Continuity
+
+**How do we know the implementation still satisfies the accepted definition?**
+
+![Deriving verification from the definition, and keeping it aligned. In the first band, a requirements artifact, FR-REFUND-001, carrying a verification obligation and derived from BR-REFUND-001, leads through Gherkin scenarios, executable tests and evidence to human assessment. In the second band, the definition moves from D1 to D2: a specification citing D1 has its citation go stale, the digest is updated so the specification now cites D2, affected scenarios are reviewed, new or revised Gherkin scenarios are written, and tests are implemented and executed. A note reads: explanatory projection, arrows clarify derivation and continuity, authored relationships remain defined by relationships.md. The closing line reads: PDaC derives traceable verification scenarios from accepted product intent; it proposes and keeps them aligned, while completeness and execution remain outside PDaC.](/diagrams/pdac-8-verification-derivation-and-continuity.png)
+
+Verification scenarios are authored on requirements and citable by anchor, so a change to the definition marks the scenarios that depend on it. PDaC derives and proposes; it does not guarantee the suite is complete, and it does not run the tests. Authoritative: [Artifacts](/spec/artifacts/) and the [Frontmatter reference](/spec/frontmatter-reference/).
+
+## Using them
+
+The diagrams are licensed [CC BY 4.0](https://github.com/product-definition-as-code/spec/blob/main/LICENSE.md), like the rest of the specification text. Their canonical home is [`assets/diagrams/`](https://github.com/product-definition-as-code/spec/tree/main/assets/diagrams) in the spec repository, and every copy on this site is generated from it.
+
+To use one in a talk, an article or a README, link to it rather than re-uploading it:
+
+```
+https://pdac.dev/diagrams/pdac-0-one-minute-map.png
+```

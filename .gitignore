@@ -4,4 +4,5 @@ dist/
 # Generated from the spec repository by scripts/sync-spec.mjs; never edit here
 src/content/docs/spec/
 src/content/docs/manifesto.md
+public/diagrams/
 .git-lock-trash/
