@@ -81,6 +81,30 @@ header.header site-search button[data-open-modal] {
   color: var(--pdac-blueprint-navy);
 }
 
+/* --- Diagrams -------------------------------------------------
+   The figures are drawn on Paper and carry the artifact family colors.
+   They are never inverted in dark mode: inversion would break the color
+   contract below. Instead the light ground is framed so it reads as a
+   deliberate card rather than a bleed. */
+.sl-markdown-content img[src^='/diagrams/'] {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--pdac-paper);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* Figure captions: the italic line directly under a diagram. */
+.sl-markdown-content p:has(> img[src^='/diagrams/']) + p > em:only-child {
+  display: block;
+  margin-top: -0.75rem;
+  font-size: var(--sl-text-sm);
+  font-style: normal;
+  color: var(--sl-color-gray-3);
+}
+
 /* --- The color contract: artifact IDs ------------------------
    Applied by scripts/rehype-pdac-ids.mjs to inline code matching
    an artifact ID or prefix. Monospace and the visible prefix stay

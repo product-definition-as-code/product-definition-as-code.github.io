@@ -1,7 +1,7 @@
 // Sync spec content from the spec repository into the site's content collection.
 // Usage: node scripts/sync-spec.mjs [path-to-spec-repo]   (default: ../spec)
 // The spec repository is the single source of truth; everything written here is generated.
-import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync, existsSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +9,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const specRepo = process.argv[2] ?? join(root, '..', 'spec');
 const outSpec = join(root, 'src', 'content', 'docs', 'spec');
 const outManifesto = join(root, 'src', 'content', 'docs', 'manifesto.md');
+const outDiagrams = join(root, 'public', 'diagrams');
 
 if (!existsSync(join(specRepo, 'spec'))) {
   console.error(`Spec repository not found at ${specRepo} (expected a spec/ directory).`);
@@ -36,6 +37,10 @@ function transform(md, { slugBase, label }) {
   const h1 = md.match(/^# (.+)$/m);
   const title = (h1 ? h1[1] : label).replace(/"/g, '\\"');
   if (h1) md = md.replace(/^# .+\n+/m, '');
+
+  // Diagrams → the published copy under public/. Chapters reference them as
+  // ../assets/diagrams/x.png; the repository root as assets/diagrams/x.png.
+  md = md.replace(/\]\((?:\.\.\/)?assets\/diagrams\/([a-z0-9-]+\.png)\)/g, '](/diagrams/$1)');
 
   // Repo-level files → GitHub.
   md = md.replace(/\]\((?:\.\.\/)?(README|GOVERNANCE|CONTRIBUTING|SIGNATORIES|IMPLEMENTATIONS|ADOPTERS|CHANGELOG|LICENSE|CODE_OF_CONDUCT)\.md(#[^)]*)?\)/g, `](${GH}/$1.md$2)`);
@@ -87,6 +92,23 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     '',
   ].join('\n');
   writeFileSync(outManifesto, fm + body);
+}
+
+// Diagrams. The spec repository is their canonical home; this is the published
+// copy that /diagrams/<file> and https://pdac.dev/diagrams/<file> resolve to.
+// Removed first so a diagram renamed upstream does not linger here.
+{
+  const srcDiagrams = join(specRepo, 'assets', 'diagrams');
+  rmSync(outDiagrams, { recursive: true, force: true });
+  if (existsSync(srcDiagrams)) {
+    mkdirSync(outDiagrams, { recursive: true });
+    // Images only: the directory's own README documents the assets and is not published.
+    for (const file of readdirSync(srcDiagrams)) {
+      if (file.endsWith('.png')) copyFileSync(join(srcDiagrams, file), join(outDiagrams, file));
+    }
+  } else {
+    console.warn(`No diagrams found at ${srcDiagrams}; skipping.`);
+  }
 }
 
 console.log(`Synced spec content from ${specRepo}`);

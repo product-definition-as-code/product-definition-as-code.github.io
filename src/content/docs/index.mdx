@@ -25,11 +25,20 @@ AI-assisted engineering has made implementation fast. As implementation cost fal
 
 PDaC models product knowledge as a versioned, validated graph of small, related Markdown artifacts: actors, journeys, use cases, business rules, domain language and requirements. Humans and AI agents consume the same canonical model, and every implementation increment traces back to the product knowledge it serves.
 
+![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
+
+_PDaC-0, the one-minute map. [Eight more diagrams](/diagrams/) cover the boundary, the model, change, citation and verification._
+
 Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. And the citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog. Give a frontier model verifiable citations to canonical product text instead of a ticket and you stop paying the re-derivation tax on every invocation; the ambiguity that remains becomes reviewable instead of invisible.
 
 **Where this stands today:** the specification is a v0.1 draft under public RFC, weeks old and labeled accordingly, extracted from one working reference implementation. Independent conformance, a second implementation and external pilots are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
 
 <CardGrid stagger>
+  <Card title="Nine diagrams" icon="seti:image">
+    What PDaC protects, what a product definition contains, how it changes, and
+    where it stops. One question per diagram.
+    [See all nine](/diagrams/).
+  </Card>
   <Card title="The manifesto" icon="pen">
     Four values, ten principles, the position in full. Signed by pull request.
     [Read and sign it](/manifesto/).

@@ -31,6 +31,7 @@ export default defineConfig({
       },
       sidebar: [
         { label: 'Manifesto', slug: 'manifesto' },
+        { label: 'Diagrams', slug: 'diagrams' },
         { label: 'Known limits', slug: 'known-limits' },
         { label: 'Specification', items: [{ autogenerate: { directory: 'spec' } }] },
         {
