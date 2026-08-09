@@ -9,7 +9,7 @@ methodology about explicit, inspectable intent should apply the same standard to
 ## Maturity
 
 There is one implementation, ProductShape, and the specification was extracted from it. Until
-an independent implementation passes a versioned conformance corpus, conformance is
+an independent implementation passes the versioned conformance tests, conformance is
 self-conformance: useful regression evidence, not independent validation. There is one listed
 adopter. Governance is founder-led while the work is experimental. The full picture is in the
 [maturity matrix](https://github.com/product-definition-as-code/spec/blob/main/MATURITY.md).
