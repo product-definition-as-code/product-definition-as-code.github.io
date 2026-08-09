@@ -26,7 +26,7 @@ A specification cites a product rule by its ID and a content digest. Someone edi
 **1. The spec cites the rule.** It records what it cited and the digest of that text at the time.
 
 ```yaml
-# checkout-flow.citations.yaml — the spec's citation ledger
+# checkout-flow.citations.yaml - the spec's citation ledger
 - id: BR-REFUND-001
   digest: sha256:9f2a1c…e7b4   # the rule's content when the spec cited it
 ```
@@ -36,7 +36,7 @@ A specification cites a product rule by its ID and a content digest. Someone edi
 **2. The rule changes.** A product owner narrows the refund window.
 
 ```diff
-# br-refund-001.md — the canonical product rule
+# br-refund-001.md - the canonical product rule
 - Refunds are accepted within 30 days of delivery.
 + Refunds are accepted within 14 days of delivery.
 ```
@@ -44,16 +44,18 @@ A specification cites a product rule by its ID and a content digest. Someone edi
 **3. The same command now flags the drift.** The rule's digest no longer matches the one the spec recorded.
 
 ```console
-$ citations verify
-BR-REFUND-001   stale   PRODUCT061   canonical content changed since the citation was recorded
+$ prodshape citations verify
+stale    BR-REFUND-001    specs/checkout-flow.md:42
+warning  PRODUCT061  product/rules/br-refund-001.md [BR-REFUND-001]: canonical content changed since the citation was recorded
+1 citation(s): 0 current, 1 stale, 0 tampered, 0 unresolved
 ```
 
 The spec still says 30 days while the rule says 14, and now that gap is visible instead of silent. PDaC does not rewrite the spec for you: a human reviews it and updates the citation. `citations verify` reports one of four states for every citation:
 
-- `current` — the cited text is unchanged.
-- `stale` — the cited text changed since the citation was recorded.
-- `tampered` — an embedded copy of the text no longer matches the original.
-- `unresolved` — the cited artifact or anchor cannot be found.
+- `current` - the cited text is unchanged.
+- `stale` - the cited text changed since the citation was recorded.
+- `tampered` - an embedded copy of the text no longer matches the original.
+- `unresolved` - the cited artifact or anchor cannot be found.
 
 The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
 
