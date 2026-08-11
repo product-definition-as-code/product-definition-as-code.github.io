@@ -30,9 +30,11 @@ reality can coexist, and detecting that divergence is on you.
 
 ## Topology
 
-The specification assumes the product model lives beside the code it describes. Organizations
-with a dedicated model repository and many delivery repositories are not covered yet; this is
-[RFC #2](https://github.com/product-definition-as-code/spec/issues/2).
+The model repository may sit beside the code it describes or stand alone; both topologies
+conform, and the spec defines the pointer a consuming repository uses to name a dedicated one
+([Conformance, Topologies](/spec/conformance/#topologies)). What is not covered: verification
+runs against a local checkout of the model, so there is no remote model resolution, and one
+Product Definition cannot span several model repositories.
 
 ## Ontology
 
