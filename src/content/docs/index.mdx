@@ -11,6 +11,10 @@ hero:
     - text: Read the manifesto
       link: /manifesto/
       icon: right-arrow
+    - text: Try it in 15 minutes
+      link: https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md
+      variant: minimal
+      icon: rocket
     - text: Read the specification
       link: /spec/
       variant: minimal
@@ -26,9 +30,10 @@ A specification cites a product rule by its ID and a content digest. Someone edi
 **1. The spec cites the rule.** It records what it cited and the digest of that text at the time.
 
 ```yaml
-# checkout-flow.citations.yaml - the spec's citation ledger
+# openspec/checkout-flow.citations.yaml - the spec's citation ledger
 - id: BR-REFUND-001
-  digest: sha256:9f2a1c…e7b4   # the rule's content when the spec cited it
+  # the digest of the rule's content when the spec cited it
+  digest: sha256:b5c5806732cb3e3f32a6b7da97fd3e712a1bb733b4bb50e2840874ae64713228
 ```
 
 `citations verify` reports `current`. The spec and the rule agree.
@@ -45,8 +50,8 @@ A specification cites a product rule by its ID and a content digest. Someone edi
 
 ```console
 $ prodshape citations verify
-stale    BR-REFUND-001    checkout-flow.citations.yaml:1
-warning  PRODUCT061  checkout-flow.citations.yaml [BR-REFUND-001]: Citation of 'BR-REFUND-001' is stale: canonical content changed since the citation was recorded
+stale	BR-REFUND-001	openspec/checkout-flow.citations.yaml:1
+warning PRODUCT061 openspec/checkout-flow.citations.yaml [BR-REFUND-001]: Citation of 'BR-REFUND-001' is stale: canonical content changed since the citation was recorded
 1 citation(s): 0 current, 1 stale, 0 tampered, 0 unresolved
 ```
 
@@ -56,6 +61,59 @@ The spec still says 30 days while the rule says 14, and now that gap is visible 
 - `stale` - the cited text changed since the citation was recorded.
 - `tampered` - an embedded copy of the text no longer matches the original.
 - `unresolved` - the cited artifact or anchor cannot be found.
+
+**4. Run it yourself.** The demo above is real: `npm install -g @prodshape/cli`, four files in a scratch directory, no git required.
+
+<details>
+<summary>The whole demo, copy-paste (3 minutes)</summary>
+
+```bash
+npm install -g @prodshape/cli
+mkdir -p pdac-demo/docs/product/model/business-rules pdac-demo/openspec
+cd pdac-demo
+
+cat > docs/product/model/business-rules/br-refund-001.md <<'EOF'
+---
+id: BR-REFUND-001
+type: business-rule
+title: Refund window
+status: active
+---
+
+## Rule
+
+Refunds are accepted within 30 days of delivery.
+
+## Rationale
+
+Customers need a predictable window; finance needs a bounded liability.
+
+## Examples
+
+A delivery on March 1 may be refunded through March 31.
+
+## Exceptions
+
+None.
+EOF
+
+prodshape cite --id BR-REFUND-001 \
+  --file docs/product/model/business-rules/br-refund-001.md \
+  --form sidecar-ledger > openspec/checkout-flow.citations.yaml
+
+prodshape citations verify
+# current  BR-REFUND-001  openspec/checkout-flow.citations.yaml:1
+
+# now narrow the refund window: edit the rule, 30 days to 14
+prodshape citations verify
+# stale    BR-REFUND-001  openspec/checkout-flow.citations.yaml:1
+```
+
+On Windows, run it in Git Bash or PowerShell 7; in Windows PowerShell 5 the `>` redirect writes an encoding the CLI cannot read, so paste the two lines `cite` prints into the ledger file instead.
+
+</details>
+
+Adopting for real, on a repository that already runs OpenSpec, is the [15 minute walkthrough](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md): first rule, first citation, first caught drift, through a full Product Change.
 
 The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
 
@@ -88,8 +146,9 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
     v0.1, an early draft under request for comments. [Start with the overview](/spec/).
   </Card>
   <Card title="The reference implementation" icon="github">
-    ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It is
-    being updated to the citation contract.
+    ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It
+    implements the citation contract and passes the published conformance tests:
+    `npm install -g @prodshape/cli`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">
