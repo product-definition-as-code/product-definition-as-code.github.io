@@ -18,19 +18,8 @@ if (!existsSync(join(specRepo, 'spec'))) {
 
 const GH = 'https://github.com/product-definition-as-code/spec/blob/main';
 
-// Sidebar order follows the spec index, not the alphabet.
-const ORDER = {
-  'index.md': 0,
-  'terminology.md': 1,
-  'artifacts.md': 2,
-  'frontmatter-reference.md': 3,
-  'identifiers.md': 4,
-  'relationships.md': 5,
-  'product-changes.md': 6,
-  'citation-contract.md': 7,
-  'validation.md': 8,
-  'conformance.md': 9,
-};
+// Sidebar structure and order live in astro.config.mjs (explicit slugs grouped
+// by kernel, reference profile and reference workflow, mirroring the spec index).
 
 function transform(md, { slugBase, label }) {
   // Title from the first H1; strip it (Starlight renders the frontmatter title).
@@ -66,14 +55,10 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   if (!file.endsWith('.md')) continue;
   const raw = readFileSync(join(specRepo, 'spec', file), 'utf8');
   const { title, body } = transform(raw, { label: file });
-  const order = ORDER[file] ?? 99;
   const fm = [
     '---',
     `title: "${title}"`,
     `editUrl: "https://github.com/product-definition-as-code/spec/edit/main/spec/${file}"`,
-    `sidebar:`,
-    `  order: ${order}`,
-    ...(file === 'index.md' ? ['  label: "Overview"'] : []),
     '---',
     '',
   ].join('\n');

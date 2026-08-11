@@ -33,7 +33,34 @@ export default defineConfig({
         { label: 'Manifesto', slug: 'manifesto' },
         { label: 'Diagrams', slug: 'diagrams' },
         { label: 'Known limits', slug: 'known-limits' },
-        { label: 'Specification', items: [{ autogenerate: { directory: 'spec' } }] },
+        {
+          // Mirrors the spec index's grouping (kernel, reference profile, reference
+          // workflow). Explicit on purpose: a chapter renamed upstream breaks the
+          // build loudly instead of silently reordering the nav.
+          label: 'Specification',
+          items: [
+            { label: 'Overview', slug: 'spec' },
+            'spec/terminology',
+            {
+              label: 'The kernel',
+              items: [
+                'spec/identifiers',
+                'spec/relationships',
+                'spec/citation-contract',
+                'spec/validation',
+              ],
+            },
+            {
+              label: 'The reference profile',
+              items: ['spec/artifacts', 'spec/frontmatter-reference'],
+            },
+            {
+              label: 'The reference workflow',
+              items: ['spec/product-changes'],
+            },
+            'spec/conformance',
+          ],
+        },
         {
           label: 'Governance',
           link: 'https://github.com/product-definition-as-code/spec/blob/main/GOVERNANCE.md',
