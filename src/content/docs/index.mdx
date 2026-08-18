@@ -62,13 +62,13 @@ The spec still says 30 days while the rule says 14, and now that gap is visible 
 - `tampered` - an embedded copy of the text no longer matches the original.
 - `unresolved` - the cited artifact or anchor cannot be found.
 
-**4. Run it yourself.** The demo above is real: `npm install -g @prodshape/cli`, four files in a scratch directory, no git required.
+**4. Run it yourself.** The demo above is real against the supported published baseline, `@prodshape/cli@0.9.0`: four files in a scratch directory, no git required.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
 
 ```bash
-npm install -g @prodshape/cli
+npm install -g @prodshape/cli@0.9.0
 mkdir -p pdac-demo/docs/product/model/business-rules pdac-demo/openspec
 cd pdac-demo
 
@@ -104,7 +104,11 @@ prodshape cite --id BR-REFUND-001 \
 prodshape citations verify
 # current  BR-REFUND-001  openspec/checkout-flow.citations.yaml:1
 
-# now narrow the refund window: edit the rule, 30 days to 14
+node --input-type=module -e "
+  import { readFileSync, writeFileSync } from 'node:fs';
+  const path = 'docs/product/model/business-rules/br-refund-001.md';
+  writeFileSync(path, readFileSync(path, 'utf8').replace('30 days', '14 days'));
+"
 prodshape citations verify
 # stale    BR-REFUND-001  openspec/checkout-flow.citations.yaml:1
 ```
@@ -148,7 +152,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
   <Card title="The reference implementation" icon="github">
     ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It
     implements the citation contract and passes the published conformance tests:
-    `npm install -g @prodshape/cli`.
+    `npm install -g @prodshape/cli@0.9.0`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">
