@@ -3,27 +3,31 @@ title: Product Definition as Code
 description: Product Definition as Code (PDaC) for software delivery. An open methodology to model your product as a versioned, validated graph upstream of Spec-Driven Development.
 template: splash
 hero:
-  tagline: Your product, defined like code. An open methodology for the upstream layer of the AI-SDLC.
+  title: A citation that notices when the product rule behind it changed
+  tagline: A spec cites the rule by ID and content digest, so one command flags the citation as stale the moment the rule's text changes. That is Product Definition as Code, an open methodology for the upstream layer of the AI-SDLC.
   image:
     file: ../../assets/pdac.png
     alt: The PDaC product graph
   actions:
-    - text: Read the manifesto
-      link: /manifesto/
-      icon: right-arrow
-    - text: See it in 30 seconds
-      link: '#see-it-in-30-seconds-a-citation-catches-drift-on-its-own'
-      variant: minimal
+    - text: Run it in 30 seconds
+      link: '#run-it-in-30-seconds'
       icon: rocket
     - text: Read the specification
       link: /spec/
-      variant: minimal
+      variant: secondary
       icon: open-book
+    - text: Read the manifesto
+      link: /manifesto/
+      variant: minimal
+      icon: pen
+    - text: What this does not do yet
+      link: /known-limits/
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## See it in 30 seconds: a citation catches drift on its own
+## Run it in 30 seconds
 
 A specification cites a product rule by its ID and a content digest. Someone edits the rule. The next time `citations verify` runs, it marks the citation `stale`. No one had to remember to check.
 
