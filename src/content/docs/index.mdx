@@ -3,8 +3,8 @@ title: Product Definition as Code
 description: Product Definition as Code (PDaC) for software delivery. An open methodology to model your product as a versioned, validated graph upstream of Spec-Driven Development.
 template: splash
 hero:
-  title: A citation that notices when the product rule behind it changed
-  tagline: A spec cites the rule by ID and content digest, so one command flags the citation as stale the moment the rule's text changes. That is Product Definition as Code, an open methodology for the upstream layer of the AI-SDLC.
+  title: Define the product once. Let every spec cite it.
+  tagline: LLM-written specs restate your product on every increment, slightly differently each time — and paraphrase is drift. With PDaC, specs cite each rule by ID and content digest instead of restating it, so one command flags every stale reference the moment the rule changes. That is Product Definition as Code, an open methodology for the upstream layer of the AI-SDLC.
   image:
     file: ../../assets/pdac.png
     alt: The PDaC product graph
@@ -29,53 +29,94 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## Run it in 30 seconds
 
-A specification cites a product rule by its ID and a content digest. Someone edits the rule. The next time `citations verify` runs, it marks the citation `stale`. No one had to remember to check.
+Run this on any repository that has been doing Spec-Driven Development for a few weeks:
 
-**1. The spec cites the rule.** It records what it cited and the digest of that text at the time.
-
-```yaml
-# openspec/checkout-flow.citations.yaml - the spec's citation ledger
-- id: BR-REFUND-001
-  # the digest of the rule's content when the spec cited it
-  digest: sha256:b5c5806732cb3e3f32a6b7da97fd3e712a1bb733b4bb50e2840874ae64713228
+```console
+$ grep -rn -i "refund" openspec/specs
+billing/spec.md:4:  Refunds are issued for purchases made in the last 30 days.
+checkout/spec.md:4: Customers can request a refund within 30 days of delivery.
+support/spec.md:4:  If the order is less than a month old, offer a refund.
 ```
 
-`citations verify` reports `current`. The spec and the rule agree.
+Same rule, three specs, three wordings — and two meanings: 30 days from *purchase* is not 30 days from *delivery*. Nobody decided that fork. A coding agent paraphrased it into existence, and no human caught it, because specs are words only agents read. PDaC applies the oldest rule in engineering: don't repeat yourself.
 
-**2. The rule changes.** A product owner narrows the refund window.
+**1. Define the rule once.** One small versioned file with an ID.
 
-```diff
-# br-refund-001.md - the canonical product rule
-- Refunds are accepted within 30 days of delivery.
-+ Refunds are accepted within 14 days of delivery.
+```markdown
+---
+id: BR-REFUND-001
+type: business-rule
+title: Refund window
+status: active
+---
+
+## Rule
+
+Refunds are accepted within 30 days of delivery.
 ```
 
-**3. The same command now flags the drift.** The rule's digest no longer matches the one the spec recorded.
+**2. Every spec cites it instead of restating it.** `prodshape cite` emits the reference, carrying a content digest of the rule at the moment it was cited:
+
+```markdown
+## Returns
+Refunds follow BR-REFUND-001. {pdac:cite id="BR-REFUND-001" digest="sha256:b5c58067…"}
+```
+
+There is nothing left to fork: the rule has one home, and the specs get shorter.
+
+**3. The rule changes through your normal review flow.** One command flags every citing spec — file and line, no grep:
 
 ```console
 $ prodshape citations verify
-stale	BR-REFUND-001	openspec/checkout-flow.citations.yaml:1
-warning PRODUCT061 openspec/checkout-flow.citations.yaml [BR-REFUND-001]: Citation of 'BR-REFUND-001' is stale: canonical content changed since the citation was recorded
-1 citation(s): 0 current, 1 stale, 0 tampered, 0 unresolved
+stale  BR-REFUND-001  openspec/specs/billing/spec.md:4
+stale  BR-REFUND-001  openspec/specs/checkout/spec.md:4
+stale  BR-REFUND-001  openspec/specs/support/spec.md:4
+warning PRODUCT061 openspec/specs/billing/spec.md [BR-REFUND-001]: Citation of 'BR-REFUND-001' is stale: canonical content changed since the citation was recorded
+3 citation(s): 0 current, 3 stale, 0 tampered, 0 unresolved
 ```
 
-The spec still says 30 days while the rule says 14, and now that gap is visible instead of silent. PDaC does not rewrite the spec for you: a human reviews it and updates the citation. `citations verify` reports one of four states for every citation:
+Put that command in CI and stale product knowledge stops being invisible. PDaC does not rewrite the specs for you: a human reviews each flagged reference and updates the citation. `citations verify` reports one of four states for every citation:
 
 - `current` - the cited text is unchanged.
 - `stale` - the cited text changed since the citation was recorded.
 - `tampered` - an embedded copy of the text no longer matches the original.
 - `unresolved` - the cited artifact or anchor cannot be found.
 
-**4. Run it yourself.** The demo above is real against the supported published baseline, `@prodshape/cli@0.9.0`: four files in a scratch directory, no git required.
+**4. Run it yourself.** The demo above is real, verified against `@prodshape/cli@0.12.0`: the whole script — the fork, the fix, the catch — is at [pdac.dev/demo.sh](/demo.sh). A handful of files in a scratch directory, no `init`, no git required.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
 
 ```bash
-npm install -g @prodshape/cli@0.9.0
-mkdir -p pdac-demo/docs/product/model/business-rules pdac-demo/openspec
-cd pdac-demo
+npm install -g @prodshape/cli@0.12.0
 
+mkdir refund-fork-demo && cd refund-fork-demo
+mkdir -p docs/product/model/business-rules openspec/specs/checkout openspec/specs/billing openspec/specs/support
+
+# ACT 1: the same rule, restated by agents in three specs, three wordings
+cat > openspec/specs/checkout/spec.md <<'EOF'
+# Checkout
+
+## Returns
+Customers can request a refund within 30 days of delivery.
+EOF
+cat > openspec/specs/billing/spec.md <<'EOF'
+# Billing
+
+## Credits
+Refunds are issued for purchases made in the last 30 days.
+EOF
+cat > openspec/specs/support/spec.md <<'EOF'
+# Support playbook
+
+## Refunds
+If the order is less than a month old, offer a refund.
+EOF
+
+grep -rn -i "refund" openspec/specs
+# purchase vs delivery vs "a month" — nobody decided that fork
+
+# ACT 2: define once, cite everywhere
 cat > docs/product/model/business-rules/br-refund-001.md <<'EOF'
 ---
 id: BR-REFUND-001
@@ -101,23 +142,43 @@ A delivery on March 1 may be refunded through March 31.
 None.
 EOF
 
-prodshape cite --id BR-REFUND-001 \
-  --file docs/product/model/business-rules/br-refund-001.md \
-  --form sidecar-ledger > openspec/checkout-flow.citations.yaml
+CITE=$(prodshape cite --id BR-REFUND-001 \
+  --file docs/product/model/business-rules/br-refund-001.md --form inline)
+
+cat > openspec/specs/checkout/spec.md <<EOF
+# Checkout
+
+## Returns
+Refunds follow BR-REFUND-001. $CITE
+EOF
+cat > openspec/specs/billing/spec.md <<EOF
+# Billing
+
+## Credits
+Refund eligibility is BR-REFUND-001. $CITE
+EOF
+cat > openspec/specs/support/spec.md <<EOF
+# Support playbook
+
+## Refunds
+Apply BR-REFUND-001 as written. $CITE
+EOF
 
 prodshape citations verify
-# current  BR-REFUND-001  openspec/checkout-flow.citations.yaml:1
+# current x3 — every spec agrees with the rule
 
+# ACT 3: the rule evolves through your normal flow
 node --input-type=module -e "
   import { readFileSync, writeFileSync } from 'node:fs';
-  const path = 'docs/product/model/business-rules/br-refund-001.md';
-  writeFileSync(path, readFileSync(path, 'utf8').replace('30 days', '14 days'));
+  const p = 'docs/product/model/business-rules/br-refund-001.md';
+  writeFileSync(p, readFileSync(p,'utf8').replace('30 days','14 days'));
 "
+
 prodshape citations verify
-# stale    BR-REFUND-001  openspec/checkout-flow.citations.yaml:1
+# stale x3 — every citing spec, file:line. No grep.
 ```
 
-On Windows, run it in Git Bash or PowerShell 7; in Windows PowerShell 5 the `>` redirect writes an encoding the CLI cannot read, so paste the two lines `cite` prints into the ledger file instead.
+On Windows, run it in Git Bash or WSL; the heredocs above are POSIX-shell constructs.
 
 </details>
 
@@ -156,7 +217,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
   <Card title="The reference implementation" icon="github">
     ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It
     implements the citation contract and passes the published conformance tests:
-    `npm install -g @prodshape/cli@0.9.0`.
+    `npm install -g @prodshape/cli@0.12.0`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">
