@@ -82,13 +82,13 @@ Put that command in CI and stale product knowledge stops being invisible. PDaC d
 - `tampered` - an embedded copy of the text no longer matches the original.
 - `unresolved` - the cited artifact or anchor cannot be found.
 
-**4. Run it yourself.** The demo above is real, verified against `@prodshape/cli@0.12.0`: the whole script — the fork, the fix, the catch — is at [pdac.dev/demo.sh](/demo.sh). A handful of files in a scratch directory, no `init`, no git required.
+**4. Run it yourself.** The demo above is real, verified against `@prodshape/cli@%PRODSHAPE_VERSION%`: the whole script — the fork, the fix, the catch — is at [pdac.dev/demo.sh](/demo.sh). A handful of files in a scratch directory, no `init`, no git required.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
 
 ```bash
-npm install -g @prodshape/cli@0.12.0
+npm install -g @prodshape/cli@%PRODSHAPE_VERSION%
 
 mkdir refund-fork-demo && cd refund-fork-demo
 mkdir -p docs/product/model/business-rules openspec/specs/checkout openspec/specs/billing openspec/specs/support
@@ -217,7 +217,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
   <Card title="The reference implementation" icon="github">
     ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It
     implements the citation contract and passes the published conformance tests:
-    `npm install -g @prodshape/cli@0.12.0`.
+    `npm install -g @prodshape/cli@latest`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">

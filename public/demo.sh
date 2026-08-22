@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Define once, cite everywhere — 30-second demo (verified against @prodshape/cli@0.12.0)
+# Define once, cite everywhere — 30-second demo (verified against @prodshape/cli@%PRODSHAPE_VERSION%)
 set -eu
 
-npm install -g @prodshape/cli@0.12.0
+npm install -g @prodshape/cli@%PRODSHAPE_VERSION%
 
 mkdir refund-fork-demo && cd refund-fork-demo
 mkdir -p docs/product/model/business-rules openspec/specs/checkout openspec/specs/billing openspec/specs/support

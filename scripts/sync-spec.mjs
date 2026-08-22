@@ -4,6 +4,8 @@
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkVersionGuard, collectGuardedFiles } from './check-version-guard.mjs';
+import { resolveVersion } from './resolve-version.mjs';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const specRepo = process.argv[2] ?? join(root, '..', 'spec');
@@ -97,3 +99,23 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
 }
 
 console.log(`Synced spec content from ${specRepo}`);
+
+// CLI version. Authored content carries a %PRODSHAPE_VERSION% placeholder
+// instead of a hand-pinned version; resolve it and substitute here so
+// index.mdx and demo.sh always show the same, current version.
+{
+  const guardOffenders = checkVersionGuard(collectGuardedFiles(root));
+  if (guardOffenders.length) {
+    console.error('Hard-coded @prodshape/cli version found (use %PRODSHAPE_VERSION% or @latest instead):');
+    for (const offender of guardOffenders) console.error(`  ${offender}`);
+    process.exit(1);
+  }
+
+  const version = await resolveVersion();
+  const indexMdx = join(root, 'src', 'content', 'docs', 'index.mdx');
+  const demoSh = join(root, 'public', 'demo.sh');
+  for (const file of [indexMdx, demoSh]) {
+    writeFileSync(file, readFileSync(file, 'utf8').replaceAll('%PRODSHAPE_VERSION%', version));
+  }
+  console.log(`Resolved @prodshape/cli version: ${version}`);
+}

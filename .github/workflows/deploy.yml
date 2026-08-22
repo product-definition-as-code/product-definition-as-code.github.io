@@ -4,9 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # The spec repo can trigger a rebuild by sending a repository_dispatch event.
+  # The spec repo and the productshape release workflow can each trigger a
+  # rebuild by sending a repository_dispatch event.
   repository_dispatch:
-    types: [spec-updated]
+    types: [spec-updated, prodshape-released]
 
 permissions:
   contents: read
@@ -36,6 +37,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node scripts/sync-spec.mjs .spec-src
+        env:
+          # Set on a prodshape-released dispatch; empty otherwise, in which
+          # case the script falls back to the npm registry's latest tag.
+          PRODSHAPE_VERSION: ${{ github.event.client_payload.version }}
       - run: npx astro build
       - uses: actions/upload-pages-artifact@v5
         with:
