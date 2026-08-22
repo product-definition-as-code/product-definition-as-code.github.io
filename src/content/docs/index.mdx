@@ -1,5 +1,5 @@
 ---
-title: Product Definition as Code
+title: Define the product once
 description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.
 template: splash
 hero:
@@ -11,25 +11,26 @@ hero:
     file: ../../assets/pdac.png
     alt: The PDaC product graph
   actions:
-    - text: Run it in 30 seconds
-      link: '#run-it-in-30-seconds'
+    - text: Watch the drift (30 seconds)
+      link: '#watch-the-drift'
       icon: rocket
-    - text: Read the specification
-      link: /spec/
+    - text: Adopt one real rule
+      link: https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md
       variant: secondary
-      icon: open-book
-    - text: Read the manifesto
-      link: /manifesto/
-      variant: minimal
-      icon: pen
-    - text: What this does not do yet
-      link: /known-limits/
-      variant: minimal
+      icon: right-arrow
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Run it in 30 seconds
+## Watch the drift
+
+Three specs restate one refund rule. The rule is defined once, cited by stable ID and content digest, then changed — and `prodshape citations verify` flags every recorded citation, file and line.
+
+![Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line.](/pdac-demo.gif)
+
+The recording is real output, not an animation: its end card names the exact CLI version it captured, and the same story is runnable below.
+
+## Run it yourself (3 minutes)
 
 Run this on any repository that has been doing Spec-Driven Development for a few weeks:
 
@@ -66,7 +67,7 @@ Refunds follow BR-REFUND-001. {pdac:cite id="BR-REFUND-001" digest="sha256:b5c58
 
 There is nothing left to fork: the rule has one home, and the specs get shorter.
 
-**3. The rule changes through your normal review flow.** One command flags every citing spec — file and line, no grep:
+**3. The rule changes — in this sandbox, by editing the file directly.** A governed repository moves the accepted definition only through a Product Change; this demo skips that on purpose to trigger drift quickly, and the catch works the same either way. One command flags every citing spec — file and line, no grep:
 
 ```console
 $ prodshape citations verify
@@ -84,15 +85,17 @@ Put that command in CI and stale product knowledge stops being invisible. PDaC d
 - `tampered` - an embedded copy of the text no longer matches the original.
 - `unresolved` - the cited artifact or anchor cannot be found.
 
-**4. Run it yourself.** The demo above is real, verified against `@prodshape/cli@%PRODSHAPE_VERSION%`: the whole script — the fork, the fix, the catch — is at [pdac.dev/demo.sh](/demo.sh). A handful of files in a scratch directory, no `init`, no git required.
+**4. The whole script.** Verified against `@prodshape/cli@%PRODSHAPE_VERSION%` and served at [pdac.dev/demo.sh](/demo.sh): the fork, the fix, the catch. It is a **non-governed sandbox** — it runs in a temporary directory via `npx`, no global install, no git, and it is re-runnable as many times as you like.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
 
 ```bash
-npm install -g @prodshape/cli@%PRODSHAPE_VERSION%
+cd "$(mktemp -d)"
+npm init -y >/dev/null 2>&1
+npm install --save-dev --save-exact @prodshape/cli@%PRODSHAPE_VERSION%
+prodshape() { npx --no-install prodshape "$@"; }
 
-mkdir refund-fork-demo && cd refund-fork-demo
 mkdir -p docs/product/model/business-rules openspec/specs/checkout openspec/specs/billing openspec/specs/support
 
 # ACT 1: the same rule, restated by agents in three specs, three wordings
@@ -169,7 +172,7 @@ EOF
 prodshape citations verify
 # current x3 — every spec agrees with the rule
 
-# ACT 3: the rule evolves through your normal flow
+# ACT 3: the rule changes (sandbox shortcut: a direct edit; a governed repository uses a Product Change)
 node --input-type=module -e "
   import { readFileSync, writeFileSync } from 'node:fs';
   const p = 'docs/product/model/business-rules/br-refund-001.md';

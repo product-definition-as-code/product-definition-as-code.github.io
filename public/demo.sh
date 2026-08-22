@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# Define once, cite everywhere — 30-second demo (verified against @prodshape/cli@%PRODSHAPE_VERSION%)
+# Define once, cite everywhere — the refund-fork demo (verified against @prodshape/cli@%PRODSHAPE_VERSION%)
 set -eu
 
-npm install -g @prodshape/cli@%PRODSHAPE_VERSION%
+# Non-governed sandbox: runs in a throwaway temp directory, installs locally,
+# re-runnable as often as you like. No global install, no git.
+cd "$(mktemp -d)"
+npm init -y >/dev/null 2>&1
+npm install --save-dev --save-exact @prodshape/cli@%PRODSHAPE_VERSION%
+prodshape() { npx --no-install prodshape "$@"; }
 
-mkdir refund-fork-demo && cd refund-fork-demo
 mkdir -p docs/product/model/business-rules openspec/specs/checkout openspec/specs/billing openspec/specs/support
 
 # ── ACT 1: what an SDD repo looks like after a few weeks ─────────────
@@ -87,7 +91,7 @@ prodshape citations verify
 # current  BR-REFUND-001  openspec/specs/checkout/spec.md:4
 # current  BR-REFUND-001  openspec/specs/support/spec.md:4
 
-# ── ACT 3: the rule evolves through your normal flow ─────────────────
+# ── ACT 3: the rule changes (sandbox shortcut: a direct edit; a governed repository uses a Product Change) ─────────────────
 node --input-type=module -e "
   import { readFileSync, writeFileSync } from 'node:fs';
   const p = 'docs/product/model/business-rules/br-refund-001.md';
