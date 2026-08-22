@@ -1,6 +1,6 @@
 ---
 title: Product Definition as Code
-description: Product requirements in versioned Markdown that delivery documents cite by stable ID and digest. When cited text changes, tools detect documentation drift in the recorded citations.
+description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.
 template: splash
 hero:
   title: Define the product once. Let every spec cite it.
@@ -190,8 +190,11 @@ The full rules are in the [Citation Contract](/spec/citation-contract/). The res
 
 ## What PDaC is
 
-{/* Canonical PDaC definition paragraph — verbatim from the spec repository's
-    README (canonical-pdac-definition markers). Do not paraphrase or edit here. */}
+{/* Canonical PDaC definition, one-line and paragraph — verbatim from the spec
+    repository's README (canonical-pdac-definition markers). Do not paraphrase
+    or edit here. */}
+
+Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.
 
 The definition lives as small, related Markdown files — actors, journeys, use cases, business rules, domain terms, requirements — compiled into a validated product graph that humans and AI agents read alike. It changes only through an explicit Product Change, reviewed and accepted by a human. Consumer documents (SDD specs, tasks, agent prompts) cite the exact product text they rely on by stable ID and content digest, and when cited text changes, tools flag every recorded citation for review: documentation drift is detected instead of silent. Deterministic tools check structure and references, never truth; people decide what is true and what should change.
 
@@ -205,7 +208,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
 
 ## Where this stands today
 
-The specification is a v0.1 draft under public RFC, weeks old and labeled accordingly, extracted from one working reference implementation. Independent conformance, a second implementation and external pilots are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
+The specification is a v0.1 draft under public RFC, weeks old and labeled accordingly, extracted from one working reference implementation. Conformance of a second, independent implementation, and external pilots, are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
 
 ## Go deeper
 
@@ -224,9 +227,9 @@ The specification is a v0.1 draft under public RFC, weeks old and labeled accord
     v0.1, an early draft under request for comments. [Start with the overview](/spec/).
   </Card>
   <Card title="The reference implementation" icon="github">
-    ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It
+    ProductShape, the reference implementation of Product Definition as Code. It
     implements the citation contract and passes the published conformance tests:
-    `npm install -g @prodshape/cli@latest`.
+    `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">

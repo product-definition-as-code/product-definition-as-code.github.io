@@ -12,7 +12,7 @@ export default defineConfig({
     starlight({
       title: 'Product Definition as Code',
       description:
-        'Product requirements in versioned Markdown that delivery documents cite by stable ID and digest. When cited text changes, tools detect documentation drift in the recorded citations.',
+        'Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.',
       logo: { src: './src/assets/pdac.png', alt: 'PDaC' },
       favicon: '/favicon.png',
       social: [
