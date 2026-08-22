@@ -1,10 +1,12 @@
 ---
 title: Product Definition as Code
-description: Product Definition as Code (PDaC) for software delivery. An open methodology to model your product as a versioned, validated graph upstream of Spec-Driven Development.
+description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.
 template: splash
 hero:
   title: Define the product once. Let every spec cite it.
-  tagline: LLM-written specs restate your product on every increment, slightly differently each time — and paraphrase is drift. With PDaC, specs cite each rule by ID and content digest instead of restating it, so one command flags every stale reference the moment the rule changes. That is Product Definition as Code, an open methodology for the upstream layer of the AI-SDLC.
+  # The first sentence is the canonical PDaC one-line definition — verbatim from
+  # the spec repository's README (canonical-pdac-definition markers). Do not paraphrase.
+  tagline: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. Each citation carries a stable identifier and a content digest of the exact text it relies on; when that text changes, one command flags every recorded citation for a person to review.
   image:
     file: ../../assets/pdac.png
     alt: The PDaC product graph
@@ -186,19 +188,29 @@ Adopting for real, on a repository that already runs OpenSpec, is the [15 minute
 
 The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
 
-## The bottleneck is moving left
+## What PDaC is
 
-AI-assisted engineering has made implementation fast. As implementation cost falls, ambiguity and decision quality become the larger share of delivery risk: the hard part is knowing, precisely and verifiably, what the product is. An agent that writes code in minutes amplifies whatever understanding it is given, including none.
+{/* Canonical PDaC definition, one-line and paragraph — verbatim from the spec
+    repository's README (canonical-pdac-definition markers). Do not paraphrase
+    or edit here. */}
 
-PDaC models product knowledge as a versioned, validated graph of small, related Markdown artifacts: actors, journeys, use cases, business rules, domain language and requirements. Humans and AI agents consume the same canonical model, and every implementation increment traces back to the product knowledge it serves.
+Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.
+
+The definition lives as small, related Markdown files — actors, journeys, use cases, business rules, domain terms, requirements — compiled into a validated product graph that humans and AI agents read alike. It changes only through an explicit Product Change, reviewed and accepted by a human. Consumer documents (SDD specs, tasks, agent prompts) cite the exact product text they rely on by stable ID and content digest, and when cited text changes, tools flag every recorded citation for review: documentation drift is detected instead of silent. Deterministic tools check structure and references, never truth; people decide what is true and what should change.
 
 ![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
 
 _PDaC-0, the one-minute map. [Eight more diagrams](/diagrams/) cover the boundary, the model, change, citation and verification._
 
-Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. And the citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog. Give a frontier model verifiable citations to canonical product text instead of a ticket and you stop paying the re-derivation tax on every invocation; the ambiguity that remains becomes reviewable instead of invisible.
+## Where PDaC stops
 
-**Where this stands today:** the specification is a v0.1 draft under public RFC, weeks old and labeled accordingly, extracted from one working reference implementation. Independent conformance, a second implementation and external pilots are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
+Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. The citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog.
+
+## Where this stands today
+
+The specification is a v0.1 draft under public RFC, weeks old and labeled accordingly, extracted from one working reference implementation. Conformance of a second, independent implementation, and external pilots, are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
+
+## Go deeper
 
 <CardGrid stagger>
   <Card title="Nine diagrams" icon="seti:image">
@@ -215,9 +227,9 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
     v0.1, an early draft under request for comments. [Start with the overview](/spec/).
   </Card>
   <Card title="The reference implementation" icon="github">
-    ProductShape is to PDaC what OpenSpec is to Spec-Driven Development. It
+    ProductShape, the reference implementation of Product Definition as Code. It
     implements the citation contract and passes the published conformance tests:
-    `npm install -g @prodshape/cli@latest`.
+    `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">
