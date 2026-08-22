@@ -12,7 +12,7 @@ export default defineConfig({
     starlight({
       title: 'Product Definition as Code',
       description:
-        'PDaC is an open methodology to model your product as a versioned, validated graph upstream of Spec-Driven Development.',
+        'Product requirements in versioned Markdown that delivery documents cite by stable ID and digest. When cited text changes, tools detect documentation drift in the recorded citations.',
       logo: { src: './src/assets/pdac.png', alt: 'PDaC' },
       favicon: '/favicon.png',
       social: [
