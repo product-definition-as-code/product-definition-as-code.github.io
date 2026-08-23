@@ -56,6 +56,16 @@ export default defineConfig({
         { label: 'Diagrams', slug: 'diagrams' },
         { label: 'Known limits', slug: 'known-limits' },
         {
+          label: 'Articles',
+          items: [
+            { label: 'Overview', slug: 'articles' },
+            {
+              label: 'Your software specification is not your product definition',
+              slug: 'articles/your-software-specification-is-not-your-product-definition',
+            },
+          ],
+        },
+        {
           // Mirrors the spec index's grouping (kernel, reference profile, reference
           // workflow). Explicit on purpose: a chapter renamed upstream breaks the
           // build loudly instead of silently reordering the nav.
