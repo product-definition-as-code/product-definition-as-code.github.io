@@ -15,6 +15,28 @@ export default defineConfig({
         'Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.',
       logo: { src: './src/assets/pdac.png', alt: 'PDaC' },
       favicon: '/favicon.png',
+      head: [
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image', content: 'https://pdac.dev/og.png' },
+        },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:card', content: 'summary_large_image' },
+        },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og.png' },
+        },
+        {
+          tag: 'script',
+          attrs: {
+            'data-goatcounter': 'https://pdac-dev.goatcounter.com/count',
+            async: true,
+            src: '//gc.zgo.at/count.js',
+          },
+        },
+      ],
       social: [
         {
           icon: 'github',

@@ -15,7 +15,7 @@ hero:
       link: '#watch-the-drift'
       icon: rocket
     - text: Adopt one real rule
-      link: https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md
+      link: https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=hero-adopt-rule
       variant: secondary
       icon: right-arrow
 ---
@@ -29,6 +29,10 @@ Three specs restate one refund rule. The rule is defined once, cited by stable I
 ![Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line.](/pdac-demo.gif)
 
 The recording is real output, not an animation: its end card names the exact CLI version it captured, and the same story is runnable below.
+
+- **pdac-lint** is the conformance runner, versioned separately from the spec, that runs the published conformance tests against an implementation.
+- **`@prodshape/cli`**: [![npm version](https://img.shields.io/npm/v/@prodshape/cli)](https://www.npmjs.com/package/@prodshape/cli)
+- **v0.1 RFC, comment here**: the spec is open for comment on [GitHub Discussions](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment).
 
 ## Run it yourself (3 minutes)
 
@@ -187,7 +191,7 @@ On Windows, run it in Git Bash or WSL; the heredocs above are POSIX-shell constr
 
 </details>
 
-Adopting for real, on a repository that already runs OpenSpec, is the [15 minute walkthrough](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md): first rule, first citation, first caught drift, through a full Product Change.
+Adopting for real, on a repository that already runs OpenSpec, is the [15 minute walkthrough](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=adopt-walkthrough): first rule, first citation, first caught drift, through a full Product Change.
 
 The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
 
@@ -233,14 +237,14 @@ The specification is a v0.1 draft under public RFC, weeks old and labeled accord
     ProductShape, the reference implementation of Product Definition as Code. It
     implements the citation contract and passes the published conformance tests:
     `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
-    [ProductShape on GitHub](https://github.com/juangcarmona/productshape).
+    [ProductShape on GitHub](https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape).
   </Card>
   <Card title="Build an implementation" icon="puzzle">
     The spec is implementation-independent by design and wants more than one.
-    [Conformance and listing criteria](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md).
+    [Conformance and listing criteria](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=build-implementation).
   </Card>
 </CardGrid>
 
 ## Where it comes from
 
-PDaC was introduced in [Product Definition as Code for the AI-SDLC](https://jgcarmona.com/en/product-definition-as-code/) (July 2026) and extracted into an open specification.
+PDaC was introduced in [Product Definition as Code for the AI-SDLC](https://jgcarmona.com/en/product-definition-as-code/?utm_source=pdac.dev&utm_medium=site&utm_campaign=origin-blog-post) (July 2026) and extracted into an open specification.
