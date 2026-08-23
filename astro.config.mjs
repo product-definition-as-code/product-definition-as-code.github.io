@@ -68,6 +68,10 @@ export default defineConfig({
               label: 'Where Product Definition as Code comes from',
               slug: 'articles/what-product-definition-as-code-puts-together',
             },
+            {
+              label: 'The layer above Spec Kit',
+              slug: 'articles/the-layer-above-spec-kit',
+            },
           ],
         },
         {
