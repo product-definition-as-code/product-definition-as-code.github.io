@@ -102,6 +102,12 @@ export default defineConfig({
           link: 'https://github.com/juangcarmona/productshape',
         },
       ],
+      components: {
+        // Starlight ships no header navigation and the splash homepage has no
+        // sidebar, so the header is overridden to add one. The override still
+        // renders the stock SiteTitle, Search, SocialIcons and ThemeSelect.
+        Header: './src/components/Header.astro',
+      },
       customCss: ['./src/styles/custom.css'],
     }),
   ],

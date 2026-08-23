@@ -1,0 +1,136 @@
+---
+// Override of Starlight 0.41's Header. The only change to the markup is the
+// added <HeaderNav />; every other slot is still the virtual component, so
+// SiteTitle (logo, alt text and the link home), Search, SocialIcons,
+// ThemeSelect and LanguageSelect keep their stock behaviour.
+//
+// Header was chosen over SiteTitle because the nav needs its own row at mobile
+// widths, and SiteTitle renders inside `.title-wrapper`, which is `overflow:
+// clip` inside a fixed-height bar. The splash homepage has no sidebar and
+// therefore no hamburger, so the nav cannot be hidden on small screens.
+//
+// The styles below are Starlight's own, minus its @layer wrapper so they still
+// beat the layered core rules, plus the mobile block that places the nav and
+// one extra grid column on desktop. Re-check them when upgrading Starlight.
+import config from 'virtual:starlight/user-config';
+
+import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
+import Search from 'virtual:starlight/components/Search';
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import SocialIcons from 'virtual:starlight/components/SocialIcons';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+
+import HeaderNav from './HeaderNav.astro';
+
+/**
+ * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
+ */
+const shouldRenderSearch =
+	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+---
+
+<div class="header">
+	<div class="title-wrapper sl-flex">
+		<SiteTitle />
+	</div>
+	<HeaderNav />
+	<div class="sl-flex print:hidden search-wrapper">
+		{shouldRenderSearch && <Search />}
+	</div>
+	<div class="sl-hidden md:sl-flex print:hidden right-group">
+		<div class="sl-flex social-icons">
+			<SocialIcons />
+		</div>
+		<ThemeSelect />
+		<LanguageSelect />
+	</div>
+</div>
+
+<style>
+	.header {
+		display: flex;
+		gap: var(--sl-nav-gap);
+		justify-content: space-between;
+		align-items: center;
+		height: 100%;
+	}
+
+	.title-wrapper {
+		/* Prevent long titles overflowing and covering the search and menu buttons on narrow viewports. */
+		overflow: clip;
+		/* Avoid clipping focus ring around link inside title wrapper. */
+		padding: 0.25rem;
+		margin: -0.25rem;
+		min-width: 0;
+	}
+
+	.right-group,
+	.social-icons {
+		gap: 1rem;
+		align-items: center;
+	}
+	.social-icons::after {
+		content: '';
+		height: 2rem;
+		border-inline-end: 1px solid var(--sl-color-gray-5);
+	}
+
+	/* Below the sidebar breakpoint the bar becomes two rows: title and search on
+	   the first, the nav on its own full-width row. An explicit grid rather than
+	   flex-wrap, so the long site title clips as it always did instead of
+	   pushing the search box onto a line of its own. --sl-nav-height and
+	   --sl-nav-pad-y are adjusted to match in src/styles/custom.css. */
+	@media (max-width: 49.999rem) {
+		.header {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-rows: auto auto;
+			row-gap: 0.25rem;
+			align-items: center;
+		}
+		.title-wrapper {
+			grid-area: 1 / 1;
+		}
+		.search-wrapper {
+			grid-area: 1 / 2;
+			justify-self: end;
+		}
+		.header :global(.pdac-header-nav) {
+			grid-area: 2 / 1 / 2 / -1;
+			min-width: 0;
+		}
+	}
+
+	@media (min-width: 50rem) {
+		:global(:root[data-has-sidebar]) {
+			--__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+		}
+		:global(:root:not([data-has-toc])) {
+			--__toc-width: 0rem;
+		}
+		.header {
+			--__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
+			--__main-column-fr: calc(
+				(
+						100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
+							(2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
+							var(--sl-content-width)
+					) / 2
+			);
+			display: grid;
+			grid-template-columns:
+        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+				minmax(
+					calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
+					auto
+				)
+				/* 2 (nav): use the space the links need. */
+				auto
+				/* 3 (search box): all free space that is available. */
+				1fr
+				/* 4 (right items): use the space that these need. */
+				auto;
+			align-content: center;
+		}
+	}
+</style>
