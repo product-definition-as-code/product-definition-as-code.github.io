@@ -31,6 +31,7 @@
   --pdac-br: #e2b93b;
   --pdac-term: #f0883e;
   --pdac-req: #f07a76;
+  --pdac-sb: #5eead4;
   --pdac-chg: var(--pdac-ice);
 }
 
@@ -49,6 +50,7 @@
   --pdac-br: #b7791f;
   --pdac-term: #c05621;
   --pdac-req: #c53030;
+  --pdac-sb: #0f766e;
   --pdac-chg: var(--pdac-blueprint-navy);
 }
 
@@ -187,4 +189,5 @@ header.header .pdac-header-nav a:focus-visible {
 .pdac-br   { --pdac-fam: var(--pdac-br); }
 .pdac-term { --pdac-fam: var(--pdac-term); }
 .pdac-req  { --pdac-fam: var(--pdac-req); }
+.pdac-sb   { --pdac-fam: var(--pdac-sb); }
 .pdac-chg  { --pdac-fam: var(--pdac-chg); }
