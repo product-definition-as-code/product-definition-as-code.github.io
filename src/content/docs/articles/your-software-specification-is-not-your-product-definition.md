@@ -61,7 +61,7 @@ It gives a team a place to record what the product means, how that meaning relat
 
 It does not own the backlog, the sprint, the implementation plan, the code, the deployment environment or the final truth of production. Those belong to the people and tools responsible for delivery and operation.
 
-Product Definition as Code is the methodology. [ProductShape](https://github.com/juangcarmona/productshape) is the reference implementation. [`pdac-lint`](https://github.com/product-definition-as-code/pdac-lint) is an independent validator. The [PDaC specification](/spec/) defines the protocol and reference profile.
+Product Definition as Code is the methodology. [ProductShape](https://github.com/juangcarmona/productshape) is the reference implementation. [`pdac-conformance`](https://github.com/product-definition-as-code/pdac-conformance) is the neutral conformance runner. The [PDaC specification](/spec/) defines the protocol and reference profile.
 
 ## A change becomes visible
 

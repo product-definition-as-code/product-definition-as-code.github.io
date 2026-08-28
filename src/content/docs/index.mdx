@@ -30,9 +30,9 @@ Three specs restate one refund rule. The rule is defined once, cited by stable I
 
 The recording is real output, not an animation: its end card names the exact CLI version it captured, and the same story is runnable below.
 
-- **pdac-lint** is the conformance runner, versioned separately from the spec, that runs the published conformance tests against an implementation.
+- **pdac-conformance** is the neutral conformance runner, versioned separately from the spec, that runs the published conformance tests against an implementation.
 - **`@prodshape/cli`**: [![npm version](https://img.shields.io/npm/v/@prodshape/cli)](https://www.npmjs.com/package/@prodshape/cli)
-- **v0.1 RFC, comment here**: the spec is open for comment on [GitHub Discussions](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment).
+- **v0.2.0 request for comments**: the released draft is open for comment on [GitHub Discussions](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment).
 
 ## Run it yourself (3 minutes)
 
@@ -215,7 +215,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
 
 ## Where this stands today
 
-The specification is a v0.1 draft under public RFC, weeks old and labeled accordingly, extracted from one working reference implementation. Conformance of a second, independent implementation, and external pilots, are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
+The specification is v0.2.0, released for public comment on 2026-08-28. It is an early draft extracted from one working reference implementation. Conformance of a second, independent implementation, and external pilots, are the next proof points, and they are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about.
 
 ## Go deeper
 
@@ -231,11 +231,11 @@ The specification is a v0.1 draft under public RFC, weeks old and labeled accord
   </Card>
   <Card title="The specification" icon="open-book">
     Nine normative chapters, RFC 2119 language, stable diagnostic codes. Currently
-    v0.1, an early draft under request for comments. [Start with the overview](/spec/).
+    v0.2.0, an early draft released for public comment. [Start with the overview](/spec/).
   </Card>
   <Card title="The reference implementation" icon="github">
     ProductShape, the reference implementation of Product Definition as Code. It
-    implements the citation contract and passes the published conformance tests:
+    implements the citation contract and currently targets the v0.1 profile:
     `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
     [ProductShape on GitHub](https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape).
   </Card>
