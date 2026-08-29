@@ -64,6 +64,10 @@ export default defineConfig({
               label: 'Your software specification is not your product definition',
               slug: 'articles/your-software-specification-is-not-your-product-definition',
             },
+            {
+              label: 'Where Product Definition as Code comes from',
+              slug: 'articles/what-product-definition-as-code-puts-together',
+            },
           ],
         },
         {
