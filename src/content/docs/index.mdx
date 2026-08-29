@@ -224,30 +224,37 @@ The specification is still an early draft extracted from one working reference i
 ## Go deeper
 
 <CardGrid stagger>
-  <Card title="Nine diagrams" icon="seti:image">
-    What PDaC protects, what a product definition contains, how it changes, and
-    where it stops. One question per diagram.
-    [See all nine](/diagrams/).
-  </Card>
-  <Card title="The manifesto" icon="pen">
-    Four values, ten principles, the position in full. Signed by pull request.
-    [Read and sign it](/manifesto/).
-  </Card>
-  <Card title="The specification" icon="open-book">
-    Nine normative chapters, RFC 2119 language, stable diagnostic codes. Currently
-    v0.2.0, an early draft released for public comment. [Start with the overview](/spec/).
-  </Card>
-  <Card title="The reference implementation" icon="github">
-    ProductShape, the reference implementation of Product Definition as Code. It
-    implements the citation contract and its published releases currently target
-    the v0.1 rules with the `v1alpha1` file format. [v0.2 alignment is in progress](https://github.com/juangcarmona/productshape/issues/174):
-    `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
-    [ProductShape on GitHub](https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape).
-  </Card>
-  <Card title="Build an implementation" icon="puzzle">
-    The spec is implementation-independent by design and wants more than one.
-    [Conformance and listing criteria](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=build-implementation).
-  </Card>
+  <a className="pdac-link-card" href="/diagrams/">
+    <Card title="Nine diagrams" icon="seti:image">
+      What PDaC protects, what a product definition contains, how it changes, and
+      where it stops. One question per diagram.
+    </Card>
+  </a>
+  <a className="pdac-link-card" href="/manifesto/">
+    <Card title="The manifesto" icon="pen">
+      Four values, ten principles, the position in full. Signed by pull request.
+    </Card>
+  </a>
+  <a className="pdac-link-card" href="/spec/">
+    <Card title="The specification" icon="open-book">
+      Nine normative chapters, RFC 2119 language, stable diagnostic codes. Currently
+      v0.2.0, an early draft released for public comment.
+    </Card>
+  </a>
+  <a className="pdac-link-card" href="https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape">
+    <Card title="The reference implementation" icon="github">
+      ProductShape, the reference implementation of Product Definition as Code. It
+      implements the citation contract and its published releases currently target
+      the v0.1 rules with the `v1alpha1` file format. v0.2 alignment is in progress:
+      `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
+    </Card>
+  </a>
+  <a className="pdac-link-card" href="https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=build-implementation">
+    <Card title="Build an implementation" icon="puzzle">
+      The spec is implementation-independent by design and wants more than one.
+      Read the conformance and listing criteria.
+    </Card>
+  </a>
 </CardGrid>
 
 ## Where it comes from
