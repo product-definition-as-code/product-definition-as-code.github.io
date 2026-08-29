@@ -8,10 +8,16 @@ methodology about explicit, inspectable intent should apply the same standard to
 
 ## Maturity
 
-There is one implementation, ProductShape, and the specification was extracted from it. Until
-an independent implementation passes the versioned conformance tests, conformance is
-self-conformance: useful regression evidence, not independent validation. There is one listed
-adopter. Governance is founder-led while the work is experimental. The full picture is in the
+There is one implementation, ProductShape, and the specification was extracted from it. The
+v0.2.0 conformance tests contain 44 published cases, but ProductShape has not yet passed that
+version. Its [last recorded pass](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md)
+targets the v0.1 rules, and [v0.2 alignment](https://github.com/juangcarmona/productshape/issues/174)
+is in progress. The unchanged `v1alpha1` file format means existing product definitions do
+not need a migration, but it does not mean the implementation supports every v0.2 rule.
+
+Until an independent implementation passes the versioned conformance tests, implementation
+evidence is useful regression evidence, not independent validation. There is one listed adopter.
+Governance is founder-led while the work is experimental. The full picture is in the
 [maturity matrix](https://github.com/product-definition-as-code/spec/blob/main/MATURITY.md).
 
 ## What the tooling cannot enforce
