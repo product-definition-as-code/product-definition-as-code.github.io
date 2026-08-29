@@ -135,6 +135,10 @@ In v0.2.0, citations resolve within one repository. Cross-repository citation re
 
 The [v0.2.0 specification](/spec/) groups the sources into three layers. The kernel combines stable identity, typed relationships, traceability, content fingerprints and deterministic validation. The reference profile combines product, domain and requirements modelling. The reference workflow combines configuration management, semantic change records, Git review and human acceptance.
 
+![The PDaC reference workflow starts from an accepted baseline, records semantic intent in a Product Change, validates an overlay, requires human approval, applies the candidate on a working branch, sends it through pull-request review and accepts the new baseline only when a human merges it.](/article-assets/pdac-reference-workflow.png)
+
+*Apply materialises an approved candidate on a working branch. Only the human-reviewed merge creates a new accepted baseline.*
+
 Its main design choice is the authority boundary. Accepted product intent is upstream. Delivery cites it. Evidence returns as a proposal rather than rewriting it. That is a composition of prior art, not a claim to have invented the underlying practices.
 
 PDaC does not discover the right product, prove implementation correctness or guarantee outcomes. It adds maintenance work, so it should earn that cost.
