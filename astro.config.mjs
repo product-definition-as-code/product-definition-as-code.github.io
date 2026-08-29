@@ -81,6 +81,7 @@ export default defineConfig({
                 'spec/relationships',
                 'spec/citation-contract',
                 'spec/validation',
+                'spec/configuration',
               ],
             },
             {

@@ -9,11 +9,11 @@ methodology about explicit, inspectable intent should apply the same standard to
 ## Maturity
 
 There is one implementation, ProductShape, and the specification was extracted from it. The
-v0.2.0 conformance tests contain 44 published cases, but ProductShape has not yet passed that
-version. Its [last recorded pass](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md)
-targets the v0.1 rules, and [v0.2 alignment](https://github.com/juangcarmona/productshape/issues/174)
-is in progress. The unchanged `v1alpha1` file format means existing product definitions do
-not need a migration, but it does not mean the implementation supports every v0.2 rule.
+current ProductShape release implements PDaC v0.2.0. Its
+[pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml)
+passes all 44 published cases and verifies all 12 pinned digests. This is strong regression
+evidence from the reference implementation, but the published tests are not yet a complete
+executable form of every normative rule.
 
 Until an independent implementation passes the versioned conformance tests, implementation
 evidence is useful regression evidence, not independent validation. There is one listed adopter.

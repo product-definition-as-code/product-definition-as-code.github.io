@@ -217,7 +217,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
 
 ## Where this stands today
 
-The specification is v0.2.0, released for public comment on 2026-08-28. Published ProductShape releases still target the v0.1 rules. The file format remains the same (`v1alpha1`), so existing product definitions do not need a migration. New v0.2 features, including Structured Behaviour, are optional and can be adopted through Product Changes. [ProductShape's v0.2 alignment work](https://github.com/juangcarmona/productshape/issues/174) is in progress, and the [implementation record](https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md) states what has actually passed the conformance tests.
+The specification is v0.2.0, released for public comment on 2026-08-28. The current ProductShape release implements it. Its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests. The file format remains `v1alpha1`, so existing product definitions do not need a migration. New v0.2 features, including Structured Behaviour, are optional and can be adopted through Product Changes.
 
 The specification is still an early draft extracted from one working reference implementation. A second, independent implementation and external pilots are the next proof points. They are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about. The full list of specification changes is in the [v0.2.0 release notes](https://github.com/product-definition-as-code/spec/releases/tag/v0.2.0).
 
@@ -244,8 +244,7 @@ The specification is still an early draft extracted from one working reference i
   <a className="pdac-link-card" href="https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape">
     <Card title="The reference implementation" icon="github">
       ProductShape, the reference implementation of Product Definition as Code. It
-      implements the citation contract and its published releases currently target
-      the v0.1 rules with the `v1alpha1` file format. v0.2 alignment is in progress:
+      implements PDaC v0.2.0 with the `v1alpha1` file format:
       `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
     </Card>
   </a>

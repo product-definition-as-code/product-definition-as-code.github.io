@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Define once, cite everywhere — the refund-fork demo (verified against @prodshape/cli@%PRODSHAPE_VERSION%)
+# Define once, cite everywhere: the refund-fork demo (verified against @prodshape/cli@%PRODSHAPE_VERSION%)
 set -eu
 
 # Non-governed sandbox: runs in a throwaway temp directory, installs locally,
