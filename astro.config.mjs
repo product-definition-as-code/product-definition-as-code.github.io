@@ -52,6 +52,7 @@ export default defineConfig({
           'https://github.com/product-definition-as-code/product-definition-as-code.github.io/edit/main/',
       },
       sidebar: [
+        { label: 'Adoption', slug: 'adoption' },
         { label: 'Manifesto', slug: 'manifesto' },
         { label: 'Diagrams', slug: 'diagrams' },
         { label: 'Known limits', slug: 'known-limits' },

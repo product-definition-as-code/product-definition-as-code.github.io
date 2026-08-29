@@ -13,20 +13,20 @@ hero:
     file: ../../assets/pdac-mark.svg
     alt: The PDaC node and link mark
   actions:
-    - text: Watch the drift (30 seconds)
-      link: '#watch-the-drift'
-      icon: rocket
-    - text: Adopt one real rule
-      link: https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=hero-adopt-rule
-      variant: secondary
+    - text: Adopt PDaC in your SDLC
+      link: /adoption/
       icon: right-arrow
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Watch the drift
+## One rule, three acts
 
-Three specs restate one refund rule. The rule is defined once and cited by stable ID and content digest. When it changes, `prodshape citations verify` flags every recorded citation, file and line.
+The recording below tells one story from beginning to end:
+
+1. **Act 1: the rule is restated.** Three specs describe the same refund rule in three different ways. Nobody chose the differences.
+2. **Act 2: the rule is defined once.** Each spec replaces its copy with a citation carrying the rule's stable ID and content digest.
+3. **Act 3: the rule changes.** `prodshape citations verify` flags every recorded citation that now needs a person to review it.
 
 ![Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line.](/pdac-demo.gif)
 
@@ -193,7 +193,7 @@ On Windows, run it in Git Bash or WSL; the heredocs above are POSIX-shell constr
 
 </details>
 
-Adopting for real, on a repository that already runs OpenSpec, is the [15 minute walkthrough](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=adopt-walkthrough): first rule, first citation, first caught drift, through a full Product Change.
+For a real repository, choose the [PDaC adoption path](/adoption/) that matches how your team delivers software.
 
 The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
 
