@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">PDaC node and link mark</title>
+
+  <g fill="none" stroke="#9dbcf4" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <path d="M256 108 127 181 127 331 256 407 385 331 385 181Z" />
+    <path d="M256 108V407" />
+    <path d="M127 181 385 331" />
+    <path d="M385 181 127 331" />
+  </g>
+
+  <g stroke="#fff" stroke-width="6">
+    <circle cx="256" cy="108" r="42" fill="#2f8f60" />
+    <circle cx="127" cy="181" r="42" fill="#d12f2f" />
+    <circle cx="385" cy="181" r="42" fill="#2948c6" />
+    <circle cx="127" cy="331" r="42" fill="#e86f16" />
+    <circle cx="385" cy="331" r="42" fill="#6d47c8" />
+    <circle cx="256" cy="407" r="42" fill="#e2a72b" />
+  </g>
+
+  <circle cx="256" cy="256" r="50" fill="#fff" stroke="#c8dcff" stroke-width="7" />
+</svg>

@@ -131,6 +131,44 @@ mobile-starlight-toc .display-current {
   color: var(--pdac-ice) !important;
 }
 
+/* Keep the splash hero compact and give its two ideas distinct hierarchy. */
+.hero .copy {
+  gap: 0.65rem;
+}
+
+.hero .tagline {
+  max-width: 46rem;
+}
+
+.hero .hero-subheading {
+  margin: 0;
+  color: var(--sl-color-text-accent);
+  font-size: clamp(1.65rem, 3vw, 2.6rem);
+  line-height: 1.15;
+}
+
+.hero .hero-description {
+  margin: 1rem 0 0;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+.hero > img[src*='pdac-mark'] {
+  width: min(56%, 17rem);
+}
+
+@media (min-width: 50rem) {
+  .hero {
+    grid-template-columns: minmax(0, 3fr) minmax(12rem, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    padding-block: clamp(2.5rem, 6vh, 4.5rem);
+  }
+
+  .hero > img[src*='pdac-mark'] {
+    width: min(100%, 18rem);
+  }
+}
+
 /* Below Starlight's sidebar breakpoint the nav takes a second row, so the bar
    grows. Everything that positions against the header derives from
    --sl-nav-height, so raising it is enough; the logo is capped because
