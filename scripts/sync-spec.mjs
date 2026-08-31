@@ -214,7 +214,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     '',
     absolute(definition.split('\n').slice(1).join('\n').trim()),
     '',
-    'Deterministic tools check structure, never truth; people decide meaning. The specification is v0.2.0, an early draft open for public comment. One reference implementation exists (ProductShape); a second independent implementation and external pilots are release gates for v1, not assumed achievements.',
+    'The specification is v0.2.0, an early draft open for public comment. One reference implementation exists (ProductShape); a second independent implementation and external pilots are release gates for v1, not assumed achievements.',
     '',
     '## Core',
     '',
