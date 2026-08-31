@@ -19,4 +19,10 @@ The first article explains why a delivery specification is not a durable home fo
 
 This article maps each part of the methodology to the disciplines, standards, products and tools it came from.
 
-More articles will cover Product Changes, citations and a worked example of specification drift in greater depth.
+## See the boundary in practice
+
+[The layer above Spec Kit](./the-layer-above-spec-kit/)
+
+This article shows that layer built for a concrete SDD framework: four unserved Spec Kit requests, the boundary that made the literal ask a trap, and the citation mechanism that fills the gap, installable in two commands.
+
+More articles will cover Product Changes, citations in depth and a worked example of specification drift.
