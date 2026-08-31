@@ -16,11 +16,107 @@ hero:
     - text: Adopt PDaC in your SDLC
       link: /adoption/
       icon: right-arrow
+    # The paragraph above ends on the citation check, which now lives further
+    # down the page. This keeps that promise one click away.
+    - text: See the checks run
+      link: /#see-the-checks-run-3-minutes
+      icon: down-caret
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## One rule, three acts
+## One rule, three wordings
+
+Run this on any repository that has been doing Spec-Driven Development for a few weeks:
+
+```console
+$ grep -rn -i "refund" openspec/specs
+billing/spec.md:4:  Refunds are issued for purchases made in the last 30 days.
+checkout/spec.md:4: Customers can request a refund within 30 days of delivery.
+support/spec.md:4:  If the order is less than a month old, offer a refund.
+```
+
+The same rule appears in three specs with three wordings and two meanings: 30 days from *purchase* is not 30 days from *delivery*. Nobody decided that fork. A coding agent paraphrased it into existence, and no human caught it, because specs are words only agents read. PDaC applies the oldest rule in engineering: don't repeat yourself.
+
+**Define the rule once.** One small versioned file with an ID, in one agreed place:
+
+```markdown
+---
+id: BR-REFUND-001
+type: business-rule
+title: Refund window
+status: active
+---
+
+## Rule
+
+Refunds are accepted within 30 days of delivery.
+```
+
+Every spec, ticket and prompt then points at `BR-REFUND-001` instead of restating it. Nothing is left to fork: the rule has one home, and the specs get shorter. No tool is needed to get this far, and [one rule is a fair place to start](/adoption/).
+
+## Define, derive, build, verify, evolve
+
+Defining one rule is the smallest slice of a longer loop. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
+
+<CardGrid>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/">
+    <Card title="Define" icon="document">
+      Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs. Ten kinds, one shape each, so the same file means the same thing in every repository, and a tool can check that structure without judging the content.
+    </Card>
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/relationships/">
+    <Card title="Derive" icon="notes">
+      Requirements stay connected to the rules and use cases behind them, so you can standardise how work gets briefed: agents read the definition first and receive only the part that matters. Experimental practice: before an agent builds a ticket, compare the ticket with the agreed definition and the code, then turn contradictions into questions for a person. No command or skill does that reading today. Next: a packaged selection-to-briefing step.
+    </Card>
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/adoption/">
+    <Card title="Build" icon="laptop">
+      Whatever builds, builds: an SDD framework, a coding agent, or a team working from the backlog. They all read the same agreed definition instead of restating it. Delivery owns implementation decisions; the definition owns product meaning.
+    </Card>
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/#structured-behaviour-structured-behaviour-sb-">
+    <Card title="Verify" icon="approve-check-circle">
+      Structured Behaviour records given, when and then clauses as accepted product intent with its own ID and digest, so tests and specs cite the exact behaviour they verify. Next: deterministic projection into test syntax such as Gherkin, and coverage reporting.
+    </Card>
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/product-changes/">
+    <Card title="Evolve" icon="code-branch">
+      Meaning changes through one mechanism: a Product Change that states what should become true, reviewed and accepted by a person. That habit is the discipline; no tool is required to keep it. Where a document has declared what it depends on, a tool can then list every document that relied on the old wording, instead of leaving you to grep.
+    </Card>
+  </a>
+</CardGrid>
+
+## Start from the failure you need to prevent
+
+Structured product Markdown can help an agent before ProductShape is installed. The PDaC contract adds stable identity, typed relationships, explicit Product Changes and citations. ProductShape adds deterministic validation and navigation over what those files declare. These are capabilities to combine, not maturity levels, and none removes human product judgement.
+
+[Start with one product decision and one real delivery item](/adoption/).
+
+## What PDaC is
+
+{/* Canonical PDaC definition, one-line and paragraph, verbatim from the spec
+    repository's README (canonical-pdac-definition markers). Do not paraphrase
+    or edit here. */}
+
+Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.
+
+The definition lives in small, related Markdown files: actors, journeys, use cases, business rules, domain terms and requirements. Together they form a validated product graph that humans and AI agents can read alike. It changes only through an explicit Product Change, reviewed and accepted by a human. Consumer documents such as SDD specs, tasks and agent prompts cite the exact product text they rely on by stable ID and content digest. When cited text changes, tools flag every recorded citation for review, so documentation drift is detected instead of remaining silent. Deterministic tools check structure and references, never truth. People decide what is true and what should change.
+
+In practice the citation is the trust boundary between product and delivery: it records which exact product meaning a document relied on, and it makes that reliance checkable over time.
+
+![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
+
+_PDaC-0, the one-minute map. [Eight more diagrams](/diagrams/) cover the boundary, the model, change, citation and verification._
+
+## Where PDaC stops
+
+Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. The citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog.
+
+## See the checks run (3 minutes)
+
+Pointing a spec at `BR-REFUND-001` already stops the fork. Making that dependency checkable by a machine is a further step: each delivery document records the exact version of the rule it relied on, so one command can report when the rule moved underneath it. Teams tend to reach this once the definition itself has settled, rather than in week one. Here is what it looks like when they do.
 
 The recording below tells one story from beginning to end:
 
@@ -36,44 +132,14 @@ The recording is real output, not an animation: its end card names the exact CLI
 - **`@prodshape/cli`**: [![npm version](https://img.shields.io/npm/v/@prodshape/cli)](https://www.npmjs.com/package/@prodshape/cli)
 - **v0.2.0 request for comments**: the released draft is open for comment on [GitHub Discussions](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment).
 
-## Run it yourself (3 minutes)
-
-Run this on any repository that has been doing Spec-Driven Development for a few weeks:
-
-```console
-$ grep -rn -i "refund" openspec/specs
-billing/spec.md:4:  Refunds are issued for purchases made in the last 30 days.
-checkout/spec.md:4: Customers can request a refund within 30 days of delivery.
-support/spec.md:4:  If the order is less than a month old, offer a refund.
-```
-
-The same rule appears in three specs with three wordings and two meanings: 30 days from *purchase* is not 30 days from *delivery*. Nobody decided that fork. A coding agent paraphrased it into existence, and no human caught it, because specs are words only agents read. PDaC applies the oldest rule in engineering: don't repeat yourself.
-
-**1. Define the rule once.** One small versioned file with an ID.
-
-```markdown
----
-id: BR-REFUND-001
-type: business-rule
-title: Refund window
-status: active
----
-
-## Rule
-
-Refunds are accepted within 30 days of delivery.
-```
-
-**2. Every spec cites it instead of restating it.** `prodshape cite` emits the reference, carrying a content digest of the rule at the moment it was cited:
+**1. Every spec cites the rule instead of restating it.** `prodshape cite` emits the reference, carrying a content digest of the rule at the moment it was cited:
 
 ```markdown
 ## Returns
 Refunds follow BR-REFUND-001. {pdac:cite id="BR-REFUND-001" digest="sha256:b5c58067…"}
 ```
 
-There is nothing left to fork: the rule has one home, and the specs get shorter.
-
-**3. The rule changes.** In this sandbox, that means editing the file directly. A governed repository moves the accepted definition only through a Product Change. This demo skips that on purpose to trigger drift quickly, and the catch works the same either way. One command flags every citing spec by file and line. No grep needed:
+**2. The rule changes.** In this sandbox, that means editing the file directly. A governed repository moves the accepted definition only through a Product Change. This demo skips that on purpose to trigger drift quickly, and the catch works the same either way. One command flags every citing spec by file and line. No grep needed:
 
 ```console
 $ prodshape citations verify
@@ -91,7 +157,7 @@ Put that command in CI and stale product knowledge stops being invisible. PDaC d
 - `tampered` - an embedded copy of the text no longer matches the original.
 - `unresolved` - the cited artifact or anchor cannot be found.
 
-**4. The whole script.** Verified against `@prodshape/cli@%PRODSHAPE_VERSION%` and served at [pdac.dev/demo.sh](/demo.sh). It shows the fork, the fix and the catch. This is a **non-governed sandbox**. It runs in a temporary directory via `npx`, with no global install and no git. You can run it again whenever you like.
+**3. The whole script.** Verified against `@prodshape/cli@%PRODSHAPE_VERSION%` and served at [pdac.dev/demo.sh](/demo.sh). It shows the fork, the fix and the catch. This is a **non-governed sandbox**. It runs in a temporary directory via `npx`, with no global install and no git. You can run it again whenever you like.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
@@ -195,59 +261,7 @@ On Windows, run it in Git Bash or WSL; the heredocs above are POSIX-shell constr
 
 For a real repository, choose the [PDaC adoption path](/adoption/) that matches how your team delivers software.
 
-The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
-
-## Define, derive, build, verify, evolve
-
-The demo is the smallest slice of a longer loop. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
-
-<CardGrid>
-  <Card title="Define">
-    Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs, checked deterministically by `prodshape validate`.
-  </Card>
-  <Card title="Derive">
-    Requirements stay connected to the rules and use cases behind them, and `prodshape context` compiles a bounded, cited briefing for selected work. The same model grounds incoming work: before an agent builds a ticket, check it against the accepted definition and the code, and turn contradictions into questions for a person. Next: a packaged selection-to-briefing step.
-  </Card>
-  <Card title="Build">
-    OpenSpec and Spec Kit integrations install grounding instructions and verify their own documents; direct coding agents receive the same cited briefing. Delivery owns implementation decisions; the definition owns product meaning.
-  </Card>
-  <Card title="Verify">
-    Structured Behaviour records given, when and then clauses as accepted product intent with its own ID and digest, so tests and specs cite the exact behaviour they verify. Next: deterministic projection into test syntax such as Gherkin, and coverage reporting.
-  </Card>
-  <Card title="Evolve">
-    A Product Change proposes, validates and applies new meaning; `prodshape impact` walks what it touches; `citations verify` reports every consumer as current, stale, tampered or unresolved. A citation records which exact product meaning a document relied on, so review becomes a list instead of a search.
-  </Card>
-</CardGrid>
-
-## Three rungs, one contract
-
-Adoption is cumulative capability, not an installer mode. The files and IDs are identical at every rung, so nothing is re-entered to move up.
-
-- **Structure.** Maintain product intent as structured Markdown with stable IDs. ProductShape is optional. When it is used, `prodshape init` scaffolds it and `validate` checks it.
-- **Assist.** `init --ai` installs the bundled agent skills, and `context`, `inspect` and `impact` give agents bounded, cited product knowledge instead of the whole repository.
-- **Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared, ProductShape enforces their structure and existence and detects when cited product knowledge changes. `citations verify` runs in CI, with provider checks for OpenSpec and Spec Kit document populations.
-
-[Pick the path that matches your delivery workflow](/adoption/).
-
-## What PDaC is
-
-{/* Canonical PDaC definition, one-line and paragraph, verbatim from the spec
-    repository's README (canonical-pdac-definition markers). Do not paraphrase
-    or edit here. */}
-
-Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.
-
-The definition lives in small, related Markdown files: actors, journeys, use cases, business rules, domain terms and requirements. Together they form a validated product graph that humans and AI agents can read alike. It changes only through an explicit Product Change, reviewed and accepted by a human. Consumer documents such as SDD specs, tasks and agent prompts cite the exact product text they rely on by stable ID and content digest. When cited text changes, tools flag every recorded citation for review, so documentation drift is detected instead of remaining silent. Deterministic tools check structure and references, never truth. People decide what is true and what should change.
-
-In practice the citation is the trust boundary between product and delivery: it records which exact product meaning a document relied on, and it makes that reliance checkable over time.
-
-![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
-
-_PDaC-0, the one-minute map. [Eight more diagrams](/diagrams/) cover the boundary, the model, change, citation and verification._
-
-## Where PDaC stops
-
-Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. The citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog.
+The full rules are in the [Citation Contract](/spec/citation-contract/).
 
 ## Where this stands today
 

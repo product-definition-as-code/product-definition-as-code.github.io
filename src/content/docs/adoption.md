@@ -1,99 +1,145 @@
 ---
-title: Adopt PDaC in your SDLC
-description: Start with one product decision, then connect PDaC to OpenSpec, Spec Kit, or a coding agent working without an SDD framework.
+title: Adopt PDaC
+description: PDaC is a method you can fit to the way you already work. Start with one product decision, then add checks only when you need them.
 ---
 
-Start with one product decision that is currently repeated across specifications, tickets or prompts. Give it one canonical home, cite it from delivery work, and let the citation check tell you when that decision moves.
+Product Definition as Code (PDaC) is a method, not a tool. It fits whatever you already use: a backlog, an SDD framework such as OpenSpec or Spec Kit, or a coding agent on its own.
 
-PDaC does not require a particular Spec-Driven Development framework. Choose the path that matches the way your team already works.
+The idea is small. Write down what the product means, once, in small Markdown files that people and agents can both read. Then let tickets, specs and prompts point at those files instead of restating them in their own words. Everyone then works from the same wording, agents included.
 
-## The adoption loop
+You do not have to describe the whole product, and you do not have to install anything to try it. [ProductShape](https://github.com/juangcarmona/productshape) is the reference implementation, and it is optional. Add it when you want a tool to check the files for you.
 
-The delivery tool changes. The product loop does not:
+## Start with one decision
 
-1. **Define one product decision.** Start with a business rule, requirement or use case that delivery work currently copies.
-2. **Accept it through a Product Change.** A human reviews what should become true and accepts the resulting definition through merge.
-3. **Cite it from delivery work.** Specifications, plans, tasks and agent prompts point to the accepted text by stable ID and content digest.
-4. **Verify citations in CI.** When accepted text changes, the check names every recorded citation that needs review.
-5. **Return what delivery learns.** New evidence becomes a proposed Product Change. Delivery does not silently rewrite accepted product intent.
+Pick a decision people keep repeating, or keep getting slightly wrong. A business rule is usually the easiest one. Write it in a single file with an ID, in the place it will live for good, for example `docs/product/model/business-rules/br-refund-001.md`:
 
-Install the reference implementation in the repository where the Product Definition will live:
+```markdown
+---
+id: BR-REFUND-001
+type: business-rule
+title: Refund window
+status: active
+---
+
+## Rule
+
+Refunds are accepted within 30 days of delivery.
+
+## Rationale
+
+Customers need a predictable window; finance needs a bounded liability.
+
+## Examples
+
+A delivery on March 1 may be refunded through March 31.
+
+## Exceptions
+
+None.
+```
+
+Those four frontmatter fields and four sections are all a business rule needs. Links to other files are optional and can come later.
+
+Then:
+
+1. Ask whoever owns the product to read the rule and agree that it is right.
+2. Point one real ticket, spec or agent prompt at the ID and the file. Before the work starts, have the agent read the rule and the code it touches, and say where the two disagree or where a decision is missing.
+3. Let your normal process build and test the item. If the work turns up a new product decision, bring it back as a proposed change to the rule instead of quietly editing it.
+4. Stop there. Ask whether the clearer context was worth keeping the file, before you write any more of them.
+
+That much is already useful. It is not yet a full PDaC repository, and it does not need to be. The ID, the plain Markdown and the file shape are what let the same knowledge move into the full method later without anyone typing it again.
+
+## Add a capability when you hit the failure it prevents
+
+These are not levels, and there is nothing to configure. You can use structured Markdown with an agent, follow the PDaC rules without ProductShape, add checking without an SDD integration, or add citations to only the documents that live a long time.
+
+| What goes wrong | What to add | What it still does not tell you |
+| --- | --- | --- |
+| Every agent session rebuilds the same product decisions, or gets them slightly wrong | Markdown files with stable IDs, in one agreed place | Whether what you wrote is right or complete |
+| Meaning drifts because anyone can edit anything, and related decisions stop agreeing | The PDaC rules: typed links, an agreed definition, and changes proposed explicitly | Whether an agreed change was built, tested, released or deployed |
+| A link or a citation breaks and nobody notices | ProductShape's checks, navigation, impact analysis and citation verification | Whether the delivery work agrees with the definition |
+| A ticket contradicts the product or the code before anyone starts building | An agent reading the ticket, the definition and the code together | Whether the work is ready, which stays a person's call |
+
+Full PDaC is a set of rules to meet, not a level to reach. The [specification](/spec/) says what they are, and ProductShape is one tool that implements them.
+
+## Follow the PDaC rules when the definition has to be trusted
+
+Same Markdown, stronger promises:
+
+- The agreed definition lives under `docs/product/model` on your main branch. Graphs, indexes and reports are generated from it, never the other way round.
+- IDs and typed links, where each link says what kind of link it is, let a tool find and check what depends on what.
+- The first agreed version arrives as a change called `CHG-INITIAL`. After that, every change of meaning is proposed as a Product Change, checked against the current version, and agreed by a person in review.
+- A Product Change says what the product should now mean. It does not say the work was built, tested, released or deployed.
+- The definition and the delivery can move at different speeds. They can share a pull request or run apart, without either one taking over the other.
+
+You can follow these rules with plain files and any tool that implements them. If you want ProductShape to do the checking, install it once you know you want that:
 
 ```bash
 npm install --save-dev --save-exact @prodshape/cli@latest
-npx prodshape init --dry-run
-npx prodshape init --gitignore
+npx --no-install prodshape init --dry-run
+npx --no-install prodshape init --gitignore
+npx --no-install prodshape change create CHG-INITIAL
 ```
 
-The dry run shows every path before anything is written. The second command creates `docs/product/` and `.product/`. Your source code and existing delivery documents stay where they are.
-
-If the product already exists, begin with [brownfield recovery](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/brownfield.md). For a new product, use the [greenfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/greenfield.md).
-
-## Three rungs, one contract
-
-Adoption is cumulative capability, not an installer mode. Every rung works on the same files and IDs, so moving up never re-enters anything.
-
-**Structure.** Maintain product intent as structured Markdown with stable IDs. ProductShape is optional at this rung. When it is used, `npx prodshape init` scaffolds the kernel, `init --full` adds per-kind folders and authoring templates, and `prodshape validate` checks identities, relationships and structure deterministically. The result is one canonical home per decision, exactly as in the loop above.
-
-**Assist.** `npx prodshape init --ai` installs the bundled agent skills, and `prodshape context`, `inspect` and `impact` give agents bounded, cited product knowledge instead of the whole repository. A practice worth stealing at this rung: review incoming work against the accepted definition and the code before an agent builds it. Contradictions and missing decisions become questions for a person before delivery, not archaeology after it. The agent interprets; a person answers.
-
-**Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared, ProductShape enforces their structure and existence and detects when cited product knowledge changes. `citations verify` runs in CI and provider checks cover OpenSpec and Spec Kit document populations. A declared citation makes identity, existence and future content changes checkable; whether the work still agrees with the cited meaning stays a human and agent judgement.
-
-## Choose your delivery path
-
-### OpenSpec
-
-Keep OpenSpec's proposal, design, tasks, spec deltas and archive lifecycle. PDaC adds the accepted product definition above that workflow and verifiable citations inside its documents.
+`init` creates four files, not a whole folder structure. Move your first file under the new change's `proposed/` directory, list its ID under `operations.add`, then check it against what is already agreed:
 
 ```bash
-npx prodshape integration add openspec
-npx prodshape citations verify --provider openspec
+npx --no-install prodshape change validate CHG-INITIAL
 ```
 
-The integration adds PDaC guidance to `openspec/config.yaml` and records which OpenSpec documents must be cited or explicitly exempt. OpenSpec still owns implementation changes and their lifecycle. PDaC owns accepted product intent and the Product Changes that evolve it.
+A person approves the meaning. Once the change says `approved`, `prodshape change apply CHG-INITIAL` moves the file into `docs/product/model`, and merging that reviewed result is what makes it official. Apply never commits and never agrees to anything by itself. The [governed citation-first walkthrough](https://github.com/juangcarmona/productshape/blob/main/packages/cli/README.md#the-governed-citation-first-walkthrough) runs the whole loop end to end.
 
-[Follow the complete OpenSpec adoption guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md).
-
-### Spec Kit
-
-Keep Spec Kit's constitution, templates and specify, plan and tasks lifecycle. PDaC supplies cited product context for each feature and checks that current feature documents are grounded or explicitly exempt.
+With a first version in place, the tool can check and explore what the files say:
 
 ```bash
-npx prodshape integration add speckit
-npx prodshape context BR-EXAMPLE-001 FR-EXAMPLE-001
-npx prodshape citations verify --provider speckit
+npx --no-install prodshape validate
+npx --no-install prodshape inspect BR-REFUND-001
+npx --no-install prodshape impact BR-REFUND-001
 ```
 
-The context command renders the accepted product text with ready citations before a specify run. The integration adds grounding instructions to Spec Kit's templates and verifies each current `spec.md`, `plan.md` and `tasks.md`. Spec Kit still decides how a feature becomes a specification, plan and task set.
+`validate` checks the file shapes, the IDs, the links you declared, the lifecycle rules, any change in flight and the state of every citation. `inspect` and `impact` show you what is connected to what. None of it reads meaning the way a person or an agent does.
 
-[Follow the complete Spec Kit adoption guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-speckit-repository.md).
+## Add citations when a document has to survive the rule changing
 
-### Direct agent delivery
+An ID says which rule a document depends on. A citation adds a fingerprint, a content digest, of the exact words it relied on. That pays off when a spec, task, prompt or design will outlive today's conversation, and somebody later needs to know that the rule underneath it moved.
 
-A coding agent can consume PDaC without OpenSpec or Spec Kit. People may call this vibe coding. The useful version still starts from accepted product intent and keeps product decisions separate from implementation decisions.
-
-Install the integration for the agent your team uses:
+For example, produce the citation for the refund rule, then paste the result next to the sentence in `specs/refunds.md` that depends on it:
 
 ```bash
-npx prodshape integration add codex
-# or: claude
-# or: copilot
+npx --no-install prodshape cite --id BR-REFUND-001 --file docs/product/model/business-rules/br-refund-001.md
+npx --no-install prodshape citations verify specs
 ```
 
-Then use the model directly:
+Change the refund rule later and the check reports that citation as `stale`, naming the file and line someone needs to look at. It also spots a citation pointing at something that is no longer there, and a copied-in quote that no longer matches the original.
 
-1. Inspect or search the relevant product artifacts.
-2. Run `prodshape context <ID> [<ID>...]` to create a cited briefing.
-3. Give that briefing to the coding agent with the delivery request.
-4. Keep durable prompts, plans or tasks in the repository and cite the product text they depend on.
-5. Run `prodshape citations verify` in CI.
+A clean citation only proves that the target still exists and still says the same thing. It does not prove that `specs/refunds.md`, the ticket or the code agrees with the rule. An agent can judge that; a person decides what to do about it.
 
-The agent may draft product artifacts or Product Changes, but a person decides what becomes accepted product intent. A clean citation check proves that recorded references still match. It does not prove that the implementation is correct or that the model is complete.
+## Let agents read meaning, and tools check structure
 
-[Addy Osmani's Agent Skills](https://github.com/addyosmani/agent-skills) is one optional way to add planning, testing, debugging and review workflows around direct agent delivery. PDaC and an engineering skill pack solve different problems: PDaC supplies accepted product context; the skills guide how the agent plans, builds and checks software.
+Before work starts, an agent can:
 
-## What stays human
+1. Read the incoming item as written.
+2. Read the product files and the code it touches.
+3. Run `validate`, `inspect`, `impact` and `context` for evidence anyone can reproduce, when ProductShape is installed.
+4. Keep four things apart: what the product says, what the code does, what the tool reported, and what the agent is guessing.
+5. Point out contradictions and missing decisions, ask a few sharp questions, and recommend something.
 
-PDaC validates structure, relationships and citation freshness. It cannot decide whether a product claim is true, choose which feature to build, approve a Product Change or prove that delivery matches the definition. Keep those decisions visible and assign them to people.
+The person decides whether the work is ready and whether the product should change. Ready work goes into your usual backlog, SDD framework or delivery process with the product context attached. Anything new the work reveals about the product comes back as a proposed Product Change.
 
-Whichever path you choose, begin with one real rule. A small, cited definition that catches one real drift is a better adoption test than a large model nobody uses.
+This review is an experiment today, not a feature. ProductShape has no readiness command, no installed readiness skill and no check that judges meaning. The bundled `refine-product` skill improves the definition itself, not incoming work. Its commands supply the structural evidence; the agent does the reading.
+
+## Where to start, depending on what you have
+
+- **A new product.** Write one rule, use case or requirement from what you intend to build, then make it official through `CHG-INITIAL`. Add other kinds of file only when the product needs them. See the [greenfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/greenfield.md).
+- **A product that already exists.** Recover one decision from what you are allowed to use: current documents, tests, code and conversations. Record where it came from and how sure you are, and let a person confirm it before it becomes official. See the [brownfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/brownfield.md).
+- **You already use OpenSpec.** Treat your current specs as evidence, agree a product definition above them, then wire up one current document. The integration adds guidance and citation checks without taking OpenSpec over. See the [OpenSpec guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md).
+- **You already use Spec Kit.** Keep the constitution and the specify, plan and tasks lifecycle. Give one feature its product context, then check that feature's documents with the integration. See the [Spec Kit guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-speckit-repository.md).
+- **You just use a coding agent.** No integration needed. Give the agent the agreed files, or a `prodshape context <ID> [<ID>...]` briefing, keep anything long-lived in the repository and cite the product text it depends on.
+
+For the exact files an install adds, who owns them and how to update them safely, see the [existing repository guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-repository.md).
+
+## Who decides what
+
+ProductShape checks structure, links and citations. Agents read the product and the code, spot likely contradictions and ask questions. People decide what the product should be, approve changes, decide whether work is ready, and have the last word.
+
+Start with one repeated decision, one ID and one real ticket. That is a whole first step, and a fine place to stop.
