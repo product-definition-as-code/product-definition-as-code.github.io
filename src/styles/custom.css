@@ -131,7 +131,8 @@ mobile-starlight-toc .display-current {
   color: var(--pdac-ice) !important;
 }
 
-/* Keep the splash hero compact and give its two ideas distinct hierarchy. */
+/* Keep the splash hero compact and give its three ideas distinct hierarchy:
+   the three beats of the method, the problem, then what PDaC does about it. */
 .hero .copy {
   gap: 0.65rem;
 }
@@ -140,21 +141,43 @@ mobile-starlight-toc .display-current {
   max-width: 46rem;
 }
 
-.hero .hero-subheading {
-  margin: 0;
-  color: var(--sl-color-text-accent);
-  font-size: clamp(1.65rem, 3vw, 2.6rem);
-  line-height: 1.15;
+/* The headline is three lines by design, so it takes a smaller ramp than
+   Starlight's one-line default and a tight leading that holds them together
+   as one block. The third line is the longest and sets the wrap. */
+.hero h1 {
+  font-size: clamp(2.1rem, calc(1rem + 2.7vw), 3.1rem);
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
-.hero .hero-description {
-  margin: 1rem 0 0;
-  text-align: justify;
+.hero .pdac-hero-line {
+  display: block;
+}
+
+/* The last beat is the one that keeps "once" honest, so it carries the accent
+   rather than repeating the first line's weight. */
+.hero .pdac-hero-line:last-child {
+  color: var(--sl-color-text-accent);
+}
+
+.hero .hero-problem {
+  margin: 0;
+  font-size: var(--sl-text-lg);
   text-wrap: pretty;
 }
 
+/* Ragged right, not justified: the column is narrow enough that justifying
+   without hyphenation opens rivers of white space, and it is worst at phone
+   widths where the headline already takes four lines. */
+.hero .hero-description {
+  margin: 1rem 0 0;
+  text-wrap: pretty;
+}
+
+/* The three-line headline is taller than the one it replaced, so the mark
+   gives room back above it on the phone layout, where it stacks on top. */
 .hero > img[src*='pdac-mark'] {
-  width: min(56%, 17rem);
+  width: min(44%, 12rem);
 }
 
 /* Make the whole Go deeper card the link. The coloured border is visible at
@@ -265,6 +288,67 @@ mobile-starlight-toc .display-current {
 .pdac-link-card.pdac-loop-card:nth-child(5) {
   --pdac-card-glow: var(--sl-color-orange);
   --pdac-card-tint: var(--sl-color-orange-low);
+}
+
+/* --- The three beats -----------------------------------------
+   Define, build, change: the spine the headline states and the five-stage
+   loop below expands. One column on small screens so the beats read in
+   order, three side by side once there is room. The beat colours match the
+   loop cards they group: Define blue, Build green, Change orange.
+   The margin resets beat Starlight's markdown sibling spacing, which would
+   otherwise push the second and third beat down inside their grid cells. */
+.sl-markdown-content .pdac-spine {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1.75rem;
+}
+
+.pdac-spine .pdac-beat {
+  margin-top: 0;
+  border-inline-start: 3px solid var(--pdac-beat-glow);
+  border-radius: 0.25rem;
+  background: linear-gradient(to right, var(--pdac-beat-tint), transparent 70%);
+  padding: 0.7rem 1rem;
+}
+
+/* The -high variants, not the plain hues: the plain hue carries the border
+   and the tint, where it is a background, and it drops to about 1.7:1 as
+   text in one theme or the other. The -high pair stays above 7:1 in both. */
+.pdac-spine .pdac-beat-name {
+  margin: 0;
+  color: var(--pdac-beat-text);
+  font-size: var(--sl-text-xl);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.pdac-spine .pdac-beat-question {
+  margin: 0.2rem 0 0;
+  text-wrap: pretty;
+}
+
+.pdac-beat-define {
+  --pdac-beat-glow: var(--sl-color-blue);
+  --pdac-beat-tint: var(--sl-color-blue-low);
+  --pdac-beat-text: var(--sl-color-blue-high);
+}
+
+.pdac-beat-build {
+  --pdac-beat-glow: var(--sl-color-green);
+  --pdac-beat-tint: var(--sl-color-green-low);
+  --pdac-beat-text: var(--sl-color-green-high);
+}
+
+.pdac-beat-change {
+  --pdac-beat-glow: var(--sl-color-orange);
+  --pdac-beat-tint: var(--sl-color-orange-low);
+  --pdac-beat-text: var(--sl-color-orange-high);
+}
+
+@media (min-width: 50rem) {
+  .sl-markdown-content .pdac-spine {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 50rem) {

@@ -5,7 +5,7 @@ description: PDaC is a method you can fit to the way you already work. Start wit
 
 Product Definition as Code (PDaC) is a method, not a tool. It fits whatever you already use: a backlog, an SDD framework such as OpenSpec or Spec Kit, or a coding agent on its own.
 
-The idea is small. Write down what the product means, once, in small Markdown files that people and agents can both read. Then let tickets, specs and prompts point at those files instead of restating them in their own words. Everyone then works from the same wording, agents included.
+The idea is small, and it has three beats. **Define once**: write down what the product means, in small Markdown files that people and agents can both read. **Build from it**: let tickets, specs and prompts point at those files instead of restating them in their own words, so everyone works from the same wording, agents included. **Change without losing track**: when a decision moves, change it in the one place it lives, then find every document that relied on the old wording. This page gets the first beat going on a real repository, with one decision.
 
 You do not have to describe the whole product, and you do not have to install anything to try it. Every kind of file has a [copy-paste template](/templates/). [ProductShape](https://github.com/juangcarmona/productshape) is the reference implementation, and it is optional. Add it when you want a tool to check the files for you.
 
@@ -73,7 +73,7 @@ The full argument is in [The layer above Spec Kit](/articles/the-layer-above-spe
 
 ## Three doors, not three floors
 
-These are not levels, and there is nothing to configure. Enter through the door that matches the failure in front of you: **write it down** (structured Markdown with stable IDs), **agree how it changes** (the PDaC rules), or **make it checkable** (ProductShape's checks). They combine in any order.
+The three beats say what the method does. These three doors say how much of it you adopt, which is a different question. They are not levels, and there is nothing to configure. Enter through the door that matches the failure in front of you: **write it down** (structured Markdown with stable IDs), **agree how it changes** (the PDaC rules), or **make it checkable** (ProductShape's checks). They combine in any order.
 
 | What goes wrong | What to add | What it still does not tell you |
 | --- | --- | --- |
