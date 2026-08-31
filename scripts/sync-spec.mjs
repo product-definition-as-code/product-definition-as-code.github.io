@@ -120,6 +120,57 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   writeFileSync(outManifesto, fm + bodyWithSigning);
 }
 
+// Templates page. The spec repository's templates/ directory is canonical;
+// this page renders it as one copy-paste block per file. The list is explicit
+// on purpose: a template added or renamed upstream breaks the build loudly
+// instead of silently changing the page.
+{
+  const templatesDir = join(specRepo, 'templates');
+  const order = [
+    ['actor', 'Actor'],
+    ['journey', 'Journey'],
+    ['use-case', 'Use Case'],
+    ['business-rule', 'Business Rule'],
+    ['domain-term', 'Domain Term'],
+    ['bounded-context', 'Bounded Context'],
+    ['functional-requirement', 'Functional Requirement'],
+    ['quality-requirement', 'Quality Requirement'],
+    ['constraint', 'Constraint'],
+    ['structured-behaviour', 'Structured Behaviour'],
+    ['product-change', 'Product Change'],
+  ];
+  const present = readdirSync(templatesDir).filter((f) => f.endsWith('.md') && f !== 'README.md');
+  const expected = order.map(([slug]) => `${slug}.md`);
+  const missing = expected.filter((f) => !present.includes(f));
+  const extra = present.filter((f) => !expected.includes(f));
+  if (missing.length || extra.length) {
+    console.error(
+      `templates/ changed upstream: missing [${missing.join(', ')}], unlisted [${extra.join(', ')}]. Update the order list in sync-spec.mjs deliberately.`,
+    );
+    process.exit(1);
+  }
+  const sections = order.map(([slug, label]) => {
+    const content = readFileSync(join(templatesDir, `${slug}.md`), 'utf8').trimEnd();
+    return `## ${label}\n\n\`\`\`\`markdown\n${content}\n\`\`\`\`\n`;
+  });
+  const page = [
+    '---',
+    'title: Templates',
+    'description: Eleven copy-paste Markdown templates, one per PDaC artifact type plus the Product Change, machine-checked against the specification.',
+    'editUrl: "https://github.com/product-definition-as-code/spec/tree/main/templates"',
+    '---',
+    '',
+    'Copy the file for the kind you need, replace the ID, fill the sections. That is a valid PDaC artifact; no tool is needed to author one.',
+    '',
+    "The files come verbatim from the [specification repository's templates directory](https://github.com/product-definition-as-code/spec/tree/main/templates), where a check validates every one of them against the v1alpha1 schemas and the required sections of the [artifacts chapter](/spec/artifacts/) on every change. What you copy cannot have drifted from the specification. They are non-normative, like the diagrams: where a template and the specification appear to disagree, the specification wins.",
+    '',
+    'They use `EXAMPLE` IDs and one small worked domain, meeting room booking, and they reference each other, so the set also shows the relationships each type carries. Replace the IDs with your own before the first review; an ID is immutable once accepted. The comment inside each file explains its type; delete it as you fill the template in.',
+    '',
+    sections.join('\n'),
+  ].join('\n');
+  writeFileSync(join(root, 'src', 'content', 'docs', 'templates.md'), page);
+}
+
 // Diagrams. The spec repository is their canonical home; this is the published
 // copy that /diagrams/<file> and https://pdac.dev/diagrams/<file> resolve to.
 // Removed first so a diagram renamed upstream does not linger here.

@@ -7,7 +7,7 @@ Product Definition as Code (PDaC) is a method, not a tool. It fits whatever you 
 
 The idea is small. Write down what the product means, once, in small Markdown files that people and agents can both read. Then let tickets, specs and prompts point at those files instead of restating them in their own words. Everyone then works from the same wording, agents included.
 
-You do not have to describe the whole product, and you do not have to install anything to try it. [ProductShape](https://github.com/juangcarmona/productshape) is the reference implementation, and it is optional. Add it when you want a tool to check the files for you.
+You do not have to describe the whole product, and you do not have to install anything to try it. Every kind of file has a [copy-paste template](/templates/). [ProductShape](https://github.com/juangcarmona/productshape) is the reference implementation, and it is optional. Add it when you want a tool to check the files for you.
 
 ## Start with one decision
 
@@ -38,7 +38,7 @@ A delivery on March 1 may be refunded through March 31.
 None.
 ```
 
-Those four frontmatter fields and four sections are all a business rule needs. Links to other files are optional and can come later.
+Those four frontmatter fields and four sections are all a business rule needs. Links to other files are optional and can come later. The other ten kinds have the same ready shape on the [templates page](/templates/).
 
 Then:
 
@@ -49,16 +49,38 @@ Then:
 
 That much is already useful. It is not yet a full PDaC repository, and it does not need to be. The ID, the plain Markdown and the file shape are what let the same knowledge move into the full method later without anyone typing it again.
 
-## Add a capability when you hit the failure it prevents
+## Where to start, depending on what you have
 
-These are not levels, and there is nothing to configure. You can use structured Markdown with an agent, follow the PDaC rules without ProductShape, add checking without an SDD integration, or add citations to only the documents that live a long time.
+- **A new product.** Write one rule, use case or requirement from what you intend to build, starting from its [template](/templates/), then make it official through `CHG-INITIAL`. Add other kinds of file only when the product needs them. See the [greenfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/greenfield.md).
+- **A product that already exists.** Recover one decision from what you are allowed to use: current documents, tests, code and conversations. Record where it came from and how sure you are, and let a person confirm it before it becomes official. See the [brownfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/brownfield.md).
+- **You already use OpenSpec.** Treat your current specs as evidence, agree a product definition above them, then wire up one current document: cite the rule it depends on and let `citations verify` watch it. The integration adds guidance and citation checks without taking OpenSpec over. See the [OpenSpec guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md).
+- **You already use Spec Kit.** Keep the constitution and the specify, plan and tasks lifecycle. Give one feature its product context, then check that feature's documents with the integration. See the [Spec Kit guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-speckit-repository.md).
+- **You just use a coding agent.** No integration needed. Give the agent the agreed files, or a `prodshape context <ID> [<ID>...]` briefing, keep anything long-lived in the repository and cite the product text it depends on.
+
+For the exact files an install adds, who owns them and how to update them safely, see the [existing repository guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-repository.md).
+
+## PDaC next to Spec Kit and OpenSpec
+
+Complements, not competitors: an SDD framework owns one implementation increment, PDaC owns the product meaning every increment reads from.
+
+| Question | Spec Kit, OpenSpec | PDaC |
+| --- | --- | --- |
+| What does it own? | One implementation increment: spec, plan, tasks | The accepted product definition that outlives every increment |
+| Where does shared product meaning live? | In each spec's own words, or a constitution read whole | In one file per decision, cited by stable ID and content digest |
+| What happens when meaning changes? | Each document is updated by hand, or quietly drifts | One command flags every recorded citation for a person to review |
+
+The full argument is in [The layer above Spec Kit](/articles/the-layer-above-spec-kit/); the OpenSpec and Spec Kit guides above wire the checks into an existing repository.
+
+## Three doors, not three floors
+
+These are not levels, and there is nothing to configure. Enter through the door that matches the failure in front of you: **write it down** (structured Markdown with stable IDs), **agree how it changes** (the PDaC rules), or **make it checkable** (ProductShape's checks). They combine in any order.
 
 | What goes wrong | What to add | What it still does not tell you |
 | --- | --- | --- |
-| Every agent session rebuilds the same product decisions, or gets them slightly wrong | Markdown files with stable IDs, in one agreed place | Whether what you wrote is right or complete |
-| Meaning drifts because anyone can edit anything, and related decisions stop agreeing | The PDaC rules: typed links, an agreed definition, and changes proposed explicitly | Whether an agreed change was built, tested, released or deployed |
-| A link or a citation breaks and nobody notices | ProductShape's checks, navigation, impact analysis and citation verification | Whether the delivery work agrees with the definition |
-| A ticket contradicts the product or the code before anyone starts building | An agent reading the ticket, the definition and the code together | Whether the work is ready, which stays a person's call |
+| Every agent session rebuilds the same product decisions, or gets them slightly wrong | **Write it down**: Markdown files with stable IDs, in one agreed place | Whether what you wrote is right or complete |
+| Meaning drifts because anyone can edit anything, and related decisions stop agreeing | **Agree how it changes**: the PDaC rules: typed links, an agreed definition, and changes proposed explicitly | Whether an agreed change was built, tested, released or deployed |
+| A link or a citation breaks and nobody notices | **Make it checkable**: ProductShape's checks, navigation, impact analysis and citation verification | Whether the delivery work agrees with the definition |
+| A ticket contradicts the product or the code before anyone starts building | An agent reading the ticket, the definition and the code together: a practice, not a door, and an experiment today | Whether the work is ready, which stays a person's call |
 
 Full PDaC is a set of rules to meet, not a level to reach. The [specification](/spec/) says what they are, and ProductShape is one tool that implements them.
 
@@ -127,16 +149,6 @@ Before work starts, an agent can:
 The person decides whether the work is ready and whether the product should change. Ready work goes into your usual backlog, SDD framework or delivery process with the product context attached. Anything new the work reveals about the product comes back as a proposed Product Change.
 
 This review is an experiment today, not a feature. ProductShape has no readiness command, no installed readiness skill and no check that judges meaning. The bundled `refine-product` skill improves the definition itself, not incoming work. Its commands supply the structural evidence; the agent does the reading.
-
-## Where to start, depending on what you have
-
-- **A new product.** Write one rule, use case or requirement from what you intend to build, then make it official through `CHG-INITIAL`. Add other kinds of file only when the product needs them. See the [greenfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/greenfield.md).
-- **A product that already exists.** Recover one decision from what you are allowed to use: current documents, tests, code and conversations. Record where it came from and how sure you are, and let a person confirm it before it becomes official. See the [brownfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/brownfield.md).
-- **You already use OpenSpec.** Treat your current specs as evidence, agree a product definition above them, then wire up one current document. The integration adds guidance and citation checks without taking OpenSpec over. See the [OpenSpec guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-openspec-repository.md).
-- **You already use Spec Kit.** Keep the constitution and the specify, plan and tasks lifecycle. Give one feature its product context, then check that feature's documents with the integration. See the [Spec Kit guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-speckit-repository.md).
-- **You just use a coding agent.** No integration needed. Give the agent the agreed files, or a `prodshape context <ID> [<ID>...]` briefing, keep anything long-lived in the repository and cite the product text it depends on.
-
-For the exact files an install adds, who owns them and how to update them safely, see the [existing repository guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/existing-repository.md).
 
 ## Who decides what
 
