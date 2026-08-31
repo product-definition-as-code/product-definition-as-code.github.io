@@ -329,6 +329,17 @@ mobile-starlight-toc .display-current {
   color: var(--sl-color-gray-3);
 }
 
+/* --- The demo video --------------------------------------------
+   Same frames as the GIF, a tenth of its weight. Framed like the
+   diagrams so the navy terminal reads as a deliberate card. */
+.pdac-demo-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+}
+
 /* --- The manifesto values on the homepage ---------------------
    Four value pairs quoted verbatim from MANIFESTO.md. Slightly larger
    than body text so they read as a statement, not a list. */

@@ -122,7 +122,21 @@ The recording below tells one story from beginning to end:
 2. **Act 2: the rule is defined once.** Each spec replaces its copy with a citation carrying the rule's stable ID and content digest.
 3. **Act 3: the rule changes.** `prodshape citations verify` flags every recorded citation that now needs a person to review it.
 
-![Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line.](/pdac-demo.gif)
+<video
+  className="pdac-demo-video"
+  autoplay
+  muted
+  loop
+  playsinline
+  controls
+  preload="metadata"
+  poster="/pdac-demo-poster.png"
+  aria-label="Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line."
+>
+  <source src="/pdac-demo.webm" type="video/webm" />
+  <source src="/pdac-demo.mp4" type="video/mp4" />
+  <img src="/pdac-demo.gif" alt="Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line." />
+</video>
 
 The recording is real output, not an animation: its end card names the exact CLI version it captured, and the same story is runnable below.
 

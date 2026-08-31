@@ -188,9 +188,26 @@ render_frame(duration=3500, endcard=[
 
 imgs = [f[0].quantize(colors=128, dither=Image.Dither.NONE) for f in frames]
 durs = [f[1] for f in frames]
+
+import subprocess
+import sys
+from pathlib import Path
+
+OUT_GIF = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent / "public" / "pdac-demo.gif"
 imgs[0].save(
-    "/tmp/claude-0/-home-user/270f461f-ce63-5748-bf94-621491a17ed8/scratchpad/pdac-demo.gif",
+    str(OUT_GIF),
     save_all=True, append_images=imgs[1:], duration=durs, loop=0, optimize=True,
 )
 total = sum(durs) / 1000
 print(f"frames={len(frames)} size={W}x{H} duration={total:.1f}s")
+
+# Video variants for the site, derived from the GIF so they carry exactly the
+# same frames and the same end card. Stretched 1.25x on purpose: the video
+# reads a touch slower than the GIF. Requires ffmpeg.
+SLOWDOWN = "1.25"
+VF = f"setpts={SLOWDOWN}*PTS,scale=trunc(iw/2)*2:trunc(ih/2)*2"
+common = ["ffmpeg", "-y", "-loglevel", "error", "-i", str(OUT_GIF), "-vf", VF, "-fps_mode", "vfr", "-pix_fmt", "yuv420p"]
+subprocess.run([*common, "-c:v", "libvpx-vp9", "-crf", "42", "-b:v", "0", "-row-mt", "1", str(OUT_GIF.with_name("pdac-demo.webm"))], check=True)
+subprocess.run([*common, "-c:v", "libx264", "-preset", "veryslow", "-crf", "28", "-tune", "animation", "-movflags", "+faststart", str(OUT_GIF.with_name("pdac-demo.mp4"))], check=True)
+subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(OUT_GIF), "-vframes", "1", str(OUT_GIF.with_name("pdac-demo-poster.png"))], check=True)
+print("video variants written next to the GIF")
