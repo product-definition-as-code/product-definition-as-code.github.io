@@ -160,7 +160,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     'editUrl: "https://github.com/product-definition-as-code/spec/tree/main/templates"',
     '---',
     '',
-    'Copy the file for the kind you need, replace the ID, fill the sections. That is a valid PDaC artifact; no tool is needed to author one.',
+    'Copy the file for the kind you need, replace the ID, fill the sections. That is a valid PDaC artifact; no tool is needed to author one. To scaffold a repository at once, [download the ten model templates as a zip](/pdac-templates.zip): it extracts as `docs/product/model/`, every file already in its place, and the extracted set validates clean. The Product Change is not in the zip on purpose: your first change is `CHG-INITIAL`, authored for your product, not extracted from an example.',
     '',
     "The files come verbatim from the [specification repository's templates directory](https://github.com/product-definition-as-code/spec/tree/main/templates), where a check validates every one of them against the v1alpha1 schemas and the required sections of the [artifacts chapter](/spec/artifacts/) on every change. What you copy cannot have drifted from the specification. They are non-normative, like the diagrams: where a template and the specification appear to disagree, the specification wins.",
     '',
@@ -169,6 +169,98 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     sections.join('\n'),
   ].join('\n');
   writeFileSync(join(root, 'src', 'content', 'docs', 'templates.md'), page);
+}
+
+// pdac-templates.zip: the eleven templates laid out as the reference tree, so
+// one extraction scaffolds docs/product/ in a repository. Each entry's path
+// comes from the template's own "Reference layout:" line, the same line the
+// reader sees, so the zip cannot disagree with the documentation; a template
+// without one fails the build. Entries are stored uncompressed: they are small
+// Markdown files, and a dependency-free writer beats a dependency.
+{
+  const templatesDir = join(specRepo, 'templates');
+  // The Product Change template is deliberately not in the zip: extracted next
+  // to a model that already contains BR-EXAMPLE-001, an active change adding
+  // that ID would be invalid by construction, and a real first change is the
+  // reader's own CHG-INITIAL. It stays copy-paste on the page.
+  const files = readdirSync(templatesDir)
+    .filter((f) => f.endsWith('.md') && f !== 'README.md' && f !== 'product-change.md')
+    .sort();
+
+  const crcTable = [];
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    crcTable[n] = c >>> 0;
+  }
+  const crc32 = (buf) => {
+    let c = 0xffffffff;
+    for (const b of buf) c = crcTable[(c ^ b) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  };
+
+  // Fixed timestamp: the zip's bytes depend only on the templates' content.
+  const dosDate = ((2026 - 1980) << 9) | (1 << 5) | 1;
+  const dosTime = 0;
+
+  const entries = [];
+  for (const file of files) {
+    const content = readFileSync(join(templatesDir, file));
+    const m = content.toString('utf8').match(/Reference layout: (docs\/product\/\S+?\.md)/);
+    if (!m) {
+      console.error(`templates/${file}: no "Reference layout:" line; the zip has nowhere to put it.`);
+      process.exit(1);
+    }
+    entries.push({ path: m[1], content });
+  }
+  entries.sort((a, b) => a.path.localeCompare(b.path));
+
+  const chunks = [];
+  const central = [];
+  let offset = 0;
+  for (const { path, content } of entries) {
+    const name = Buffer.from(path, 'utf8');
+    const crc = crc32(content);
+    const local = Buffer.alloc(30);
+    local.writeUInt32LE(0x04034b50, 0);
+    local.writeUInt16LE(20, 4); // version needed
+    local.writeUInt16LE(0, 6); // flags
+    local.writeUInt16LE(0, 8); // method: store
+    local.writeUInt16LE(dosTime, 10);
+    local.writeUInt16LE(dosDate, 12);
+    local.writeUInt32LE(crc, 14);
+    local.writeUInt32LE(content.length, 18);
+    local.writeUInt32LE(content.length, 22);
+    local.writeUInt16LE(name.length, 26);
+    local.writeUInt16LE(0, 28);
+    chunks.push(local, name, content);
+
+    const dir = Buffer.alloc(46);
+    dir.writeUInt32LE(0x02014b50, 0);
+    dir.writeUInt16LE(20, 4); // made by
+    dir.writeUInt16LE(20, 6); // version needed
+    dir.writeUInt16LE(0, 8);
+    dir.writeUInt16LE(0, 10);
+    dir.writeUInt16LE(dosTime, 12);
+    dir.writeUInt16LE(dosDate, 14);
+    dir.writeUInt32LE(crc, 16);
+    dir.writeUInt32LE(content.length, 20);
+    dir.writeUInt32LE(content.length, 24);
+    dir.writeUInt16LE(name.length, 28);
+    // extra, comment, disk, internal attrs, external attrs: zero
+    dir.writeUInt32LE(offset, 42);
+    central.push(Buffer.concat([dir, name]));
+    offset += local.length + name.length + content.length;
+  }
+  const centralBuf = Buffer.concat(central);
+  const eocd = Buffer.alloc(22);
+  eocd.writeUInt32LE(0x06054b50, 0);
+  eocd.writeUInt16LE(entries.length, 8);
+  eocd.writeUInt16LE(entries.length, 10);
+  eocd.writeUInt32LE(centralBuf.length, 12);
+  eocd.writeUInt32LE(offset, 16);
+  writeFileSync(join(root, 'public', 'pdac-templates.zip'), Buffer.concat([...chunks, centralBuf, eocd]));
+  console.log(`pdac-templates.zip: ${entries.length} files in the reference layout`);
 }
 
 // Diagrams. The spec repository is their canonical home; this is the published
