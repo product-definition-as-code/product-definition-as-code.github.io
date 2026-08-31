@@ -17,8 +17,26 @@ export default defineConfig({
       favicon: '/favicon.png',
       head: [
         {
+          // The card is rendered by scripts/render-og.mjs and committed; a new
+          // design gets a new filename so scrapers refetch instead of serving
+          // their cached copy.
           tag: 'meta',
-          attrs: { property: 'og:image', content: 'https://pdac.dev/og.png' },
+          attrs: { property: 'og:image', content: 'https://pdac.dev/og-card.png' },
+        },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image:width', content: '1200' },
+        },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image:height', content: '630' },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image:alt',
+            content: 'Product Definition as Code: define the product once.',
+          },
         },
         {
           tag: 'meta',
@@ -26,7 +44,7 @@ export default defineConfig({
         },
         {
           tag: 'meta',
-          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og.png' },
+          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og-card.png' },
         },
         {
           tag: 'script',
