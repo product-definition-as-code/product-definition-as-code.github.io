@@ -202,31 +202,31 @@ The full rules are in the [Citation Contract](/spec/citation-contract/). The res
 The demo is the smallest slice of a longer loop. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
 
 <CardGrid>
-  <div className="pdac-loop-card">
+  <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/">
     <Card title="Define" icon="document">
-      Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs, checked deterministically by `prodshape validate`.
+      Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs. Ten kinds, one shape each, so the same file means the same thing in every repository, and a tool can check that structure without judging the content.
     </Card>
-  </div>
-  <div className="pdac-loop-card">
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/relationships/">
     <Card title="Derive" icon="notes">
-      Requirements stay connected to the rules and use cases behind them, and `prodshape context` compiles a bounded, cited briefing for selected work. Experimental practice: before an agent builds a ticket, compare it with the accepted definition and the code, then turn contradictions into questions for a person. There is no shipped readiness command or skill. Next: a packaged selection-to-briefing step.
+      Requirements stay connected to the rules and use cases behind them, so you can standardise how work gets briefed: agents read the definition first and receive only the part that matters. Experimental practice: before an agent builds a ticket, compare the ticket with the agreed definition and the code, then turn contradictions into questions for a person. No command or skill does that reading today. Next: a packaged selection-to-briefing step.
     </Card>
-  </div>
-  <div className="pdac-loop-card">
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/adoption/">
     <Card title="Build" icon="laptop">
-      OpenSpec and Spec Kit integrations install grounding instructions and verify their own documents; direct coding agents receive the same cited briefing. Delivery owns implementation decisions; the definition owns product meaning.
+      Whatever builds, builds: an SDD framework, a coding agent, or a team working from the backlog. They all read the same agreed definition instead of restating it. Delivery owns implementation decisions; the definition owns product meaning.
     </Card>
-  </div>
-  <div className="pdac-loop-card">
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/#structured-behaviour-structured-behaviour-sb-">
     <Card title="Verify" icon="approve-check-circle">
       Structured Behaviour records given, when and then clauses as accepted product intent with its own ID and digest, so tests and specs cite the exact behaviour they verify. Next: deterministic projection into test syntax such as Gherkin, and coverage reporting.
     </Card>
-  </div>
-  <div className="pdac-loop-card">
+  </a>
+  <a className="pdac-link-card pdac-loop-card" href="/spec/product-changes/">
     <Card title="Evolve" icon="code-branch">
-      A Product Change proposes, validates and applies new meaning; `prodshape impact` walks what it touches; `citations verify` reports every consumer as current, stale, tampered or unresolved. A citation records which exact product meaning a document relied on, so review becomes a list instead of a search.
+      Meaning changes through one mechanism: a Product Change that states what should become true, reviewed and accepted by a person. That habit is the discipline; no tool is required to keep it. Where a document has declared what it depends on, a tool can then list every document that relied on the old wording, instead of leaving you to grep.
     </Card>
-  </div>
+  </a>
 </CardGrid>
 
 ## Start from the failure you need to prevent

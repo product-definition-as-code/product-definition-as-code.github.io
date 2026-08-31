@@ -234,67 +234,37 @@ mobile-starlight-toc .display-current {
   }
 }
 
-/* The Define/Derive/Build/Verify/Evolve cards carry the Go deeper card's
-   coloured treatment. They are not links, so they never lift or show a
-   pointer. One hue per stage: blue defines the blueprint, purple derives the
-   projection, green builds, the Structured Behaviour teal verifies (that card
-   is about Structured Behaviour), and amber evolves, matching the dashed amber
-   feedback path drawn in PDaC-0, 1, 6 and 7. Red stays unused on purpose: no
-   stage of the loop is a failure state. As everywhere else, the colour
-   reinforces the heading and never carries the meaning alone. */
-.pdac-loop-card {
-  --pdac-loop-glow: var(--sl-color-blue);
-  display: block;
-  border-radius: 0.5rem;
+/* The five loop cards are Go deeper cards with their own hue cycle, so they
+   inherit the border, icon chip, hover lift and focus ring from the rules
+   above. Blue defines the blueprint, purple derives, green builds, the
+   Structured Behaviour teal verifies (that card is about Structured
+   Behaviour), and amber evolves, matching the dashed amber feedback path
+   drawn in PDaC-0, 1, 6 and 7. Red stays unused on purpose: no stage of the
+   loop is a failure state. As everywhere else, the colour reinforces the
+   heading and never carries the meaning alone. */
+.pdac-link-card.pdac-loop-card:nth-child(1) {
+  --pdac-card-glow: var(--sl-color-blue);
+  --pdac-card-tint: var(--sl-color-blue-low);
 }
 
-.pdac-loop-card:nth-child(2) {
-  --pdac-loop-glow: var(--sl-color-purple);
+.pdac-link-card.pdac-loop-card:nth-child(2) {
+  --pdac-card-glow: var(--sl-color-purple);
+  --pdac-card-tint: var(--sl-color-purple-low);
 }
 
-.pdac-loop-card:nth-child(3) {
-  --pdac-loop-glow: var(--sl-color-green);
+.pdac-link-card.pdac-loop-card:nth-child(3) {
+  --pdac-card-glow: var(--sl-color-green);
+  --pdac-card-tint: var(--sl-color-green-low);
 }
 
-.pdac-loop-card:nth-child(4) {
-  --pdac-loop-glow: var(--pdac-sb);
+.pdac-link-card.pdac-loop-card:nth-child(4) {
+  --pdac-card-glow: var(--pdac-sb);
+  --pdac-card-tint: color-mix(in srgb, var(--pdac-sb) 22%, transparent);
 }
 
-.pdac-loop-card:nth-child(5) {
-  --pdac-loop-glow: var(--sl-color-orange);
-}
-
-.pdac-loop-card .card {
-  --sl-card-border: var(--pdac-loop-glow);
-  --sl-card-bg: color-mix(in srgb, var(--pdac-loop-glow) 22%, transparent);
-  height: 100%;
-  border-color: color-mix(in srgb, var(--pdac-loop-glow) 45%, var(--sl-color-gray-5));
-  box-shadow: 0 0 0.8rem color-mix(in srgb, var(--pdac-loop-glow) 12%, transparent);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease;
-}
-
-@media (hover: hover) {
-  .pdac-loop-card:hover .card {
-    z-index: 1;
-    transform: translateY(-0.2rem) scale(1.015);
-    border-color: var(--pdac-loop-glow);
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--pdac-loop-glow) 65%, transparent),
-      0 0.65rem 1.6rem color-mix(in srgb, var(--pdac-loop-glow) 24%, transparent);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pdac-loop-card .card {
-    transition: none;
-  }
-
-  .pdac-loop-card:hover .card {
-    transform: none;
-  }
+.pdac-link-card.pdac-loop-card:nth-child(5) {
+  --pdac-card-glow: var(--sl-color-orange);
+  --pdac-card-tint: var(--sl-color-orange-low);
 }
 
 @media (min-width: 50rem) {
