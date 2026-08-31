@@ -1,9 +1,14 @@
 ---
 title: Where Product Definition as Code comes from
 description: The engineering disciplines, standards, products and tools behind Product Definition as Code.
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: '{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Where Product Definition as Code comes from", "author": {"@type": "Person", "name": "Juan G. Carmona", "url": "https://jgcarmona.com"}, "datePublished": "2026-08-29", "dateModified": "2026-08-29", "publisher": {"@id": "https://pdac.dev/#org"}, "mainEntityOfPage": "https://pdac.dev/articles/what-product-definition-as-code-puts-together/"}'
 ---
 
-*By Juan G. Carmona*
+*By Juan G. Carmona, 2026-08-29*
 
 LLMs are industrialising specification drift.
 

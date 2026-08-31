@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Define once, cite everywhere: the refund-fork demo (verified against @prodshape/cli@%PRODSHAPE_VERSION%)
+# Canonical home: https://pdac.dev/demo.sh; the story it tells: https://pdac.dev/
 set -eu
 
 # Non-governed sandbox: runs in a throwaway temp directory, installs locally,

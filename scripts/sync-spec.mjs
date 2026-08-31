@@ -188,6 +188,107 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   }
 }
 
+// llms.txt and llms-full.txt: the machine-reader entry points. The index file
+// follows the llms.txt convention (H1, blockquote summary, link sections); the
+// full file concatenates the manifesto, the adoption guide, the templates and
+// the specification with their canonical URLs, so an agent can read the whole
+// method in one fetch. The canonical definition comes verbatim from the spec
+// README's markers; a missing marker fails the build rather than paraphrasing.
+{
+  const readme = readFileSync(join(specRepo, 'README.md'), 'utf8');
+  const marked = readme.match(
+    /<!-- canonical-pdac-definition:start[^>]*-->\n([\s\S]*?)<!-- canonical-pdac-definition:end -->/,
+  );
+  if (!marked) {
+    console.error('README.md: canonical-pdac-definition markers not found; llms.txt would paraphrase.');
+    process.exit(1);
+  }
+  const definition = marked[1].trim();
+  const site = 'https://pdac.dev';
+  const absolute = (md) => md.replace(/\]\(\//g, `](${site}/`);
+
+  const llms = [
+    '# Product Definition as Code (PDaC)',
+    '',
+    `> ${definition.split('\n')[0]}`,
+    '',
+    absolute(definition.split('\n').slice(1).join('\n').trim()),
+    '',
+    'Deterministic tools check structure, never truth; people decide meaning. The specification is v0.2.0, an early draft open for public comment. One reference implementation exists (ProductShape); a second independent implementation and external pilots are release gates for v1, not assumed achievements.',
+    '',
+    '## Core',
+    '',
+    `- [The specification](${site}/spec/): nine normative chapters, RFC 2119 language, stable diagnostic codes`,
+    `- [Terminology](${site}/spec/terminology/): the defined terms`,
+    `- [Citation Contract](${site}/spec/citation-contract/): how delivery documents cite product text by stable ID and content digest`,
+    `- [Templates](${site}/templates/): eleven copy-paste artifact templates, machine-checked against the schemas`,
+    `- [Adoption](${site}/adoption/): start with one decision; three doors, not three floors`,
+    `- [The manifesto](${site}/manifesto/): four values, ten principles, signed by pull request`,
+    '',
+    '## Proof',
+    '',
+    `- [demo.sh](${site}/demo.sh): the three-minute demo as a runnable POSIX script; an agent can execute it in a temporary directory`,
+    `- [Known limits](${site}/known-limits/): what PDaC cannot claim yet, named before anyone has to discover it`,
+    '',
+    '## Reference',
+    '',
+    `- [Diagrams](${site}/diagrams/): nine non-normative diagrams, one question each`,
+    `- [Articles](${site}/articles/): the argument behind the method`,
+    '- [Schemas](https://github.com/product-definition-as-code/spec/tree/main/schemas/v1alpha1): JSON Schemas for every artifact type',
+    '- [ProductShape](https://github.com/juangcarmona/productshape): the reference implementation, @prodshape/cli on npm',
+    '',
+    '## Optional',
+    '',
+    `- [llms-full.txt](${site}/llms-full.txt): the manifesto, the adoption guide, the templates and the full specification in one file`,
+    '',
+  ].join('\n');
+  writeFileSync(join(root, 'public', 'llms.txt'), llms);
+
+  const parts = [
+    '# Product Definition as Code, the full text in one file',
+    '',
+    'Generated from the specification repository (https://github.com/product-definition-as-code/spec).',
+    'Each section names its canonical URL. Relative links resolve against https://pdac.dev.',
+    '',
+    definition,
+    '',
+  ];
+  const section = (title, url, body) => {
+    parts.push('---', '', `# ${title}`, '', `Canonical URL: ${url}`, '', absolute(body).trim(), '');
+  };
+
+  const manifesto = transform(readFileSync(join(specRepo, 'MANIFESTO.md'), 'utf8'), { label: 'Manifesto' });
+  section(manifesto.title, `${site}/manifesto/`, manifesto.body);
+
+  const adoption = readFileSync(join(root, 'src', 'content', 'docs', 'adoption.md'), 'utf8')
+    .replace(/^---\n[\s\S]*?\n---\n/, '');
+  section('Adopt PDaC', `${site}/adoption/`, adoption);
+
+  const templateFiles = readdirSync(join(specRepo, 'templates')).filter(
+    (f) => f.endsWith('.md') && f !== 'README.md',
+  );
+  const templateBodies = templateFiles.map(
+    (f) => `## templates/${f}\n\n\`\`\`\`markdown\n${readFileSync(join(specRepo, 'templates', f), 'utf8').trimEnd()}\n\`\`\`\``,
+  );
+  section('Artifact templates', `${site}/templates/`, templateBodies.join('\n\n'));
+
+  const chapterFiles = readdirSync(join(specRepo, 'spec'))
+    .filter((f) => f.endsWith('.md'))
+    .sort((a, b) => (a === 'index.md' ? -1 : b === 'index.md' ? 1 : a.localeCompare(b)));
+  for (const file of chapterFiles) {
+    const raw = readFileSync(join(specRepo, 'spec', file), 'utf8');
+    const { title, body } = transform(raw, { label: file });
+    const slug = file === 'index.md' ? '' : `${file.replace(/\.md$/, '')}/`;
+    section(title, `${site}/spec/${slug}`, body);
+  }
+
+  const knownLimits = readFileSync(join(root, 'src', 'content', 'docs', 'known-limits.md'), 'utf8')
+    .replace(/^---\n[\s\S]*?\n---\n/, '');
+  section('Known limits', `${site}/known-limits/`, knownLimits);
+
+  writeFileSync(join(root, 'public', 'llms-full.txt'), parts.join('\n'));
+}
+
 console.log(`Synced spec content from ${specRepo}`);
 
 // CLI version. Authored content carries a %PRODSHAPE_VERSION% placeholder
