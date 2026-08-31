@@ -71,6 +71,45 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
 {
   const raw = readFileSync(join(specRepo, 'MANIFESTO.md'), 'utf8');
   const { title, body } = transform(raw, { label: 'Manifesto' });
+
+  // Signing block: a generated view of SIGNATORIES.md, injected after the
+  // Signing section's canonical sentence so the page shows who signed and how
+  // to join them without leaving the site. The ledger stays canonical in the
+  // spec repository; do not edit names here.
+  const signatories = readFileSync(join(specRepo, 'SIGNATORIES.md'), 'utf8');
+  const rows = [...signatories.matchAll(/^\|\s*(\d+)\s*\|([^|]*)\|([^|]*)\|([^|]*)\|\s*$/gm)];
+  if (rows.length === 0) {
+    console.error('SIGNATORIES.md: no signature rows found; refusing to render an empty signing block.');
+    process.exit(1);
+  }
+  const count = rows.length;
+  const editUrl = 'https://github.com/product-definition-as-code/spec/edit/main/SIGNATORIES.md';
+  const signingBlock = [
+    '',
+    'Signing takes one pull request, no manual fork needed:',
+    '',
+    `1. <a href="${editUrl}" data-goatcounter-click="sign-edit-click">Open SIGNATORIES.md in GitHub's editor</a>; GitHub forks the repository for you.`,
+    '2. Add one line to the table: `| n | Your Name | Affiliation (optional) | link (optional) |`',
+    '3. Propose the change as a pull request titled `sign: <your name>`.',
+    '',
+    'Signing means you endorse the values and principles of the manifesto. It does not commit you, your employer, or your projects to anything else.',
+    '',
+    '### Founding signatories',
+    '',
+    `${count} so far. The list is short because the manifesto is young; signing now is what founding means.`,
+    '',
+    '| # | Name | Affiliation | Link |',
+    '| --- | --- | --- | --- |',
+    ...rows.map((r) => `| ${r[1]} |${r[2]}|${r[3]}|${r[4]}|`),
+    '',
+  ].join('\n');
+  const signingMarker = /## Signing\n\n[^\n]*\n/;
+  if (!signingMarker.test(body)) {
+    console.error('MANIFESTO.md: Signing section not found; the signing block has nowhere to land.');
+    process.exit(1);
+  }
+  const bodyWithSigning = body.replace(signingMarker, (section) => section + signingBlock);
+
   const fm = [
     '---',
     `title: "${title}"`,
@@ -78,7 +117,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     '---',
     '',
   ].join('\n');
-  writeFileSync(outManifesto, fm + body);
+  writeFileSync(outManifesto, fm + bodyWithSigning);
 }
 
 // Diagrams. The spec repository is their canonical home; this is the published
