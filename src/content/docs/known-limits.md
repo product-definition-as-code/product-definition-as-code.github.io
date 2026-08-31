@@ -1,5 +1,5 @@
 ---
-title: Known limits
+title: The known limits of Product Definition as Code
 description: What Product Definition as Code cannot claim yet, named before anyone has to discover it.
 ---
 
