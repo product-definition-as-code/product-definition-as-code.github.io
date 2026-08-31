@@ -48,7 +48,7 @@ checkout/spec.md:4: Customers can request a refund within 30 days of delivery.
 support/spec.md:4:  If the order is less than a month old, offer a refund.
 ```
 
-The same rule appears in three specs with three wordings and two meanings: 30 days from *purchase* is not 30 days from *delivery*. Nobody decided that fork. A coding agent paraphrased it into existence, and no human caught it, because specs are words only agents read. PDaC applies the oldest rule in engineering: don't repeat yourself.
+Three specs, three wordings, two meanings: 30 days from *purchase* is not 30 days from *delivery*. Nobody decided that fork. An agent paraphrased it into existence and no human caught it, because specs are words only agents read. PDaC applies the oldest rule in engineering: don't repeat yourself.
 
 **Define the rule once.** One small versioned file with an ID, in one agreed place:
 
@@ -65,11 +65,11 @@ status: active
 Refunds are accepted within 30 days of delivery.
 ```
 
-Every spec, ticket and prompt then points at `BR-REFUND-001` instead of restating it. Nothing is left to fork: the rule has one home, and the specs get shorter. No tool is needed to get this far, and [one rule is a fair place to start](/adoption/).
+Every spec, ticket and prompt then points at `BR-REFUND-001` instead of restating it. Nothing is left to fork, the specs get shorter, and no tool is needed to get this far.
 
 ## Define, build, change
 
-Defining one rule is the smallest slice of a longer loop. The method is three beats, and they are the shape the rest of this site follows:
+The method is three beats, and defining one rule is the smallest slice of the first:
 
 <div className="pdac-spine">
   <div className="pdac-beat pdac-beat-define">
@@ -86,43 +86,37 @@ Defining one rule is the smallest slice of a longer loop. The method is three be
   </div>
 </div>
 
-Define once is not define and freeze. A product that stops changing is a dead product, and the third beat is the one that keeps the first honest: change the definition in one place, then find every document that relied on the old wording. Once is about how many homes a decision has, not how many times it may be revised.
-
-The middle beat carries three stages of its own, so the loop below reads as five: define, then derive, build and verify, then evolve. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
+Once means one home for a decision, not one revision: the third beat is what keeps the first honest. The middle beat carries three stages, so the loop reads as five. Anything marked next is open backlog, not shipped product.
 
 <CardGrid>
   <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/">
     <Card title="Define" icon="document">
-      Actors, journeys, use cases, business rules, domain terms and requirements: small related Markdown files with stable IDs, one agreed shape each. The same file means the same thing in every repository, and a tool can check the shape without judging the content.
+      Actors, journeys, use cases, business rules, domain terms and requirements: small Markdown files with stable IDs and one agreed shape each. A tool can check the shape without judging the content.
     </Card>
   </a>
   <a className="pdac-link-card pdac-loop-card" href="/adoption/#let-agents-read-meaning-and-tools-check-structure">
     <Card title="Derive" icon="notes">
-      Requirements stay connected to the rules and use cases behind them, so an agent is briefed with only the part of the product that matters. Reading incoming work against the definition is an experiment today, done by an agent and a person, not a command. Next: a packaged selection-to-briefing step.
+      Requirements stay connected to the rules and use cases behind them, so an agent is briefed with only the part of the product that matters. Next: a packaged selection-to-briefing step.
     </Card>
   </a>
   <a className="pdac-link-card pdac-loop-card" href="/adoption/#where-to-start-depending-on-what-you-have">
     <Card title="Build" icon="laptop">
-      Whatever builds, builds: an SDD framework, a coding agent, or a team working from the backlog. All of them read the same agreed definition instead of restating it. Delivery owns implementation decisions; the definition owns product meaning.
+      Whatever builds, builds: an SDD framework, a coding agent, or a team working from the backlog, all reading the same definition instead of restating it. Delivery owns implementation; the definition owns meaning.
     </Card>
   </a>
   <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/#structured-behaviour-structured-behaviour-sb-">
     <Card title="Verify" icon="approve-check-circle">
-      Structured Behaviour records given, when and then clauses as accepted product intent with its own ID and digest, so tests and specs cite the exact behaviour they verify. Next: deterministic projection into test syntax such as Gherkin, and coverage reporting.
+      Structured Behaviour records given, when and then clauses as accepted intent with its own ID and digest, so tests cite the exact behaviour they verify. Next: projection into test syntax such as Gherkin, and coverage reporting.
     </Card>
   </a>
   <a className="pdac-link-card pdac-loop-card" href="/spec/product-changes/">
     <Card title="Evolve" icon="code-branch">
-      Meaning changes through one mechanism: a Product Change, proposed, reviewed and accepted by a person. A tool can then list every document that relied on the old wording, instead of leaving you to grep.
+      Meaning changes through one mechanism: a Product Change, proposed, reviewed and accepted by a person.
     </Card>
   </a>
 </CardGrid>
 
-## Three doors, not three floors
-
-The three beats say what the method does. These three doors say how much of it you adopt, which is a different question. **Write it down.** Structured product Markdown with stable IDs helps an agent before any tool is installed. **Agree how it changes.** The PDaC contract adds typed relationships and explicit Product Changes, approved by a person. **Make it checkable.** ProductShape verifies structure, links and citations deterministically. Enter through whichever door matches the failure in front of you: they combine in any order, and none removes human product judgement.
-
-[Start with one product decision and one real delivery item](/adoption/).
+You do not have to adopt all of it. Write it down, agree how it changes, make it checkable: three doors, in whichever order the failure in front of you demands. [Start with one product decision and one real delivery item](/adoption/).
 
 ## What PDaC is, and where it stops
 
@@ -134,9 +128,7 @@ Product Definition as Code keeps the agreed product definition in versioned Mark
 
 The definition lives in small, related Markdown files: actors, journeys, use cases, business rules, domain terms and requirements. Together they form a validated product graph that humans and AI agents can read alike. It changes only through an explicit Product Change, reviewed and accepted by a human. Consumer documents such as SDD specs, tasks and agent prompts cite the exact product text they rely on by stable ID and content digest. When cited text changes, tools flag every recorded citation for review, so documentation drift is detected instead of remaining silent. Deterministic tools check structure and references, never truth. People decide what is true and what should change.
 
-In practice the citation is the trust boundary between product and delivery: it records which exact product meaning a document relied on, and it makes that reliance checkable over time.
-
-And there PDaC stops. Spec-Driven Development tools own one implementation increment; PDaC owns accepted product intent, the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. The citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog.
+And there it stops. Spec-Driven Development tools own one implementation increment; PDaC owns the accepted product intent that outlives every spec. What delivery learns flows back as evidence and proposed Product Changes: one-way authority, two-way learning.
 
 ![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
 
@@ -144,13 +136,11 @@ _PDaC-0, the one-minute map. [Eight more diagrams](/diagrams/) cover the boundar
 
 ## See the checks run (3 minutes)
 
-Pointing a spec at `BR-REFUND-001` already stops the fork. Making that dependency checkable by a machine is a further step: each delivery document records the exact version of the rule it relied on, so one command can report when the rule moved underneath it. Teams tend to reach this once the definition itself has settled, rather than in week one. Here is what it looks like when they do.
+Pointing a spec at `BR-REFUND-001` stops the fork. Recording which version of the rule it relied on makes the dependency checkable, which teams tend to reach once the definition has settled. The recording tells one story:
 
-The recording below tells one story from beginning to end:
-
-1. **Act 1: the rule is restated.** Three specs describe the same refund rule in three different ways. Nobody chose the differences.
+1. **Act 1: the rule is restated.** Three specs describe the same refund rule three different ways.
 2. **Act 2: the rule is defined once.** Each spec replaces its copy with a citation carrying the rule's stable ID and content digest.
-3. **Act 3: the rule changes.** `prodshape citations verify` flags every recorded citation that now needs a person to review it.
+3. **Act 3: the rule changes.** `prodshape citations verify` flags every citation that now needs review.
 
 <video
   className="pdac-demo-video"
@@ -168,11 +158,7 @@ The recording below tells one story from beginning to end:
   <img src="/pdac-demo.gif" alt="Terminal recording. grep shows three specs paraphrasing one refund rule three different ways. The rule is defined once as BR-REFUND-001 in a small Markdown file. Each spec cites it by ID and content digest; verification reports three current citations. The rule changes from 30 to 14 days, and verification reports three stale citations with PRODUCT061 warnings naming each file and line." />
 </video>
 
-The recording is real output, not an animation: its end card names the exact CLI version it captured, and the same story is runnable below.
-
-- **pdac-conformance** is the neutral conformance runner, versioned separately from the spec, that runs the published conformance tests against an implementation.
-- **`@prodshape/cli`**: [![npm version](https://img.shields.io/npm/v/@prodshape/cli)](https://www.npmjs.com/package/@prodshape/cli)
-- **v0.2.0 request for comments**: the released draft is open for comment on [GitHub Discussions](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment).
+Real output, not an animation: the end card names the CLI version it captured. Here is the same story in three commands.
 
 **1. Every spec cites the rule instead of restating it.** `prodshape cite` emits the reference, carrying a content digest of the rule at the moment it was cited:
 
@@ -181,7 +167,7 @@ The recording is real output, not an animation: its end card names the exact CLI
 Refunds follow BR-REFUND-001. {pdac:cite id="BR-REFUND-001" digest="sha256:b5c58067…"}
 ```
 
-**2. The rule changes.** In this sandbox, that means editing the file directly. A governed repository moves the accepted definition only through a Product Change. This demo skips that on purpose to trigger drift quickly, and the catch works the same either way. One command flags every citing spec by file and line. No grep needed:
+**2. The rule changes.** A governed repository moves the accepted definition only through a Product Change; this sandbox edits the file directly to trigger drift quickly. The catch works the same either way, by file and line, with no grep:
 
 ```console
 $ prodshape citations verify
@@ -192,14 +178,9 @@ warning PRODUCT061 openspec/specs/billing/spec.md [BR-REFUND-001]: Citation of '
 3 citation(s): 0 current, 3 stale, 0 tampered, 0 unresolved
 ```
 
-Put that command in CI and stale product knowledge stops being invisible. PDaC does not rewrite the specs for you: a human reviews each flagged reference and updates the citation. `citations verify` reports one of four states for every citation:
+Put that command in CI and stale product knowledge stops being invisible. PDaC does not rewrite the specs for you: every citation reports `current`, `stale`, `tampered` or `unresolved`, and a person reviews each flag. The full rules are in the [Citation Contract](/spec/citation-contract/).
 
-- `current` - the cited text is unchanged.
-- `stale` - the cited text changed since the citation was recorded.
-- `tampered` - an embedded copy of the text no longer matches the original.
-- `unresolved` - the cited artifact or anchor cannot be found.
-
-**3. The whole script.** Verified against `@prodshape/cli@%PRODSHAPE_VERSION%` and served at [pdac.dev/demo.sh](/demo.sh). It shows the fork, the fix and the catch. This is a **non-governed sandbox**. It runs in a temporary directory via `npx`, with no global install and no git. You can run it again whenever you like.
+**3. The whole script.** Verified against `@prodshape/cli@%PRODSHAPE_VERSION%` and served at [pdac.dev/demo.sh](/demo.sh). A non-governed sandbox: it runs in a temporary directory via `npx`, with no global install and no git.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
@@ -303,8 +284,6 @@ On Windows, run it in Git Bash or WSL; the heredocs above are POSIX-shell constr
 
 For a real repository, choose the [PDaC adoption path](/adoption/) that matches how your team delivers software.
 
-The full rules are in the [Citation Contract](/spec/citation-contract/).
-
 ## What we value
 
 {/* The four value pairs are verbatim from the spec repository's MANIFESTO.md.
@@ -322,15 +301,15 @@ The full rules are in the [Citation Contract](/spec/citation-contract/).
 
 </div>
 
-Ten principles follow from these four values, and the method holds itself to its own standard: the [known limits](/known-limits/) page names what PDaC cannot claim yet, before anyone has to discover it. If the values match how you build, add your name.
+Ten principles follow from these four values. If they match how you build, add your name.
 
 <LinkButton href="/manifesto/" icon="pen" data-goatcounter-click="manifesto-cta">Read and sign the manifesto</LinkButton>
 
 ## Where this stands today
 
-The specification is v0.2.0, released for public comment on 2026-08-28. The current ProductShape release implements it. Its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests. The file format remains `v1alpha1`, so existing product definitions do not need a migration. New v0.2 features, including Structured Behaviour, are optional and can be adopted through Product Changes. Next in the open backlog: deterministic projection of Structured Behaviour into test syntax, a packaged selection-to-briefing step, and coverage reporting between requirements, behaviours and tests.
+The specification is v0.2.0, released on 2026-08-28 and [open for comment](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment). The current ProductShape release implements it: its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests, run by `pdac-conformance`, the neutral runner. The file format remains `v1alpha1`, so existing definitions need no migration, and new v0.2 features are optional.
 
-The specification is still an early draft extracted from one working reference implementation. A second, independent implementation and external pilots are the next proof points. They are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about. The full list of specification changes is in the [v0.2.0 release notes](https://github.com/product-definition-as-code/spec/releases/tag/v0.2.0).
+It is still an early draft extracted from one working implementation. A second, independent implementation and external pilots are release gates for v1, not assumed achievements, and the [known limits](/known-limits/) page names every gap we know about. Next in the open backlog: projection of Structured Behaviour into test syntax, a packaged selection-to-briefing step, and coverage reporting. Full changes in the [v0.2.0 release notes](https://github.com/product-definition-as-code/spec/releases/tag/v0.2.0).
 
 ## Go deeper
 
