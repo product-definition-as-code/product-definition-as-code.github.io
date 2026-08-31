@@ -164,7 +164,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     '',
     "The files come verbatim from the [specification repository's templates directory](https://github.com/product-definition-as-code/spec/tree/main/templates), where a check validates every one of them against the v1alpha1 schemas and the required sections of the [artifacts chapter](/spec/artifacts/) on every change. What you copy cannot have drifted from the specification. They are non-normative, like the diagrams: where a template and the specification appear to disagree, the specification wins.",
     '',
-    'They use `EXAMPLE` IDs and one small worked domain, meeting room booking, and they reference each other, so the set also shows the relationships each type carries. Replace the IDs with your own before the first review; an ID is immutable once accepted. The comment inside each file explains its type; delete it as you fill the template in.',
+    'They use `EXAMPLE` IDs and one small worked domain, meeting room booking, and they reference each other, so the set also shows the relationships each type carries. Replace the IDs with your own before the first review; an ID is immutable once accepted. The comment inside each file explains its type and names where the file lives in the reference layout (the file is always named by its lowercase ID); delete the comment as you fill the template in.',
     '',
     sections.join('\n'),
   ].join('\n');
