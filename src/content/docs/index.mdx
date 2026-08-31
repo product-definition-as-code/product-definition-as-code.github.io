@@ -206,7 +206,7 @@ The demo is the smallest slice of a longer loop. Product intent goes in once; wo
     Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs, checked deterministically by `prodshape validate`.
   </Card>
   <Card title="Derive">
-    Requirements stay connected to the rules and use cases behind them, and `prodshape context` compiles a bounded, cited briefing for selected work. The same model grounds incoming work: before an agent builds a ticket, check it against the accepted definition and the code, and turn contradictions into questions for a person. Next: a packaged selection-to-briefing step.
+    Requirements stay connected to the rules and use cases behind them, and `prodshape context` compiles a bounded, cited briefing for selected work. Experimental practice: before an agent builds a ticket, compare it with the accepted definition and the code, then turn contradictions into questions for a person. There is no shipped readiness command or skill. Next: a packaged selection-to-briefing step.
   </Card>
   <Card title="Build">
     OpenSpec and Spec Kit integrations install grounding instructions and verify their own documents; direct coding agents receive the same cited briefing. Delivery owns implementation decisions; the definition owns product meaning.
@@ -219,15 +219,11 @@ The demo is the smallest slice of a longer loop. Product intent goes in once; wo
   </Card>
 </CardGrid>
 
-## Three rungs, one contract
+## Start from the failure you need to prevent
 
-Adoption is cumulative capability, not an installer mode. The files and IDs are identical at every rung, so nothing is re-entered to move up.
+Structured product Markdown can help an agent before ProductShape is installed. The PDaC contract adds stable identity, typed relationships, explicit Product Changes and citations. ProductShape adds deterministic validation and navigation over what those files declare. These are capabilities to combine, not maturity levels, and none removes human product judgement.
 
-- **Structure.** Maintain product intent as structured Markdown with stable IDs. ProductShape is optional. When it is used, `prodshape init` scaffolds it and `validate` checks it.
-- **Assist.** `init --ai` installs the bundled agent skills, and `context`, `inspect` and `impact` give agents bounded, cited product knowledge instead of the whole repository.
-- **Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared, ProductShape enforces their structure and existence and detects when cited product knowledge changes. `citations verify` runs in CI, with provider checks for OpenSpec and Spec Kit document populations.
-
-[Pick the path that matches your delivery workflow](/adoption/).
+[Start with one product decision and one real delivery item](/adoption/).
 
 ## What PDaC is
 
