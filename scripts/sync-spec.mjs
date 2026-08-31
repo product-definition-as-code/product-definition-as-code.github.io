@@ -155,7 +155,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   });
   const page = [
     '---',
-    'title: Templates',
+    'title: PDaC artifact templates',
     'description: Eleven copy-paste Markdown templates, one per PDaC artifact type plus the Product Change, machine-checked against the specification.',
     'editUrl: "https://github.com/product-definition-as-code/spec/tree/main/templates"',
     '---',

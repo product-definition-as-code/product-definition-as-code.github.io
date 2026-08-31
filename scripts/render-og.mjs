@@ -15,8 +15,10 @@ const NAVY = '#0f2560'; // blueprint deep, the header navy
 const PAPER = '#fdfdfc';
 const ICE = '#cadcfc';
 
-// Faint blueprint grid over the navy, then the words. The mark is composited
-// on top afterwards, so the SVG leaves its corner empty.
+// Faint blueprint grid over the navy, then the words. Everything is centered
+// and kept inside the middle ~760px: chat apps (WhatsApp among them) crop wide
+// preview images towards the centre, and a centred composition survives any
+// symmetric crop. The mark is composited on top afterwards.
 const svg = `
 <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -26,19 +28,19 @@ const svg = `
   </defs>
   <rect width="${W}" height="${H}" fill="${NAVY}"/>
   <rect width="${W}" height="${H}" fill="url(#grid)"/>
-  <text x="224" y="148" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="600" fill="${ICE}">Product Definition as Code</text>
-  <text x="80" y="348" font-family="Segoe UI, Arial, sans-serif" font-size="78" font-weight="700" fill="${PAPER}">Define the product once.</text>
-  <text x="80" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="34" fill="${ICE}">Turn it into work agents can build</text>
-  <text x="80" y="472" font-family="Segoe UI, Arial, sans-serif" font-size="34" fill="${ICE}">and humans can verify.</text>
-  <text x="80" y="566" font-family="Consolas, monospace" font-size="30" fill="${ICE}" fill-opacity="0.85">pdac.dev</text>
+  <text x="600" y="286" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="${ICE}">Product Definition as Code</text>
+  <text x="600" y="376" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="700" fill="${PAPER}">Define the product once.</text>
+  <text x="600" y="440" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" fill="${ICE}">Turn it into work agents can build</text>
+  <text x="600" y="480" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" fill="${ICE}">and humans can verify.</text>
+  <text x="600" y="564" text-anchor="middle" font-family="Consolas, monospace" font-size="26" fill="${ICE}" fill-opacity="0.85">pdac.dev</text>
 </svg>`;
 
 const mark = await sharp(join(root, 'src', 'assets', 'pdac.png'))
-  .resize(120, 120)
+  .resize(140, 140)
   .toBuffer();
 
 await sharp(Buffer.from(svg))
-  .composite([{ input: mark, top: 72, left: 80 }])
+  .composite([{ input: mark, top: 64, left: (W - 140) / 2 }])
   .png()
   .toFile(join(root, 'public', 'og-card.png'));
 

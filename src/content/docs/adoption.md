@@ -1,5 +1,5 @@
 ---
-title: Adopt PDaC
+title: Adopt Product Definition as Code
 description: PDaC is a method you can fit to the way you already work. Start with one product decision, then add checks only when you need them.
 ---
 

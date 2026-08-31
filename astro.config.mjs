@@ -11,17 +11,20 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Product Definition as Code',
+      // The default description for pages without their own, the synced spec
+      // chapters included. It is also the share-preview text, so it stays the
+      // canonical one-liner: verbatim, and between 100 and 160 characters.
       description:
-        'Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.',
+        'Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.',
       logo: { src: './src/assets/pdac.png', alt: 'PDaC' },
       favicon: '/favicon.png',
       head: [
         {
-          // The card is rendered by scripts/render-og.mjs and committed; a new
-          // design gets a new filename so scrapers refetch instead of serving
-          // their cached copy.
+          // The card is rendered by scripts/render-og.mjs and committed. The
+          // v query is a cache buster: scrapers key their cache on the full
+          // URL, so bump it whenever the card's design changes.
           tag: 'meta',
-          attrs: { property: 'og:image', content: 'https://pdac.dev/og-card.png' },
+          attrs: { property: 'og:image', content: 'https://pdac.dev/og-card.png?v=2' },
         },
         {
           tag: 'meta',
@@ -44,7 +47,7 @@ export default defineConfig({
         },
         {
           tag: 'meta',
-          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og-card.png' },
+          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og-card.png?v=2' },
         },
         {
           tag: 'script',

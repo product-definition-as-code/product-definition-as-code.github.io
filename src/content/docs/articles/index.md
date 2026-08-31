@@ -1,5 +1,5 @@
 ---
-title: Articles
+title: Articles on Product Definition as Code
 description: Direct explanations of product intent, Product Definition as Code and the tools that make references checkable.
 ---
 
