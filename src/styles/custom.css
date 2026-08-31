@@ -270,6 +270,31 @@ mobile-starlight-toc .display-current {
   height: 100%;
   border-color: color-mix(in srgb, var(--pdac-loop-glow) 45%, var(--sl-color-gray-5));
   box-shadow: 0 0 0.8rem color-mix(in srgb, var(--pdac-loop-glow) 12%, transparent);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+@media (hover: hover) {
+  .pdac-loop-card:hover .card {
+    z-index: 1;
+    transform: translateY(-0.2rem) scale(1.015);
+    border-color: var(--pdac-loop-glow);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--pdac-loop-glow) 65%, transparent),
+      0 0.65rem 1.6rem color-mix(in srgb, var(--pdac-loop-glow) 24%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdac-loop-card .card {
+    transition: none;
+  }
+
+  .pdac-loop-card:hover .card {
+    transform: none;
+  }
 }
 
 @media (min-width: 50rem) {
