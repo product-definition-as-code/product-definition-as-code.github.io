@@ -223,9 +223,9 @@ The demo is the smallest slice of a longer loop. Product intent goes in once; wo
 
 Adoption is cumulative capability, not an installer mode. The files and IDs are identical at every rung, so nothing is re-entered to move up.
 
-- **Structure.** Spec-shaped Markdown with stable IDs. `prodshape init` scaffolds it; `validate` checks it. One canonical home per product decision already pays for itself.
+- **Structure.** Maintain product intent as structured Markdown with stable IDs. ProductShape is optional. When it is used, `prodshape init` scaffolds it and `validate` checks it.
 - **Assist.** `init --ai` installs the bundled agent skills, and `context`, `inspect` and `impact` give agents bounded, cited product knowledge instead of the whole repository.
-- **Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared, ProductShape enforces their structure and existence and detects when cited product knowledge changes: `citations verify` runs in CI, with provider checks for OpenSpec and Spec Kit document populations.
+- **Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared, ProductShape enforces their structure and existence and detects when cited product knowledge changes. `citations verify` runs in CI, with provider checks for OpenSpec and Spec Kit document populations.
 
 [Pick the path that matches your delivery workflow](/adoption/).
 
