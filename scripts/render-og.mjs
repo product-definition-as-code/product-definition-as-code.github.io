@@ -28,10 +28,10 @@ const svg = `
   </defs>
   <rect width="${W}" height="${H}" fill="${NAVY}"/>
   <rect width="${W}" height="${H}" fill="url(#grid)"/>
-  <text x="600" y="286" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="${ICE}">Product Definition as Code</text>
-  <text x="600" y="376" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="700" fill="${PAPER}">Define the product once.</text>
-  <text x="600" y="440" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" fill="${ICE}">Turn it into work agents can build</text>
-  <text x="600" y="480" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" fill="${ICE}">and humans can verify.</text>
+  <text x="600" y="272" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="38" font-weight="600" fill="${ICE}">Product Definition as Code</text>
+  <text x="600" y="352" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700" fill="${PAPER}">Define once.</text>
+  <text x="600" y="410" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700" fill="${PAPER}">Build from it.</text>
+  <text x="600" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700" fill="${PAPER}">Change without losing track.</text>
   <text x="600" y="564" text-anchor="middle" font-family="Consolas, monospace" font-size="26" fill="${ICE}" fill-opacity="0.85">pdac.dev</text>
 </svg>`;
 

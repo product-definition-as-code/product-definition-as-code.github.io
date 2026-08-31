@@ -1,16 +1,25 @@
 ---
-title: Define the product once
+title: Define once. Build from it. Change without losing track.
 # The description is the canonical PDaC one-line definition, verbatim, and it is
 # also the share-preview text: keep it between 100 and 160 characters.
 description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.
 template: splash
 hero:
-  title: Define the product once.
-  # The paragraph's first sentence is the canonical PDaC one-line definition, verbatim from
-  # the spec repository's README (canonical-pdac-definition markers). Do not paraphrase.
+  # Three lines, one per beat of the method. The same three beats structure the
+  # loop section below and the adoption page, so a reader meets one shape twice
+  # rather than two vocabularies once. Starlight renders the title with set:html,
+  # so the spans are real markup; src/styles/custom.css lays them out.
+  title: |
+    <span class="pdac-hero-line">Define once.</span>
+    <span class="pdac-hero-line">Build from it.</span>
+    <span class="pdac-hero-line">Change without losing track.</span>
+  # The problem comes first, in plain English. PDaC is named only after it, and
+  # the sentence that names it is the canonical PDaC one-line definition,
+  # verbatim from the spec repository's README (canonical-pdac-definition
+  # markers). Do not paraphrase it, and do not add a second definition above it.
   tagline: |
-    <h2 class="hero-subheading">Turn it into work agents can build and humans can verify.</h2>
-    <p class="hero-description">Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When the definition changes, one command flags every spec, ticket and prompt that relied on the old wording. Whether you craft code by hand, prompt an agent that writes it for you, or brief the people who do, the failure it removes is the same: one rule living in three wordings that quietly disagree.</p>
+    <p class="hero-problem">Product decisions get copied into tickets, specs, prompts and documentation. Each copy can say something slightly different, and when the product changes some of the copies get left behind.</p>
+    <p class="hero-description">Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. Those decisions get one home, and when it changes, one command flags every spec, ticket and prompt that relied on the old wording.</p>
   image:
     file: ../../assets/pdac-mark.svg
     alt: The PDaC node and link mark
@@ -58,9 +67,28 @@ Refunds are accepted within 30 days of delivery.
 
 Every spec, ticket and prompt then points at `BR-REFUND-001` instead of restating it. Nothing is left to fork: the rule has one home, and the specs get shorter. No tool is needed to get this far, and [one rule is a fair place to start](/adoption/).
 
-## Define, derive, build, verify, evolve
+## Define, build, change
 
-Defining one rule is the smallest slice of a longer loop. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
+Defining one rule is the smallest slice of a longer loop. The method is three beats, and they are the shape the rest of this site follows:
+
+<div className="pdac-spine">
+  <div className="pdac-beat pdac-beat-define">
+    <p className="pdac-beat-name">Define</p>
+    <p className="pdac-beat-question">What are we building?</p>
+  </div>
+  <div className="pdac-beat pdac-beat-build">
+    <p className="pdac-beat-name">Build</p>
+    <p className="pdac-beat-question">Turn the definition into delivery work.</p>
+  </div>
+  <div className="pdac-beat pdac-beat-change">
+    <p className="pdac-beat-name">Change</p>
+    <p className="pdac-beat-question">Evolve it, and find what the change affects.</p>
+  </div>
+</div>
+
+Define once is not define and freeze. A product that stops changing is a dead product, and the third beat is the one that keeps the first honest: change the definition in one place, then find every document that relied on the old wording. Once is about how many homes a decision has, not how many times it may be revised.
+
+The middle beat carries three stages of its own, so the loop below reads as five: define, then derive, build and verify, then evolve. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
 
 <CardGrid>
   <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/">
@@ -92,7 +120,7 @@ Defining one rule is the smallest slice of a longer loop. Product intent goes in
 
 ## Three doors, not three floors
 
-**Write it down.** Structured product Markdown with stable IDs helps an agent before any tool is installed. **Agree how it changes.** The PDaC contract adds typed relationships and explicit Product Changes, approved by a person. **Make it checkable.** ProductShape verifies structure, links and citations deterministically. Enter through whichever door matches the failure in front of you: they combine in any order, and none removes human product judgement.
+The three beats say what the method does. These three doors say how much of it you adopt, which is a different question. **Write it down.** Structured product Markdown with stable IDs helps an agent before any tool is installed. **Agree how it changes.** The PDaC contract adds typed relationships and explicit Product Changes, approved by a person. **Make it checkable.** ProductShape verifies structure, links and citations deterministically. Enter through whichever door matches the failure in front of you: they combine in any order, and none removes human product judgement.
 
 [Start with one product decision and one real delivery item](/adoption/).
 

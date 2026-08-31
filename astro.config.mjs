@@ -24,7 +24,7 @@ export default defineConfig({
           // v query is a cache buster: scrapers key their cache on the full
           // URL, so bump it whenever the card's design changes.
           tag: 'meta',
-          attrs: { property: 'og:image', content: 'https://pdac.dev/og-card.png?v=2' },
+          attrs: { property: 'og:image', content: 'https://pdac.dev/og-card.png?v=3' },
         },
         {
           tag: 'meta',
@@ -38,7 +38,8 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:image:alt',
-            content: 'Product Definition as Code: define the product once.',
+            content:
+              'Product Definition as Code. Define once. Build from it. Change without losing track.',
           },
         },
         {
@@ -47,7 +48,7 @@ export default defineConfig({
         },
         {
           tag: 'meta',
-          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og-card.png?v=2' },
+          attrs: { name: 'twitter:image', content: 'https://pdac.dev/og-card.png?v=3' },
         },
         {
           tag: 'script',
