@@ -55,7 +55,6 @@ export default defineConfig({
         { label: 'Adoption', slug: 'adoption' },
         { label: 'Manifesto', slug: 'manifesto' },
         { label: 'Diagrams', slug: 'diagrams' },
-        { label: 'Known limits', slug: 'known-limits' },
         {
           label: 'Articles',
           items: [
@@ -74,6 +73,7 @@ export default defineConfig({
             },
           ],
         },
+        { label: 'Known limits', slug: 'known-limits' },
         {
           // Mirrors the spec index's grouping (kernel, reference profile, reference
           // workflow). Explicit on purpose: a chapter renamed upstream breaks the
