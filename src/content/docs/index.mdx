@@ -1,6 +1,6 @@
 ---
 title: Define the product once
-description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. The definition becomes bounded agent context, delivery-ready requirements and testable behaviour, and citation checks report exactly which delivery documents relied on a meaning that changed.
+description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When the definition changes, one command flags every spec, ticket and prompt that relied on the old wording.
 template: splash
 hero:
   title: Define the product once.
@@ -8,7 +8,7 @@ hero:
   # the spec repository's README (canonical-pdac-definition markers). Do not paraphrase.
   tagline: |
     <h2 class="hero-subheading">Turn it into work agents can build and humans can verify.</h2>
-    <p class="hero-description">Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. The definition becomes bounded agent context, delivery-ready requirements and testable behaviour. Each citation carries a stable identifier and a content digest of the exact text it relies on; when that text changes, one command flags every recorded citation for a person to review.</p>
+    <p class="hero-description">Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When the definition changes, one command flags every spec, ticket and prompt that relied on the old wording. Whether you craft code by hand, prompt an agent that writes it for you, or brief the people who do, the failure it removes is the same: one rule living in three wordings that quietly disagree.</p>
   image:
     file: ../../assets/pdac-mark.svg
     alt: The PDaC node and link mark
@@ -16,15 +16,15 @@ hero:
     - text: Adopt PDaC in your SDLC
       link: /adoption/
       icon: right-arrow
-    # The paragraph above ends on the citation check, which now lives further
-    # down the page. This keeps that promise one click away.
-    - text: See the checks run
-      link: /#see-the-checks-run-3-minutes
-      icon: down-caret
+    # The second action serves the manifesto funnel; the demo keeps its anchor
+    # for inbound links and is reachable inside the story below.
+    - text: Read the manifesto
+      link: /manifesto/
+      icon: open-book
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
 
 ## One rule, three wordings
 
@@ -63,17 +63,17 @@ Defining one rule is the smallest slice of a longer loop. Product intent goes in
 <CardGrid>
   <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/">
     <Card title="Define" icon="document">
-      Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs. Ten kinds, one shape each, so the same file means the same thing in every repository, and a tool can check that structure without judging the content.
+      Actors, journeys, use cases, business rules, domain terms and requirements: small related Markdown files with stable IDs, one agreed shape each. The same file means the same thing in every repository, and a tool can check the shape without judging the content.
     </Card>
   </a>
-  <a className="pdac-link-card pdac-loop-card" href="/spec/relationships/">
+  <a className="pdac-link-card pdac-loop-card" href="/adoption/#let-agents-read-meaning-and-tools-check-structure">
     <Card title="Derive" icon="notes">
-      Requirements stay connected to the rules and use cases behind them, so you can standardise how work gets briefed: agents read the definition first and receive only the part that matters. Experimental practice: before an agent builds a ticket, compare the ticket with the agreed definition and the code, then turn contradictions into questions for a person. No command or skill does that reading today. Next: a packaged selection-to-briefing step.
+      Requirements stay connected to the rules and use cases behind them, so an agent is briefed with only the part of the product that matters. Reading incoming work against the definition is an experiment today, done by an agent and a person, not a command. Next: a packaged selection-to-briefing step.
     </Card>
   </a>
-  <a className="pdac-link-card pdac-loop-card" href="/adoption/">
+  <a className="pdac-link-card pdac-loop-card" href="/adoption/#where-to-start-depending-on-what-you-have">
     <Card title="Build" icon="laptop">
-      Whatever builds, builds: an SDD framework, a coding agent, or a team working from the backlog. They all read the same agreed definition instead of restating it. Delivery owns implementation decisions; the definition owns product meaning.
+      Whatever builds, builds: an SDD framework, a coding agent, or a team working from the backlog. All of them read the same agreed definition instead of restating it. Delivery owns implementation decisions; the definition owns product meaning.
     </Card>
   </a>
   <a className="pdac-link-card pdac-loop-card" href="/spec/artifacts/#structured-behaviour-structured-behaviour-sb-">
@@ -83,18 +83,18 @@ Defining one rule is the smallest slice of a longer loop. Product intent goes in
   </a>
   <a className="pdac-link-card pdac-loop-card" href="/spec/product-changes/">
     <Card title="Evolve" icon="code-branch">
-      Meaning changes through one mechanism: a Product Change that states what should become true, reviewed and accepted by a person. That habit is the discipline; no tool is required to keep it. Where a document has declared what it depends on, a tool can then list every document that relied on the old wording, instead of leaving you to grep.
+      Meaning changes through one mechanism: a Product Change, proposed, reviewed and accepted by a person. A tool can then list every document that relied on the old wording, instead of leaving you to grep.
     </Card>
   </a>
 </CardGrid>
 
-## Start from the failure you need to prevent
+## Three doors, not three floors
 
-Structured product Markdown can help an agent before ProductShape is installed. The PDaC contract adds stable identity, typed relationships, explicit Product Changes and citations. ProductShape adds deterministic validation and navigation over what those files declare. These are capabilities to combine, not maturity levels, and none removes human product judgement.
+**Write it down.** Structured product Markdown with stable IDs helps an agent before any tool is installed. **Agree how it changes.** The PDaC contract adds typed relationships and explicit Product Changes, approved by a person. **Make it checkable.** ProductShape verifies structure, links and citations deterministically. Enter through whichever door matches the failure in front of you: they combine in any order, and none removes human product judgement.
 
 [Start with one product decision and one real delivery item](/adoption/).
 
-## What PDaC is
+## What PDaC is, and where it stops
 
 {/* Canonical PDaC definition, one-line and paragraph, verbatim from the spec
     repository's README (canonical-pdac-definition markers). Do not paraphrase
@@ -106,13 +106,11 @@ The definition lives in small, related Markdown files: actors, journeys, use cas
 
 In practice the citation is the trust boundary between product and delivery: it records which exact product meaning a document relied on, and it makes that reliance checkable over time.
 
+And there PDaC stops. Spec-Driven Development tools own one implementation increment; PDaC owns accepted product intent, the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. The citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog.
+
 ![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
 
 _PDaC-0, the one-minute map. [Eight more diagrams](/diagrams/) cover the boundary, the model, change, citation and verification._
-
-## Where PDaC stops
-
-Spec-Driven Development tools own one implementation increment. PDaC owns accepted product intent: the graph that outlives every spec. Delivery owns its implementation choices within that intent, and what it learns flows back as evidence and proposed Product Changes. One-way authority, two-way learning. The citation contract at the boundary is delivery-neutral: the same citations brief an SDD framework, an AI coding agent, or a human team working from the backlog.
 
 ## See the checks run (3 minutes)
 
@@ -263,6 +261,27 @@ For a real repository, choose the [PDaC adoption path](/adoption/) that matches 
 
 The full rules are in the [Citation Contract](/spec/citation-contract/).
 
+## What we value
+
+{/* The four value pairs are verbatim from the spec repository's MANIFESTO.md.
+    Do not paraphrase here; change them there first. */}
+
+<div className="pdac-values">
+
+**A defined product** over a queue of tickets.
+
+**Explicit change** over casual edits.
+
+**Typed relationships** over organized documents.
+
+**Human judgment** over machine confidence.
+
+</div>
+
+Ten principles follow from these four values, and the method holds itself to its own standard: the [known limits](/known-limits/) page names what PDaC cannot claim yet, before anyone has to discover it. If the values match how you build, add your name.
+
+<LinkButton href="/manifesto/" icon="pen">Read and sign the manifesto</LinkButton>
+
 ## Where this stands today
 
 The specification is v0.2.0, released for public comment on 2026-08-28. The current ProductShape release implements it. Its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests. The file format remains `v1alpha1`, so existing product definitions do not need a migration. New v0.2 features, including Structured Behaviour, are optional and can be adopted through Product Changes. Next in the open backlog: deterministic projection of Structured Behaviour into test syntax, a packaged selection-to-briefing step, and coverage reporting between requirements, behaviours and tests.
@@ -272,21 +291,10 @@ The specification is still an early draft extracted from one working reference i
 ## Go deeper
 
 <CardGrid stagger>
-  <a className="pdac-link-card" href="/diagrams/">
-    <Card title="Nine diagrams" icon="seti:image">
-      What PDaC protects, what a product definition contains, how it changes, and
-      where it stops. One question per diagram.
-    </Card>
-  </a>
-  <a className="pdac-link-card" href="/manifesto/">
-    <Card title="The manifesto" icon="pen">
-      Four values, ten principles, the position in full. Signed by pull request.
-    </Card>
-  </a>
-  <a className="pdac-link-card" href="/spec/">
-    <Card title="The specification" icon="open-book">
-      Nine normative chapters, RFC 2119 language, stable diagnostic codes. Currently
-      v0.2.0, an early draft released for public comment.
+  <a className="pdac-link-card" href="/articles/">
+    <Card title="Articles" icon="pen">
+      The problem behind PDaC, where the method comes from, and the layer above
+      Spec Kit. One argument per article, primary sources only.
     </Card>
   </a>
   <a className="pdac-link-card" href="https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape">

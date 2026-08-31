@@ -2,24 +2,25 @@
 // Top-level navigation rendered in the site header. Starlight ships no header
 // nav, and the splash homepage has no sidebar, so this is the only navigation
 // a first-time visitor sees. Kept to four destinations on purpose: the header
-// is tight at 375px and the sidebar covers everything else.
+// is tight at 375px and the sidebar covers everything else. Ordered by how a
+// reader learns, not how the project is organised. GitHub is not a link here:
+// the stock SocialIcons render it beside the search box already.
 //
 // Styles live in src/styles/custom.css next to the navy header treatment,
 // which sets colours on `header.header a` and would otherwise outrank
 // component-scoped rules.
 const links = [
-  { label: 'Spec', href: '/spec/' },
   { label: 'Adoption', href: '/adoption/' },
+  { label: 'Manifesto', href: '/manifesto/' },
+  { label: 'Spec', href: '/spec/' },
   { label: 'Diagrams', href: '/diagrams/' },
-  { label: 'GitHub', href: 'https://github.com/product-definition-as-code', external: true },
 ];
 
 // Normalise to a single trailing slash so /spec and /spec/ compare equal.
 const path = Astro.url.pathname.replace(/\/*$/, '/');
 
 /** 'page' on the exact page, 'true' on a page below it, otherwise undefined. */
-function current(href: string, external?: boolean) {
-  if (external) return undefined;
+function current(href: string) {
   if (path === href) return 'page';
   return path.startsWith(href) ? 'true' : undefined;
 }
@@ -28,9 +29,9 @@ function current(href: string, external?: boolean) {
 <nav class="pdac-header-nav print:hidden" aria-label="Main">
   <ul>
     {
-      links.map(({ label, href, external }) => (
+      links.map(({ label, href }) => (
         <li>
-          <a href={href} aria-current={current(href, external)}>
+          <a href={href} aria-current={current(href)}>
             {label}
           </a>
         </li>

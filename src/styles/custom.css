@@ -329,6 +329,14 @@ mobile-starlight-toc .display-current {
   color: var(--sl-color-gray-3);
 }
 
+/* --- The manifesto values on the homepage ---------------------
+   Four value pairs quoted verbatim from MANIFESTO.md. Slightly larger
+   than body text so they read as a statement, not a list. */
+.pdac-values p {
+  font-size: var(--sl-text-lg);
+  margin-block: 0.4rem;
+}
+
 /* --- The color contract: artifact IDs ------------------------
    Applied by scripts/rehype-pdac-ids.mjs to inline code matching
    an artifact ID or prefix. Monospace and the visible prefix stay
