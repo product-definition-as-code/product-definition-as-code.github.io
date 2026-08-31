@@ -53,6 +53,7 @@ export default defineConfig({
       },
       sidebar: [
         { label: 'Adoption', slug: 'adoption' },
+        { label: 'Templates', slug: 'templates' },
         { label: 'Manifesto', slug: 'manifesto' },
         { label: 'Diagrams', slug: 'diagrams' },
         {
