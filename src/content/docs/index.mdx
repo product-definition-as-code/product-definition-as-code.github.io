@@ -1,14 +1,14 @@
 ---
 title: Define the product once
-description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. When cited text changes, tools detect documentation drift in the recorded citations.
+description: Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. The definition becomes bounded agent context, delivery-ready requirements and testable behaviour, and citation checks report exactly which delivery documents relied on a meaning that changed.
 template: splash
 hero:
   title: Define the product once.
   # The paragraph's first sentence is the canonical PDaC one-line definition, verbatim from
   # the spec repository's README (canonical-pdac-definition markers). Do not paraphrase.
   tagline: |
-    <h2 class="hero-subheading">Let every spec cite it.</h2>
-    <p class="hero-description">Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. Each citation carries a stable identifier and a content digest of the exact text it relies on; when that text changes, one command flags every recorded citation for a person to review.</p>
+    <h2 class="hero-subheading">Turn it into work agents can build and humans can verify.</h2>
+    <p class="hero-description">Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating. The definition becomes bounded agent context, delivery-ready requirements and testable behaviour. Each citation carries a stable identifier and a content digest of the exact text it relies on; when that text changes, one command flags every recorded citation for a person to review.</p>
   image:
     file: ../../assets/pdac-mark.svg
     alt: The PDaC node and link mark
@@ -197,6 +197,38 @@ For a real repository, choose the [PDaC adoption path](/adoption/) that matches 
 
 The full rules are in the [Citation Contract](/spec/citation-contract/). The rest of this page explains the model that makes this possible.
 
+## Define, derive, build, verify, evolve
+
+The demo is the smallest slice of a longer loop. Product intent goes in once; work, context and expected behaviour come out; what delivery learns comes back as a proposed change. Anything marked next below is open backlog, not shipped product.
+
+<CardGrid>
+  <Card title="Define">
+    Actors, journeys, use cases, business rules, domain terms, bounded contexts, functional and quality requirements, constraints and structured behaviours: small related Markdown files with stable IDs, checked deterministically by `prodshape validate`.
+  </Card>
+  <Card title="Derive">
+    Requirements stay connected to the rules and use cases behind them, and `prodshape context` compiles a bounded, cited briefing for selected work. The same model grounds incoming work: before an agent builds a ticket, check it against the accepted definition and the code, and turn contradictions into questions for a person. Next: a packaged selection-to-briefing step.
+  </Card>
+  <Card title="Build">
+    OpenSpec and Spec Kit integrations install grounding instructions and verify their own documents; direct coding agents receive the same cited briefing. Delivery owns implementation decisions; the definition owns product meaning.
+  </Card>
+  <Card title="Verify">
+    Structured Behaviour records given, when and then clauses as accepted product intent with its own ID and digest, so tests and specs cite the exact behaviour they verify. Next: deterministic projection into test syntax such as Gherkin, and coverage reporting.
+  </Card>
+  <Card title="Evolve">
+    A Product Change proposes, validates and applies new meaning; `prodshape impact` walks what it touches; `citations verify` reports every consumer as current, stale, tampered or unresolved. A citation records which exact product meaning a document relied on, so review becomes a list instead of a search.
+  </Card>
+</CardGrid>
+
+## Three rungs, one contract
+
+Adoption is cumulative capability, not an installer mode. The files and IDs are identical at every rung, so nothing is re-entered to move up.
+
+- **Structure.** Spec-shaped Markdown with stable IDs. `prodshape init` scaffolds it; `validate` checks it. One canonical home per product decision already pays for itself.
+- **Assist.** `init --ai` installs the bundled agent skills, and `context`, `inspect` and `impact` give agents bounded, cited product knowledge instead of the whole repository.
+- **Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared, ProductShape enforces their structure and existence and detects when cited product knowledge changes: `citations verify` runs in CI, with provider checks for OpenSpec and Spec Kit document populations.
+
+[Pick the path that matches your delivery workflow](/adoption/).
+
 ## What PDaC is
 
 {/* Canonical PDaC definition, one-line and paragraph, verbatim from the spec
@@ -206,6 +238,8 @@ The full rules are in the [Citation Contract](/spec/citation-contract/). The res
 Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.
 
 The definition lives in small, related Markdown files: actors, journeys, use cases, business rules, domain terms and requirements. Together they form a validated product graph that humans and AI agents can read alike. It changes only through an explicit Product Change, reviewed and accepted by a human. Consumer documents such as SDD specs, tasks and agent prompts cite the exact product text they rely on by stable ID and content digest. When cited text changes, tools flag every recorded citation for review, so documentation drift is detected instead of remaining silent. Deterministic tools check structure and references, never truth. People decide what is true and what should change.
+
+In practice the citation is the trust boundary between product and delivery: it records which exact product meaning a document relied on, and it makes that reliance checkable over time.
 
 ![Two zones. On the left, product thinking: what the product means, holding the accepted product definition, versioned, related and reviewable. On the right, software delivery: how the product is built, holding SDD specs, AI agents, developers, backlog and code. An arrow labelled "cited by" runs from the definition to delivery, and a dashed amber arrow returns, labelled "delivery evidence reveals new product questions or changes".](/diagrams/pdac-0-one-minute-map.png)
 
@@ -217,7 +251,7 @@ Spec-Driven Development tools own one implementation increment. PDaC owns accept
 
 ## Where this stands today
 
-The specification is v0.2.0, released for public comment on 2026-08-28. The current ProductShape release implements it. Its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests. The file format remains `v1alpha1`, so existing product definitions do not need a migration. New v0.2 features, including Structured Behaviour, are optional and can be adopted through Product Changes.
+The specification is v0.2.0, released for public comment on 2026-08-28. The current ProductShape release implements it. Its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests. The file format remains `v1alpha1`, so existing product definitions do not need a migration. New v0.2 features, including Structured Behaviour, are optional and can be adopted through Product Changes. Next in the open backlog: deterministic projection of Structured Behaviour into test syntax, a packaged selection-to-briefing step, and coverage reporting between requirements, behaviours and tests.
 
 The specification is still an early draft extracted from one working reference implementation. A second, independent implementation and external pilots are the next proof points. They are release gates for v1, not assumed achievements. The [known limits](/known-limits/) page names every gap we know about. The full list of specification changes is in the [v0.2.0 release notes](https://github.com/product-definition-as-code/spec/releases/tag/v0.2.0).
 

@@ -29,6 +29,16 @@ The dry run shows every path before anything is written. The second command crea
 
 If the product already exists, begin with [brownfield recovery](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/brownfield.md). For a new product, use the [greenfield guide](https://github.com/juangcarmona/productshape/blob/main/docs/adoption/greenfield.md).
 
+## Three rungs, one contract
+
+Adoption is cumulative capability, not an installer mode. Every rung works on the same files and IDs, so moving up never re-enters anything.
+
+**Structure.** Keep the product definition as spec-shaped Markdown with stable IDs. `npx prodshape init` scaffolds the kernel, `init --full` adds per-kind folders and authoring templates, and `prodshape validate` checks identities, relationships and structure deterministically. This rung pays for itself with one canonical home per decision, exactly as in the loop above.
+
+**Assist.** `npx prodshape init --ai` installs the bundled agent skills, and `prodshape context`, `inspect` and `impact` give agents bounded, cited product knowledge instead of the whole repository. A practice worth stealing at this rung: review incoming work against the accepted definition and the code before an agent builds it. Contradictions and missing decisions become questions for a person before delivery, not archaeology after it. The agent interprets; a person answers.
+
+**Enforce.** Agents interpret whether work agrees with product intent. Once dependencies are declared as citations, ProductShape enforces their structure and existence and detects when cited product knowledge changes. `citations verify` runs in CI and provider checks cover OpenSpec and Spec Kit document populations. A declared dependency makes identity, existence and future content changes checkable; whether the work still agrees with the cited meaning stays a human and agent judgement.
+
 ## Choose your delivery path
 
 ### OpenSpec
