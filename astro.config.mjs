@@ -36,6 +36,34 @@ export default defineConfig({
             src: '//gc.zgo.at/count.js',
           },
         },
+        {
+          // Site-wide structured data. Articles add their own TechArticle
+          // objects via per-page frontmatter and reference the ids below.
+          tag: 'script',
+          attrs: { type: 'application/ld+json' },
+          content: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': [
+              {
+                '@type': 'Organization',
+                '@id': 'https://pdac.dev/#org',
+                name: 'Product Definition as Code',
+                url: 'https://pdac.dev/',
+                logo: 'https://pdac.dev/favicon.png',
+                sameAs: ['https://github.com/product-definition-as-code'],
+              },
+              {
+                '@type': 'WebSite',
+                '@id': 'https://pdac.dev/#website',
+                name: 'Product Definition as Code',
+                url: 'https://pdac.dev/',
+                description:
+                  'Product Definition as Code keeps the agreed product definition in versioned Markdown that delivery work cites instead of restating.',
+                publisher: { '@id': 'https://pdac.dev/#org' },
+              },
+            ],
+          }),
+        },
       ],
       social: [
         {

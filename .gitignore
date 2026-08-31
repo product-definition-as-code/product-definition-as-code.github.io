@@ -6,4 +6,6 @@ src/content/docs/spec/
 src/content/docs/manifesto.md
 src/content/docs/templates.md
 public/diagrams/
+public/llms.txt
+public/llms-full.txt
 .git-lock-trash/

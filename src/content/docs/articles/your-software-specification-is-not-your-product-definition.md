@@ -1,9 +1,14 @@
 ---
 title: Your software specification is not your product definition
 description: Delivery specifications describe work. Product Definition as Code keeps the accepted product intent that delivery work must remain aligned with.
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: '{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Your software specification is not your product definition", "author": {"@type": "Person", "name": "Juan G. Carmona", "url": "https://jgcarmona.com"}, "datePublished": "2026-08-23", "dateModified": "2026-08-28", "publisher": {"@id": "https://pdac.dev/#org"}, "mainEntityOfPage": "https://pdac.dev/articles/your-software-specification-is-not-your-product-definition/"}'
 ---
 
-*By Juan G. Carmona*
+*By Juan G. Carmona, 2026-08-23*
 
 Most software teams have plenty of specifications.
 

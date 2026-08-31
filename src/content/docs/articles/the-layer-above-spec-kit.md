@@ -1,9 +1,14 @@
 ---
 title: The layer above Spec Kit
 description: Spec Kit users asked four times for a product level above feature specs. This is that layer, installable in two commands, without asking Spec Kit to change.
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: '{"@context": "https://schema.org", "@type": "TechArticle", "headline": "The layer above Spec Kit", "author": {"@type": "Person", "name": "Juan G. Carmona", "url": "https://jgcarmona.com"}, "datePublished": "2026-08-31", "dateModified": "2026-08-31", "publisher": {"@id": "https://pdac.dev/#org"}, "mainEntityOfPage": "https://pdac.dev/articles/the-layer-above-spec-kit/"}'
 ---
 
-*By Juan G. Carmona*
+*By Juan G. Carmona, 2026-08-31*
 
 [GitHub Spec Kit](https://github.com/github/spec-kit) turns a feature description into a specification, a plan and tasks. It is disciplined about the question it owns: how do we specify this increment of work?
 

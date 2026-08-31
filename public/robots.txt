@@ -1,0 +1,25 @@
+# pdac.dev welcomes crawlers, AI crawlers included: the site exists to be read
+# by machines as much as by people. Machine-readable entry points:
+#   https://pdac.dev/llms.txt        curated index for language models
+#   https://pdac.dev/llms-full.txt   manifesto, adoption, templates and spec in one file
+#   https://pdac.dev/demo.sh         runnable proof, POSIX shell
+
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://pdac.dev/sitemap-index.xml
