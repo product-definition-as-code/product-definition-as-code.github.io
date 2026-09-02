@@ -41,26 +41,11 @@ The [intent-driven-template](https://github.com/intent-driven-dev/intent-driven-
 
 ## The architecture I want to test
 
-```text
-                 human / agentic wrapper
-                           │
-                ┌──────────┴──────────┐
-                │                     │
-          PRODUCT WORKFLOW      DELIVERY WORKFLOW
-                │                     │
-             OpenSpec              OpenSpec
-                │                     │
-        PDaC product delta        SDD workflow
-                │                     │
-        deterministic checks      implementation
-                │                     │
-                ▼                     ▼
-       docs/product/model         code + tests
-                │                     ▲
-                └── product context ──┘
-```
+![Product and Delivery as separate workflows. A human or agentic wrapper decides which to invoke. Product produces semantic deltas against docs/product/model; Delivery consumes fresh product context and produces implementation.](/article-assets/product-and-sdd-workflows.png)
 
 Product and Delivery are separate workflows because they move at different speeds and answer different review questions. A product may be refined repeatedly without implementation. Delivery may implement behaviour that is already fully defined. A change may require Product only, Delivery only, or Product then Delivery. A human, command or higher-level agent decides which to invoke and how to compose them. Forcing both through one unified adaptive workflow is exactly the failure mode Böckeler describes: review overload and implicit product analysis hidden inside SDD.
+
+The diagram shows OpenSpec on both sides because that is what I am testing first. The composition is not specific to OpenSpec. The same shape could work with Spec Kit, with Kiro, or with a custom flow built from agent skills such as the set Addy Osmani proposes. What matters is that the Delivery side is a real workflow engine that consumes product context, and that the Product side applies deterministic PDaC validation around a semantic delta. OpenSpec is the first candidate because its custom schemas and per-change schema selection already support holding two different workflows in one repository.
 
 The key invariant, which PDaC exists to enforce:
 
