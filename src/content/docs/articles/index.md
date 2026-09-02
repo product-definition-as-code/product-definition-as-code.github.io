@@ -25,4 +25,10 @@ This article maps each part of the methodology to the disciplines, standards, pr
 
 This article shows that layer built for a concrete SDD framework: four unserved Spec Kit requests, the boundary that made the literal ask a trap, and the citation mechanism that fills the gap, installable in two commands.
 
+## An architectural experiment in progress
+
+[Maybe ProductShape should do less](./maybe-productshape-should-do-less/)
+
+ProductShape grew a workflow engine to make PDaC executable. OpenSpec may now do that job better. This article exposes the reasoning, the prior art and the spike that will test whether part of ProductShape should move to OpenSpec, written before the experiment is implemented.
+
 More articles will cover Product Changes, citations in depth and a worked example of specification drift.
