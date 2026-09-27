@@ -9,11 +9,12 @@ methodology about explicit, inspectable intent should apply the same standard to
 ## Maturity
 
 There is one implementation, ProductShape, and the specification was extracted from it. The
-current ProductShape release implements PDaC v0.2.0. Its
+current ProductShape release implements the v0.3.0 candidate while retaining the
+v0.2.0 contract. Its
 [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml)
-passes all 44 published cases and verifies all 12 pinned digests. This is strong regression
-evidence from the reference implementation, but the published tests are not yet a complete
-executable form of every normative rule.
+passes the currently pinned v0.2.0 profile. This is strong regression evidence from the
+reference implementation, but it is not an independent v0.3.0 qualification claim and the
+published tests are not yet a complete executable form of every normative rule.
 
 Until an independent implementation passes the versioned conformance tests, implementation
 evidence is useful regression evidence, not independent validation. There is one listed adopter.

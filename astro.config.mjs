@@ -149,7 +149,7 @@ export default defineConfig({
             },
             {
               label: 'The reference workflow',
-              items: ['spec/product-changes'],
+              items: ['spec/product-changes', 'spec/verification-evidence'],
             },
             'spec/conformance',
           ],
