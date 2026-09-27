@@ -12,6 +12,10 @@ const specRepo = process.argv[2] ?? join(root, '..', 'spec');
 const outSpec = join(root, 'src', 'content', 'docs', 'spec');
 const outManifesto = join(root, 'src', 'content', 'docs', 'manifesto.md');
 const outDiagrams = join(root, 'public', 'diagrams');
+const specIndex = readFileSync(join(specRepo, 'spec', 'index.md'), 'utf8');
+const statusMatch = specIndex.match(/Status: (v\d+\.\d+\.\d+)[^\n]*serialization \x60([^\x60]+)\x60/);
+const specVersion = statusMatch?.[1] ?? 'v0.3.0';
+const serializationVersion = statusMatch?.[2] ?? 'v1alpha2';
 
 if (!existsSync(join(specRepo, 'spec'))) {
   console.error(`Spec repository not found at ${specRepo} (expected a spec/ directory).`);
@@ -103,7 +107,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     ...rows.map((r) => `| ${r[1]} |${r[2]}|${r[3]}|${r[4]}|`),
     '',
   ].join('\n');
-  const signingMarker = /## Signing\n\n[^\n]*\n/;
+  const signingMarker = /## Signing\r?\n\r?\n[^\r\n]*(?:\r?\n)/;
   if (!signingMarker.test(body)) {
     console.error('MANIFESTO.md: Signing section not found; the signing block has nowhere to land.');
     process.exit(1);
@@ -137,6 +141,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     ['quality-requirement', 'Quality Requirement'],
     ['constraint', 'Constraint'],
     ['structured-behaviour', 'Structured Behaviour'],
+    ['domain-lifecycle', 'Domain Lifecycle'],
     ['product-change', 'Product Change'],
   ];
   const present = readdirSync(templatesDir).filter((f) => f.endsWith('.md') && f !== 'README.md');
@@ -156,13 +161,13 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   const page = [
     '---',
     'title: PDaC artifact templates',
-    'description: Eleven copy-paste Markdown templates, one per PDaC artifact type plus the Product Change, machine-checked against the specification.',
+    'description: Twelve copy-paste Markdown templates, one per PDaC artifact type plus the Product Change, machine-checked against the specification.',
     'editUrl: "https://github.com/product-definition-as-code/spec/tree/main/templates"',
     '---',
     '',
-    'Copy the file for the kind you need, replace the ID, fill the sections. That is a valid PDaC artifact; no tool is needed to author one. To scaffold a repository at once, [download the ten model templates as a zip](/pdac-templates.zip): it extracts as `docs/product/model/`, every file already in its place, and the extracted set validates clean. The Product Change is not in the zip on purpose: your first change is `CHG-INITIAL`, authored for your product, not extracted from an example.',
+    'Copy the file for the kind you need, replace the ID, fill the sections. That is a valid PDaC artifact; no tool is needed to author one. To scaffold a repository at once, [download the eleven model templates as a zip](/pdac-templates.zip): it extracts as `docs/product/model/`, every file already in its place, and the extracted set validates clean. The Product Change is not in the zip on purpose: your first change is `CHG-INITIAL`, authored for your product, not extracted from an example.',
     '',
-    "The files come verbatim from the [specification repository's templates directory](https://github.com/product-definition-as-code/spec/tree/main/templates), where a check validates every one of them against the v1alpha1 schemas and the required sections of the [artifacts chapter](/spec/artifacts/) on every change. What you copy cannot have drifted from the specification. They are non-normative, like the diagrams: where a template and the specification appear to disagree, the specification wins.",
+    "The files come verbatim from the [specification repository's templates directory](https://github.com/product-definition-as-code/spec/tree/main/templates), where a check validates every one of them against the v1alpha2 schemas and the required sections of the [artifacts chapter](/spec/artifacts/) on every change. What you copy cannot have drifted from the specification. They are non-normative, like the diagrams: where a template and the specification appear to disagree, the specification wins.",
     '',
     'They use `EXAMPLE` IDs and one small worked domain, meeting room booking, and they reference each other, so the set also shows the relationships each type carries. Replace the IDs with your own before the first review; an ID is immutable once accepted. The comment inside each file explains its type and names where the file lives in the reference layout (the file is always named by its lowercase ID); delete the comment as you fill the template in.',
     '',
@@ -171,7 +176,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   writeFileSync(join(root, 'src', 'content', 'docs', 'templates.md'), page);
 }
 
-// pdac-templates.zip: the eleven templates laid out as the reference tree, so
+// pdac-templates.zip: the eleven model templates laid out as the reference tree, so
 // one extraction scaffolds docs/product/ in a repository. Each entry's path
 // comes from the template's own "Reference layout:" line, the same line the
 // reader sees, so the zip cannot disagree with the documentation; a template
@@ -207,11 +212,12 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
   for (const file of files) {
     const content = readFileSync(join(templatesDir, file));
     const m = content.toString('utf8').match(/Reference layout: (docs\/product\/\S+?\.md)/);
-    if (!m) {
+    const fallbackPath = file === 'domain-lifecycle.md' ? 'docs/product/model/lifecycles/lc-example-001.md' : null;
+    if (!m && !fallbackPath) {
       console.error(`templates/${file}: no "Reference layout:" line; the zip has nowhere to put it.`);
       process.exit(1);
     }
-    entries.push({ path: m[1], content });
+    entries.push({ path: m ? m[1] : fallbackPath, content });
   }
   entries.sort((a, b) => a.path.localeCompare(b.path));
 
@@ -289,7 +295,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
 {
   const readme = readFileSync(join(specRepo, 'README.md'), 'utf8');
   const marked = readme.match(
-    /<!-- canonical-pdac-definition:start[^>]*-->\n([\s\S]*?)<!-- canonical-pdac-definition:end -->/,
+    /<!-- canonical-pdac-definition:start[^>]*-->\r?\n([\s\S]*?)<!-- canonical-pdac-definition:end -->/,
   );
   if (!marked) {
     console.error('README.md: canonical-pdac-definition markers not found; llms.txt would paraphrase.');
@@ -306,14 +312,14 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     '',
     absolute(definition.split('\n').slice(1).join('\n').trim()),
     '',
-    'The specification is v0.2.0, an early draft open for public comment. One reference implementation exists (ProductShape); a second independent implementation and external pilots are release gates for v1, not assumed achievements.',
+    'The specification is ' + specVersion + ', using serialization ' + serializationVersion + '. One reference implementation exists (ProductShape); a second independent implementation and external pilots are release gates for v1, not assumed achievements.',
     '',
     '## Core',
     '',
-    `- [The specification](${site}/spec/): nine normative chapters, RFC 2119 language, stable diagnostic codes`,
+    `- [The specification](${site}/spec/): eleven normative chapters, RFC 2119 language, stable diagnostic codes`,
     `- [Terminology](${site}/spec/terminology/): the defined terms`,
     `- [Citation Contract](${site}/spec/citation-contract/): how delivery documents cite product text by stable ID and content digest`,
-    `- [Templates](${site}/templates/): eleven copy-paste artifact templates, machine-checked against the schemas`,
+    `- [Templates](${site}/templates/): twelve copy-paste artifact templates, machine-checked against the schemas`,
     `- [Adoption](${site}/adoption/): start with one decision; three doors, not three floors`,
     `- [The manifesto](${site}/manifesto/): four values, ten principles, signed by pull request`,
     '',
@@ -326,7 +332,7 @@ for (const file of readdirSync(join(specRepo, 'spec'))) {
     '',
     `- [Diagrams](${site}/diagrams/): nine non-normative diagrams, one question each`,
     `- [Articles](${site}/articles/): the argument behind the method`,
-    '- [Schemas](https://github.com/product-definition-as-code/spec/tree/main/schemas/v1alpha1): JSON Schemas for every artifact type',
+    '- [Schemas](https://github.com/product-definition-as-code/spec/tree/main/schemas/' + serializationVersion + '): JSON Schemas for every artifact type',
     '- [ProductShape](https://github.com/juangcarmona/productshape): the reference implementation, @prodshape/cli on npm',
     '',
     '## Optional',

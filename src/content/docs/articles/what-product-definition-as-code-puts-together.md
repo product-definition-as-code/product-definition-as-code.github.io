@@ -134,11 +134,16 @@ The technical contracts also build on public standards:
 
 PDaC uses requirements-engineering vocabulary but makes no [ISO/IEC/IEEE 29148](https://www.iso.org/standard/72089.html) conformance claim. [ReqIF](https://www.omg.org/reqif/) and [OSLC](https://docs.oasis-open.org/oslc-core/oslc-core/v3.0/oslc-core-v3.0.html) are future paths for exchange and cross-tool links. [SysML v2](https://www.omg.org/sysml/SysML-2.htm) and [DMN](https://www.omg.org/dmn/) are adjacent formal models, not canonical PDaC formats.
 
-In v0.2.0, citations resolve within one repository. Cross-repository citation resolution is still out of scope.
+In the v0.3.0 candidate, citations still resolve within one repository. Cross-repository citation
+resolution remains out of scope.
 
 ## How the sources are assembled
 
-The [v0.2.0 specification](/spec/) groups the sources into three layers. The kernel combines stable identity, typed relationships, traceability, content fingerprints and deterministic validation. The reference profile combines product, domain and requirements modelling. The reference workflow combines configuration management, semantic change records, Git review and human acceptance.
+The [v0.3.0 candidate specification](/spec/) groups the sources into three layers. The kernel
+combines stable identity, typed relationships, traceability, content fingerprints and deterministic
+validation. The reference profile now also includes explicit Domain Lifecycles. The reference
+workflow combines configuration management, accountable semantic change records, pre-write impact
+and citation forecasts, Git review and human acceptance.
 
 ![The PDaC reference workflow starts from an accepted baseline, records semantic intent in a Product Change, validates an overlay, requires human approval, applies the candidate on a working branch, sends it through pull-request review and accepts the new baseline only when a human merges it.](/article-assets/pdac-reference-workflow.png)
 

@@ -307,9 +307,9 @@ Ten principles follow from these four values. If they match how you build, add y
 
 ## Where this stands today
 
-The specification is v0.2.0, released on 2026-08-28 and [open for comment](https://github.com/product-definition-as-code/spec/discussions?utm_source=pdac.dev&utm_medium=site&utm_campaign=rfc-comment). The current ProductShape release implements it: its [pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml) passes all 44 published cases and verifies all 12 pinned digests, run by `pdac-conformance`, the neutral runner. The file format remains `v1alpha1`, so existing definitions need no migration, and new v0.2 features are optional.
+The specification is now a **v0.3.0 development candidate** using serialization `v1alpha2`; the last released specification is v0.2.0. ProductShape 0.22 includes the candidate's implementation work: Domain Lifecycles, accountable one-hop Product Changes, pre-write citation forecasts and external Verification Evidence, while the existing `v1alpha1` contract remains supported. The candidate is not a release or an independent conformance claim yet; qualification is tracked in the [v0.3.0 plan](https://github.com/product-definition-as-code/spec/blob/main/docs/releases/v0.3.0-plan.md).
 
-It is still an early draft extracted from one working implementation. A second, independent implementation and external pilots are release gates for v1, not assumed achievements, and the [known limits](/known-limits/) page names every gap we know about. Next in the open backlog: projection of Structured Behaviour into test syntax, a packaged selection-to-briefing step, and coverage reporting. Full changes in the [v0.2.0 release notes](https://github.com/product-definition-as-code/spec/releases/tag/v0.2.0).
+It is still an early draft extracted from one working implementation. A second, independent implementation and external pilots are release gates for v1, not assumed achievements, and the [known limits](/known-limits/) page names every gap we know about. Full changes are recorded in the [v0.3.0 candidate changelog](https://github.com/product-definition-as-code/spec/blob/main/CHANGELOG.md).
 
 ## Go deeper
 
@@ -323,7 +323,7 @@ It is still an early draft extracted from one working implementation. A second, 
   <a className="pdac-link-card" href="https://github.com/juangcarmona/productshape?utm_source=pdac.dev&utm_medium=site&utm_campaign=proof-productshape">
     <Card title="The reference implementation" icon="github">
       ProductShape, the reference implementation of Product Definition as Code. It
-      implements PDaC v0.2.0 with the `v1alpha1` file format:
+      supports PDaC v0.3.0 with the `v1alpha2` file format while retaining `v1alpha1`:
       `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
     </Card>
   </a>
