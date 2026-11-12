@@ -1,0 +1,9 @@
+{
+  "generator": "ProductShape",
+  "version": "0.24.0",
+  "sourceRepository": "https://github.com/juangcarmona/productshape",
+  "sourcePath": "examples/shop",
+  "sourceRevision": "c90b63ea25b78343c6f2b2bd4aa3f020e116cec4",
+  "artifacts": 39,
+  "relationships": 105
+}
