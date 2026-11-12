@@ -16,6 +16,18 @@ npm run dev
 
 `npm run sync <path>` accepts an explicit path to a spec checkout.
 
+## Example Product Snapshot
+
+`/example/shop/` serves a Product Snapshot of the shop model in the ProductShape repository (`examples/shop`). It is generated, not authored: `scripts/update-example-snapshot.mjs` runs a ProductShape checkout's built CLI against that model and writes `public/example/shop/index.html` together with `src/data/example-snapshot.json`, which the `/example/` page reads for its provenance line.
+
+```bash
+# in ../productshape: pnpm install && pnpm build
+node scripts/update-example-snapshot.mjs ../productshape          # regenerate and commit both files
+node scripts/update-example-snapshot.mjs ../productshape --check  # exit 1 if the committed copy differs
+```
+
+Run `--check` against the revision named in the JSON. When the example or the Snapshot changes in ProductShape, regenerate from the new revision so the page and the file move together.
+
 ## Deployment
 
 Pushed to `main`, built and deployed by `.github/workflows/deploy.yml` (GitHub Actions → GitHub Pages). One-time repository setup:
