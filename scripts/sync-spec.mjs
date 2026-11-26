@@ -18,6 +18,10 @@ if (!specIndex.includes(`Status: v${release.methodVersion} released`) ||
     !specIndex.includes(`serialization \`${release.serializationVersion}\``)) {
   throw new Error('Release manifest and normative specification status disagree');
 }
+const landing = readFileSync(join(root, 'src/content/docs/index.mdx'), 'utf8');
+if (!landing.includes(`current released specification is **PDaC v${release.methodVersion}**`)) {
+  throw new Error('Landing page must identify the current normative release');
+}
 const specVersion = `v${release.methodVersion}`;
 const serializationVersion = release.serializationVersion;
 writeFileSync(join(root, 'public', 'release.json'), JSON.stringify(release, null, 2) + '\n');
