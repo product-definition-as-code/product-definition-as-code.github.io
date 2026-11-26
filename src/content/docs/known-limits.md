@@ -9,12 +9,13 @@ methodology about explicit, inspectable intent should apply the same standard to
 ## Maturity
 
 There is one implementation, ProductShape, and the specification was extracted from it. The
-current ProductShape release implements the v0.3.0 candidate while retaining the
-v0.2.0 contract. Its
-[pinned conformance workflow](https://github.com/juangcarmona/productshape/actions/workflows/pdac-conformance.yml)
-passes the currently pinned v0.2.0 profile. This is strong regression evidence from the
-reference implementation, but it is not an independent v0.3.0 qualification claim and the
-published tests are not yet a complete executable form of every normative rule.
+current ProductShape release supports v0.3.0/v1alpha2 while retaining the
+v0.2.0 contract. Its published 0.26.1 package passes all 147 executable v0.3.0
+cases with the trusted operation adapter and runner 1.1.0. The legacy maintained
+profile passes 45 cases and 12 digest pins; the immutable v0.2.0 tag has a documented
+diagnostic-field fixture erratum, retained as a 43/44 result. See the
+[exact evidence and limitations](https://github.com/product-definition-as-code/spec/blob/main/docs/releases/v0.3.0.md).
+The published tests are not yet a complete executable form of every normative rule.
 
 Until an independent implementation passes the versioned conformance tests, implementation
 evidence is useful regression evidence, not independent validation. There is one listed adopter.

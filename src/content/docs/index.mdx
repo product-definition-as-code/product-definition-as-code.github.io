@@ -180,7 +180,7 @@ warning PRODUCT061 openspec/specs/billing/spec.md [BR-REFUND-001]: Citation of '
 
 Put that command in CI and stale product knowledge stops being invisible. PDaC does not rewrite the specs for you: every citation reports `current`, `stale`, `tampered` or `unresolved`, and a person reviews each flag. The full rules are in the [Citation Contract](/spec/citation-contract/).
 
-**3. The whole script.** Verified against `@prodshape/cli@%PRODSHAPE_VERSION%` and served at [pdac.dev/demo.sh](/demo.sh). A non-governed sandbox: it runs in a temporary directory via `npx`, with no global install and no git.
+**3. The whole script.** Verified against `@prodshape/cli@0.26.1` and served at [pdac.dev/demo.sh](/demo.sh). A non-governed sandbox: it runs in a temporary directory via `npx`, with no global install and no git.
 
 <details>
 <summary>The whole demo, copy-paste (3 minutes)</summary>
@@ -188,7 +188,7 @@ Put that command in CI and stale product knowledge stops being invisible. PDaC d
 ```bash
 cd "$(mktemp -d)"
 npm init -y >/dev/null 2>&1
-npm install --save-dev --save-exact @prodshape/cli@%PRODSHAPE_VERSION%
+npm install --save-dev --save-exact @prodshape/cli@0.26.1
 prodshape() { npx --no-install prodshape "$@"; }
 
 mkdir -p .product
@@ -312,9 +312,9 @@ Ten principles follow from these four values. If they match how you build, add y
 
 ## Where this stands today
 
-The specification is now a **v0.3.0 development candidate** using serialization `v1alpha2`; the last released specification is v0.2.0. ProductShape 0.22 includes the candidate's implementation work: Domain Lifecycles, accountable one-hop Product Changes, pre-write citation forecasts and external Verification Evidence, while the existing `v1alpha1` contract remains supported. The candidate is not a release or an independent conformance claim yet; qualification is tracked in the [v0.3.0 plan](https://github.com/product-definition-as-code/spec/blob/main/docs/releases/v0.3.0-plan.md).
+The current released specification is **PDaC v0.3.0**, serialization `v1alpha2`. ProductShape supports Domain Lifecycles, accountable one-hop Product Changes, pre-write citation forecasts and external Verification Evidence while retaining `v1alpha1`. Published ProductShape 0.26.1 passed all 147 v0.3.0 executable cases with runner 1.1.0 and its trusted operation adapter. See the [official release](https://github.com/product-definition-as-code/spec/releases/tag/v0.3.0) and [reproducible qualification record](https://github.com/product-definition-as-code/spec/blob/main/docs/releases/v0.3.0.md).
 
-It is still an early draft extracted from one working implementation. A second, independent implementation and external pilots are release gates for v1, not assumed achievements, and the [known limits](/known-limits/) page names every gap we know about. Full changes are recorded in the [v0.3.0 candidate changelog](https://github.com/product-definition-as-code/spec/blob/main/CHANGELOG.md).
+It is still an early draft extracted from one working implementation. A second, independent implementation and external pilots are release gates for v1, not assumed achievements, and the [known limits](/known-limits/) page names every gap we know about. Full changes are recorded in the [v0.3.0 changelog](https://github.com/product-definition-as-code/spec/blob/main/CHANGELOG.md).
 
 ## Go deeper
 
@@ -329,7 +329,7 @@ It is still an early draft extracted from one working implementation. A second, 
     <Card title="The reference implementation" icon="github">
       ProductShape, the reference implementation of Product Definition as Code. It
       supports PDaC v0.3.0 with the `v1alpha2` file format while retaining `v1alpha1`:
-      `npm install -g @prodshape/cli@%PRODSHAPE_VERSION%`.
+      `npm install -g @prodshape/cli@0.26.1`.
     </Card>
   </a>
   <a className="pdac-link-card" href="https://github.com/product-definition-as-code/spec/blob/main/IMPLEMENTATIONS.md?utm_source=pdac.dev&utm_medium=site&utm_campaign=build-implementation">
