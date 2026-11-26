@@ -16,7 +16,7 @@
 - Spell out **Product Definition as Code (PDaC)** on first use in an article.
 - Product Definition as Code is the methodology.
 - ProductShape is the reference implementation.
-- `pdac-lint` is an independent validator.
+- `pdac-conformance` is the independent conformance runner; `pdac-lint` is its legacy forwarding command.
 - Do not describe PDaC as a proven industry standard.
 - Explain unfamiliar terms instead of assuming that readers accept project jargon.
 - State limitations and uncertainty directly.

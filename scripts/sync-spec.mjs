@@ -13,9 +13,18 @@ const outSpec = join(root, 'src', 'content', 'docs', 'spec');
 const outManifesto = join(root, 'src', 'content', 'docs', 'manifesto.md');
 const outDiagrams = join(root, 'public', 'diagrams');
 const specIndex = readFileSync(join(specRepo, 'spec', 'index.md'), 'utf8');
-const statusMatch = specIndex.match(/Status: (v\d+\.\d+\.\d+)[^\n]*serialization \x60([^\x60]+)\x60/);
-const specVersion = statusMatch?.[1] ?? 'v0.3.0';
-const serializationVersion = statusMatch?.[2] ?? 'v1alpha2';
+const release = JSON.parse(readFileSync(join(specRepo, 'release.json'), 'utf8'));
+if (!specIndex.includes(`Status: v${release.methodVersion} released`) ||
+    !specIndex.includes(`serialization \`${release.serializationVersion}\``)) {
+  throw new Error('Release manifest and normative specification status disagree');
+}
+const landing = readFileSync(join(root, 'src/content/docs/index.mdx'), 'utf8');
+if (!landing.includes(`current released specification is **PDaC v${release.methodVersion}**`)) {
+  throw new Error('Landing page must identify the current normative release');
+}
+const specVersion = `v${release.methodVersion}`;
+const serializationVersion = release.serializationVersion;
+writeFileSync(join(root, 'public', 'release.json'), JSON.stringify(release, null, 2) + '\n');
 
 if (!existsSync(join(specRepo, 'spec'))) {
   console.error(`Spec repository not found at ${specRepo} (expected a spec/ directory).`);
