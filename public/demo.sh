@@ -10,6 +10,9 @@ npm init -y >/dev/null 2>&1
 npm install --save-dev --save-exact @prodshape/cli@%PRODSHAPE_VERSION%
 prodshape() { npx --no-install prodshape "$@"; }
 
+mkdir -p .product
+printf 'version: v1alpha2\n' > .product/config.yaml
+
 mkdir -p docs/product/model/business-rules openspec/specs/checkout openspec/specs/billing openspec/specs/support
 
 # ── ACT 1: what an SDD repo looks like after a few weeks ─────────────
